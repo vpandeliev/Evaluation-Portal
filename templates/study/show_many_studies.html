@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<h1>Studies</h1>
+ 	<ul>
+		{% for study in studies %}
+			<li>{{study}}</li>
+		{% endfor %}
+	</ul>
+{% endblock %}
