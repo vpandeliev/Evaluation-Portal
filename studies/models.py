@@ -14,6 +14,10 @@ class Study(models.Model):
 		#create timestamps, keep track of user
 		print "saving..."
 		super(Study,self).save()
+		
+	def users(self):
+		"""docstring for users"""
+		return [x.user for x in StudyUser.objects.filter(study=self)]
 	
 	def __unicode__(self):
 		return u'%s - %s' % (self.name, self.start_date)
@@ -34,8 +38,10 @@ class StudyUser(models.Model):
 		#create timestamps, keep track of user
 		print "saving..."
 		super(StudyUser,self).save()
-
+		
+		
 	def __unicode__(self):
 		return unicode(self.study.name)
+		
 
 # Create your models here.
