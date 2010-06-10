@@ -1,4 +1,12 @@
 # Django settings for portal project.
+import os
+
+ROOT_PATH = os.path.dirname(__file__)
+
+try:
+    from local_settings import *
+except ImportError:
+    print u'File settings_local.py is not found. Continuing with production settings.'
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -9,12 +17,6 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASE_ENGINE = ''           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = ''             # Or path to database file if using sqlite3.
-DATABASE_USER = ''             # Not used with sqlite3.
-DATABASE_PASSWORD = ''         # Not used with sqlite3.
-DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
-DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -47,8 +49,7 @@ MEDIA_URL = ''
 # Examples: "http://foo.com/media/", "/media/".
 ADMIN_MEDIA_PREFIX = '/media/'
 
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = '4=ic*0&yk7rh@zyxbrq*-+&i9tqj16j%m4@0sbwe%plxw(%%3b'
+
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
