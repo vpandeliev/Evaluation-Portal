@@ -6,14 +6,14 @@ class Study(models.Model):
 
 	name = models.CharField('Study Name', max_length=300)
 	description = models.CharField('Study Description', max_length=3000)
-	start_date = models.DateTimeField('Starting Date')
-	end_date = models.DateTimeField('End Date')
+	start_date = models.DateField('Starting Date')
+	end_date = models.DateField('End Date')
 	started =  models.BooleanField('Started')
 	
-	def save(self):
+	def save(self, *args, **kwargs):
 		#create timestamps, keep track of user
-		print "saving..."
-		super(Study,self).save()
+		#print "saving..."
+		super(Study, self).save(*args, **kwargs) 
 		
 	def users(self):
 		"""docstring for users"""
