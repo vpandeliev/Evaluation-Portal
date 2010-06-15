@@ -25,6 +25,16 @@ class Study(models.Model):
 	
 	def __unicode__(self):
 		return u'%s - %s' % (self.name, self.start_date)
+		
+	# def __dict__(self):
+	# 	"""docstring for __dict__"""
+	# 	return {
+	# 		'name': self.name,
+	# 		'description': self.description,
+	# 		'start_date': self.start_date,
+	# 		'end_date': self.end_date,
+	# 		'started': self.started,
+	# 	}
 
 
 class StudyUser(models.Model):

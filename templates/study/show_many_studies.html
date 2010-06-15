@@ -2,9 +2,12 @@
 
 {% block content %}
 	<h1>Studies</h1>
+	<a href="{% url create_one_study %}">Create New Study</a>
  	<ul>
 		{% for study in studies %}
-			<li><a href="{% url show_one_study study.id%}">{{study}}</a></li>
+			<li><a href="{% url show_one_study study.id%}">{{study}}</a>
+				 (<a href="{% url edit_one_study study.id %}">edit</a> |
+				  <a href="{% url remove_one_study study.id %}" onclick="confirm('Are you sure?')">Delete</a>)</li>
 		{% endfor %}
 	</ul>
 {% endblock %}
