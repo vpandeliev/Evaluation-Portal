@@ -4,7 +4,7 @@
 	<h1>Studies</h1>
  	<ul>
 		{% for study in studies %}
-			<li>{{study}}</li>
+			<li><a href="{% url show_one_study study.id%}">{{study}}</a></li>
 		{% endfor %}
 	</ul>
 {% endblock %}

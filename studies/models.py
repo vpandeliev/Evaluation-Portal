@@ -6,15 +6,19 @@ class Study(models.Model):
 
 	name = models.CharField('Study Name', max_length=300)
 	description = models.CharField('Study Description', max_length=3000)
-	start_date = models.DateField('Starting Date')
-	end_date = models.DateField('End Date')
-	started =  models.BooleanField('Started')
+	start_date = models.DateField('Starting Date', blank=True, null=True)
+	end_date = models.DateField('End Date', blank=True, null=True)
+	started =  models.BooleanField('Started', default=False)
 	
-	def save(self, *args, **kwargs):
+	def save(self, *args,**kwargs):
 		#create timestamps, keep track of user
-		#print "saving..."
+		#print "saving..."		
 		super(Study, self).save(*args, **kwargs) 
 		
+	def create_study_user(self, current_user):
+		"""docstring for create_study_user"""
+		StudyUser(study=self,user=current_user,role=1).save()
+
 	def users(self):
 		"""docstring for users"""
 		return [x.user for x in StudyUser.objects.filter(study=self)]
@@ -30,8 +34,8 @@ class StudyUser(models.Model):
 	CHOICES = ((1, 'Investigator'),(0, 'Participant'))
 	role = models.IntegerField("Role", max_length=1, choices=CHOICES)
 	#current_condition = models.ForiengKey(Condition)
-	deadline = models.DateTimeField('Deadline')
-	next_meeting = models.DateTimeField('Next Meeting')
+	deadline = models.DateTimeField('Deadline', blank=True, null=True)
+	next_meeting = models.DateTimeField('Next Meeting', blank=True, null=True)
 
 
 	def save(self):
