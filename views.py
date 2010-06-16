@@ -20,19 +20,28 @@ def register(request):
 			return render_to_response("registration/register.html", {
 			'form': form,
 			})
+	else:
+		form = UserCreationForm()
+		return render_to_response("registration/register.html", {
+		'form': form,
+		})
 
 def login(request):
-	username = request.POST.get('username', '')
-	password = request.POST.get('password', '')
-	user = auth.authenticate(username=username, password=password)
-	if user is not None and user.is_active:
-		# Correct password, and the user is marked "active"
-		auth.login(request, user)
-		# Redirect to a success page.
-		return HttpResponseRedirect("/study/")
+	errors = False
+	if request.method == 'POST':
+		username = request.POST.get('username', '')
+		password = request.POST.get('password', '')
+		user = auth.authenticate(username=username, password=password)
+		if user is not None and user.is_active:
+			# Correct password, and the user is marked "active"
+			auth.login(request, user)
+			# Redirect to a success page.
+			return HttpResponseRedirect("/study/")
+		else:
+			errors = True
+			return render_to_response("registration/login.html", locals())
 	else:
-		# Show an error page
-		return HttpResponseRedirect("/account/invalid/")
+			return render_to_response("registration/login.html", locals())
 
 def logout(request):
 	auth.logout(request)
