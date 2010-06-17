@@ -5,7 +5,7 @@ from django.contrib import admin
 admin.autodiscover()
 from portal.studies.views import *
 from portal.views import *
-from django.contrib.auth.views import login, logout
+#from django.contrib.auth.views import login, logout
 
 urlpatterns = patterns('',
 	url(r'^$', 'portal.views.home', name="home"),
