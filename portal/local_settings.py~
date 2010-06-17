@@ -1,0 +1,7 @@
+DATABASE_ENGINE = 'postgresql_psycopg2'
+DATABASE_NAME = 'portal'
+DATABASE_USER = 'portal'
+DATABASE_PASSWORD = 'evalon'
+
+ROOT_PATH = '/home/Evaluation-Portal'
+

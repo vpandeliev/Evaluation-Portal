@@ -3,17 +3,17 @@ from django.conf import settings
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
-from views import *
-#from django.contrib.auth.views import login, logout
+from portal.studies.views import *
+from portal.views import *
+from django.contrib.auth.views import login, logout
 
 urlpatterns = patterns('',
-	url(r'^$', home, name="home"),
+	url(r'^$', 'portal.views.home', name="home"),
 	(r'^admin/', include(admin.site.urls)),
-	(r'^study/',include('studies.urls')),
+	(r'^study/',include('portal.studies.urls')),
 	url(r'^accounts/login/$',  login, name="login"),
 	url(r'^accounts/logout/$', logout, name="logout"),
 	url(r'^accounts/register/$', register, name="register"),
-	
 )
 
 if settings.DEBUG:

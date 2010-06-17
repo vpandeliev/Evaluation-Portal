@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import *
-from studies.views import *
+from portal.studies.views import *
 
 urlpatterns = patterns('',
 

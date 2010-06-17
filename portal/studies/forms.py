@@ -1,5 +1,5 @@
 from django import forms
-from studies.models import Study
+from portal.studies.models import Study
 from django.contrib.admin import widgets
 	
 class NewStudyForm(forms.ModelForm):
