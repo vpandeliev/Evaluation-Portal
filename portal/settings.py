@@ -3,11 +3,6 @@ import os
 
 ROOT_PATH = os.path.dirname(__file__)
 
-try:
-    from local_settings import *
-except ImportError:
-    print u'File settings_local.py is not found. Continuing with production settings.'
-
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -16,7 +11,6 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
-
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -34,22 +28,6 @@ SITE_ID = 1
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
 USE_I18N = True
-
-# Absolute path to the directory that holds media.
-# Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = os.path.join(ROOT_PATH, 'media')
-
-
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash if there is a path component (optional in other cases).
-# Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = 'http://127.0.0.1:8000/media/'
-
-# URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
-# trailing slash.
-# Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/amedia/'
-
 
 
 # List of callables that know how to import templates from various sources.
@@ -73,13 +51,6 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'portal.urls'
 
-TEMPLATE_DIRS = (
-	os.path.join(ROOT_PATH, 'templates'),
-	os.path.join(ROOT_PATH, 'templates/study')
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-)
 
 INSTALLED_APPS = (
 	'django.contrib.admin',
@@ -88,4 +59,28 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
 		'portal.studies'
+)
+
+
+try:
+    from local_settings import *
+except ImportError:
+    print u'File settings_local.py is not found. Continuing with production settings.'
+
+
+# Absolute path to the directory that holds media.
+# Example: "/home/media/media.lawrence.com/"
+MEDIA_ROOT = os.path.join(ROOT_PATH, 'media')
+
+# URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
+# trailing slash.
+# Examples: "http://foo.com/media/", "/media/".
+ADMIN_MEDIA_PREFIX = 'http://admin.kmdi.utoronto.ca/django_admin_media/'
+
+TEMPLATE_DIRS = (
+	os.path.join(ROOT_PATH, 'templates'),
+	os.path.join(ROOT_PATH, 'templates/study')
+    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
 )
