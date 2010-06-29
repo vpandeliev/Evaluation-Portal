@@ -66,7 +66,7 @@ INSTALLED_APPS = (
 try:
     from local_settings import *
 except ImportError:
-    print u'File settings_local.py is not found. Continuing with production settings.'
+    print u'File local_settings.py is not found. Continuing with production settings.'
 
 
 # Absolute path to the directory that holds media.

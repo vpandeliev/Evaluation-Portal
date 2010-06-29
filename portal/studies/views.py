@@ -1,10 +1,13 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+import hashlib
 
 from django.http import HttpResponseRedirect
 from models import *
-from forms import NewStudyForm
+from forms import *
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+
 #from blank import Blank
 
 
@@ -26,7 +29,7 @@ def show_one_study(request,study_id):
 	
 @login_required
 def show_users_in_study(request,study_id):
-	users = Study.objects.filter(id=study_id).users()
+	users = Study.objects.get(id=study_id).users()
 	return render_to_response('show_users.html', locals(), context_instance=RequestContext(request))
 
 @login_required
@@ -43,7 +46,7 @@ def create_one_study(request):
 				started=cd['started'],
 				description=cd['description'])
 			s.create_study_user(request.user)
-			return HttpResponseRedirect('/study/')
+			return HttpResponseRedirect('/study/'+str(s.id))
 	else:
 		#study = Blank()
 		form = NewStudyForm()
@@ -68,6 +71,50 @@ def remove_one_study(request,study_id):
 	s.delete()
 	return HttpResponseRedirect('/study/')
 	
+@login_required
+def add_participant_to_study(request,study_id):
+	"""docstring for add_participant_to_study"""
+	if request.method == 'POST':
+		newuser = False
+		form = AddParticipantForm(request.POST)
+		if form.is_valid():
+			cd = form.cleaned_data
+			study = Study.objects.get(id=study_id)
+			query = cd['email']
+			user = User.objects.filter(email=query)
+			
+			if len(user) == 0:
+				newuser = True
+				pwd = hashlib.new('ripemd160')
+				pwd.update(cd['email'])
+				pwd = pwd.hexdigest()[:10]
+				user = User.objects.create_user(username=cd['email'],email=cd['email'],password=pwd)
+				user.message_set.create(message=pwd)
+			else:
+				user = user[0]
+			study.create_study_user(user)
+			return HttpResponseRedirect('/study/added_to_study/'+ str(user.id)+"/"+str(study.id))
+		else:
+			return render_to_response('add_participant_to_study.html',locals(), context_instance=RequestContext(request))
+	else: #render the form
+		study = Study.objects.get(id=study_id)
+		form = AddParticipantForm()
+		return render_to_response('add_participant_to_study.html',locals(), context_instance=RequestContext(request))
+
+@login_required
+def added_to_study(request, study_id, user_id):
+	"""docstring for added_to_study"""
+	useradded = User.objects.get(id=user_id)
+	study = Study.objects.get(id=study_id)
+
+	message = useradded.get_and_delete_messages()
+	if len(message) == 0 :
+		message = None
+	else:
+		message = message[0]
+	new = not (message is None)
+	return render_to_response('added_to_study.html',locals(), context_instance=RequestContext(request))
+
 ############### StudyUser
 
 def invite_user(request,study_id):
