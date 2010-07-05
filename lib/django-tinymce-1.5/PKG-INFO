@@ -1,0 +1,32 @@
+Metadata-Version: 1.0
+Name: django-tinymce
+Version: 1.5
+Summary: A Django application that contains a widget to render a form field as a TinyMCE editor.
+Home-page: http://code.google.com/p/django-tinymce/
+Author: Joost Cassee
+Author-email: joost@cassee.net
+License: MIT License
+Download-URL: http://code.google.com/p/django-tinymce/downloads/list
+Description: 
+        Use the TinyMCE editor for your form textareas.
+        
+        Features:
+        
+        * Use as a form widget or with a view.
+        * Enhanced support for content languages.
+        * Integration with the TinyMCE spellchecker.
+        * Enables predefined link and image lists for dialogs.
+        * Can compress the TinyMCE javascript files.
+        * Integration with django-filebrowser.
+        
+Keywords: django widget tinymce
+Platform: any
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: Web Environment
+Classifier: Framework :: Django
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development :: Libraries :: Application Frameworks
+Classifier: Topic :: Software Development :: Libraries :: Python Modules

@@ -1,8 +1,8 @@
 # Django settings for portal project.
 import os
-
+import sys
 ROOT_PATH = os.path.dirname(__file__)
-
+sys.path.insert(0, os.path.join(ROOT_PATH, "../lib"))
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -17,7 +17,9 @@ MANAGERS = ADMINS
 # although not all choices may be available on all operating systems.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'America/Toronto'
+
+
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -47,7 +49,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-	'lockdown.middleware.LockdownMiddleware'
+		'django.middleware.doc.XViewMiddleware',
+	'lockdown.middleware.LockdownMiddleware',
 )
 
 
@@ -59,7 +62,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
 		'portal.studies',
-	'lockdown'
+			'tinymce',
+	'lockdown',
 )
 
 
@@ -85,5 +89,28 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
+
+
+MEDIA_URL = os.path.join(ROOT_PATH, 'media/')
+
+TINYMCE_DEFAULT_CONFIG = {
+    'plugins': "paste,searchreplace",
+    'theme': "advanced",
+    'cleanup_on_startup': True,
+    'custom_undo_redo_levels': 10,
+		'theme_advanced_buttons1' : "bold,italic,underline,strikethrough,|,justifyleft,justifyfull,|cut,copy,paste,pastetext,|,undo,redo,|,link,unlink,anchor,image,search,replace,|,bullist,numlist,|,cleanup,help,code,|,insertdate,inserttime,preview",
+		'theme_advanced_buttons2' : "",
+		'theme_advanced_buttons3': '',
+		'theme_advanced_toolbar_location' : "top",
+		'theme_advanced_toolbar_align' : "left",
+		'theme_advanced_statusbar_location' : "bottom",
+		'theme_advanced_resizing' : 'True',
+}
+
+JS_URL = '%sjs/tiny_mce/tiny_mce.js' % MEDIA_URL
+print JS_URL
+JS_ROOT = os.path.join(MEDIA_ROOT, 'js/tiny_mce')
+print JS_ROOT
+#JS_BASE_URL = JS_URL[:JS_URL.rfind('/')]
 
 ROOT_URLCONF = 'portal.urls'

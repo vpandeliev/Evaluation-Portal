@@ -14,6 +14,8 @@ urlpatterns = patterns('',
 	url(r'^accounts/login/$',  login, name="login"),
 	url(r'^accounts/logout/$', logout, name="logout"),
 	url(r'^accounts/register/$', register, name="register"),
+	(r'^tinymce/', include('tinymce.urls')),
+	
 )
 
 if settings.DEBUG:

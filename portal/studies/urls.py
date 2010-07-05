@@ -11,6 +11,7 @@ urlpatterns = patterns('',
 	url(r'^add_part/(\d+)', add_participant_to_study, name="add_participant_to_study"),
 	url(r'^added_to_study/(\d+)/(\d+)/', added_to_study, name="added_to_study"),
 	url(r'^(\d+)/users/', show_users_in_study, name="show_users_in_study"),
+	(r'^tinymce/', include('tinymce.urls')),
 
   
 )
