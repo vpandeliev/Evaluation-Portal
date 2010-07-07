@@ -4,12 +4,56 @@
 	<h1>Studies</h1>
 	<a href="{% url create_one_study %}">Create New Study</a>
  	<ul>
-		{% for study in studies %}
-			<li><a href="{% url show_one_study study.id%}">{{study}}</a>
-				 (<a href="{% url add_participant_to_study study.id %}">add participant</a> | 
-				<a href="{% url show_users_in_study study.id %}">add participant</a> | 
-				<a href="{% url edit_one_study study.id %}">edit</a> |<a href="{% url edit_one_study study.id %}">edit</a> |
-				  <a href="{% url remove_one_study study.id %}" onclick="confirm('Are you sure?')">Delete</a>)</li>
+		{% for study_user in study_users %}
+      {% ifequal study_user.role 1 %}
+        {% comment %} user is an investigator for current study {% endcomment %}
+          <li>
+            <div class="study_header">
+              {{ study_user.study.name }}
+              <span class="study_status">Status</span>
+            </div>
+            <ul class="study_stages">
+              {% for stage in study_user.study.stages %}
+                <li>{{stage.name}}</li>
+              {% endfor %}
+            </ul>
+            <a href="" class="button">Export Data</a>
+            <a href="" class="button">Message Center</a>
+            <a href="{% url show_one_study study_user.study.id%}" class="button"> Study Home</a>
+          </li>
+      {% else %}
+        {% comment %} user is a participant for current study {% endcomment %}
+          <li>
+            <div class="study_header">
+              {{ study_user.study.name }}
+              <span class="study_status">Status</span>
+            </div>
+            <div class="study_next">
+              <span class="next">NEXT:</span> Stage info!
+            </div>
+            <div class="study_do_this">
+              Do this before....
+            </div>
+            <a href="" class="button">Act</a>
+            <div class="study_footer">
+              <a href="/feedback" class="button">Feedback</a>
+              <a href="{% url show_one_study study_user.study.id%}" class="button"> Study Home</a>
+            </div>
+            
+          </li>
+      {% endifequal %}
+
+
 		{% endfor %}
 	</ul>
 {% endblock %}
+
+
+{% comment %}
+keeping this here for reference
+			<li><a href="{% url show_one_study study.id%}">{{study}}</a>
+				 (<a href="{% url add_participant_to_study study.id %}">add participant</a> | 
+				<a href="{% url show_users_in_study study.id %}">add participant</a> | 
+				<a href="{% url edit_one_study study.id %}">edit</a> |<a href="{% url edit_one_study study.id %}">edit</a>
+{% endcomment%} |
+				  <a href="{% url remove_one_study study.id %}" onclick="confirm('Are you sure?')">Delete</a>)</li>
