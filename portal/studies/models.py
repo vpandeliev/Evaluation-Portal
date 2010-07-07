@@ -32,13 +32,19 @@ class Study(models.Model):
 	def users_in_stage(self, stage):
 		"""docstring for users"""
 		return [x.user for x in StudyUser.objects.filter(current_stage=stage)]
+
 	
 	def number_users_in_stage(self, stage):
 		"""docstring for number_users_in_stage"""
 		return len(users_in_stage(stage))
 			
+
+	def stages(self):
+		return Stage.objects.filter(study=self)
+
 	def __unicode__(self):
 		return u'%s' % (self.name)
+
 		
 	# def __dict__(self):
 	# 	"""docstring for __dict__"""
@@ -94,6 +100,7 @@ class Stage(models.Model):
 		return unicode(self.name)		
 	
 	
+
 	
 class StageGroup(models.Model):
 	group = models.ForeignKey(Group)
