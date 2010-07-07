@@ -16,12 +16,14 @@ class Study(models.Model):
 	
 	def save(self, *args,**kwargs):
 		#create timestamps, keep track of user
-		#print "saving..."		
+		#print "saving..."
+		if not Group.objects.get(name="Investigator", study=self):
+			Group.objects.create(name="Investigator", study=self)
 		super(Study, self).save(*args, **kwargs) 
 		
 	def create_study_user(self, current_user):
 		"""docstring for create_study_user"""
-		StudyUser(study=self,user=current_user,role=1).save()
+		StudyUser(study=self,user=current_user,role=1, group=Group.objects.filter(name="Investigator", study=self)).save()
 
 	def users(self):
 		"""docstring for users"""
@@ -36,7 +38,7 @@ class Study(models.Model):
 		return len(users_in_stage(stage))
 			
 	def __unicode__(self):
-		return u'%s - %s' % (self.name, self.start_date)
+		return u'%s' % (self.name)
 		
 	# def __dict__(self):
 	# 	"""docstring for __dict__"""
@@ -51,7 +53,9 @@ class Study(models.Model):
 class Group(models.Model):
 	name = models.CharField('Group Name', max_length=300)
 	study = models.ForeignKey(Study)
-		
+	
+	def __unicode__(self):
+		return u'%s - %s' % (self.study, self.name)		
 		
 class StudyUser(models.Model):
 	study = models.ForeignKey(Study)
@@ -73,17 +77,21 @@ class StudyUser(models.Model):
 		
 		
 	def __unicode__(self):
-		return unicode(self.study.name)
-		
+		return u'%s - %s(%s)' % (self.user,self.study, self.role)		
 
 
 		
 class Stage(models.Model):
+	name = models.CharField('Stage Name', max_length=300)
 	study = models.ForeignKey(Study)
 	sessions = models.IntegerField('Number of sessions')
 	deadline = models.IntegerField('Time to finish session (in days)')
 	url = models.URLField('Stage URL')
 	description = tinymce_models.HTMLField('Stage Description')
+	instructions = tinymce_models.HTMLField('Stage Instructions')
+
+	def __unicode__(self):
+		return unicode(self.name)		
 	
 	
 	
@@ -92,4 +100,6 @@ class StageGroup(models.Model):
 	stage = models.ForeignKey(Stage)
 	order = models.IntegerField()
 
-# Create your models here.
+	def __unicode__(self):
+		return u'%s - %s (%s)' % (self.stage, self.group, self.order)
+
