@@ -74,7 +74,10 @@ class StudyUser(models.Model):
 		#create timestamps, keep track of user modifying, etc.
 		print "saving..."
 		super(StudyUser,self).save()
-		
+	def getstage(self):
+		#get the current stage object
+		currstage = StageGroup.objects.get(group=self.group, order=self.current_stage).stage
+		return currstage
 		
 	def __unicode__(self):
 		return u'%s - %s(%s)' % (self.user,self.study, self.role)		
