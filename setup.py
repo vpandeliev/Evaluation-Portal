@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+#comment ADDED! testing forking etc.
 from distutils.core import setup
 
 setup(
