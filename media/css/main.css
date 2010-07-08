@@ -1,11 +1,137 @@
 body {
-	text-align: center;
+  text-align: center;
 }
 
-#outer{
-	margin:auto;
-	text-align: left;
-	width: 1000px;
-	border: 1px solid black;
-	padding: 4px;
+a:visited{
+  color: blue;
+}
+.red {color: red;}
+.green {color:green;}
+
+.button{
+  border: 1px solid #ccc;
+  padding: 4px 6px;
+  margin: 0 0 0 2px;
+  text-decoration: none;
+  color: black;
+ background: -webkit-gradient(linear, left top, left bottom, from(#dddddd), to(#cccccc) );
+   background: -moz-linear-gradient(top,  #dddddd, #cccccc);
+   -webkit-border-radius: 2px;
+   -moz-border-radius: 2px;
+}
+
+.button:visited{
+  color: black;
+}
+
+#left_button{
+  background: url("img/left.png") no-repeat;
+  border: none;
+  height: 44px;
+  width: 50px;
+}
+
+#right_button{
+  background: url("img/right.png") no-repeat 0 2px;
+  border: none;
+  height: 40px;
+  width: 50px;
+}
+
+#outer {
+  margin: auto;
+  text-align: left;
+  width: 1024px;
+}
+
+#login_menu{
+  text-align: right;
+
+}
+
+#header {
+  text-align: center;
+  font-size: 160%;
+}
+
+#stages_nav{
+  text-align: center;
+}
+
+#stages_nav ul{
+  margin: auto;
+  height: 80px;
+  position: relative;
+  top: 20px;
+  padding: 0;
+
+}
+
+.not_active{
+  display: inline;
+  border: 1px solid white;
+  padding: 15px 5px;
+}
+
+.active {
+  display: inline;
+  border: 1px solid black;
+  padding: 15px 5px;
+  background: #FFFC00;
+}
+
+/*link within list item*/
+.stage_box{
+  padding: 10px 15px;
+  border: 1px solid black;
+  background: white;
+  text-decoration: none;
+}
+
+.clear {
+  clear:both;
+}
+
+
+#stage_info{
+  border: 1px solid black;
+  padding: 5px;
+
+}
+
+.stage_header a{
+  float: right;
+  margin-left: 10px;
+}
+
+.table_wrapper table{
+  width: 100%;
+}
+
+.table_wrapper th {
+  text-align: left;
+  text-decoration: underline;
+}
+
+.table_wrapper td {
+  padding: 5px 0;
+}
+
+#study_manage a {
+  float: right;
+  margin-top: 10px;
+ margin-left: 10px;
+
+}
+
+.stage_label{
+  margin-top: 10px;
+}
+
+#study_manage {
+
+  margin-bottom: 10px;
+}
+#study_details{
+  border: 1px solid black;
 }
