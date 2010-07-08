@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from tinymce import models as tinymce_models
+import datetime
 
 class Study(models.Model):
 
@@ -33,14 +34,14 @@ class Study(models.Model):
 		"""docstring for users"""
 		return [x.user for x in StudyUser.objects.filter(current_stage=stage)]
 
+	def getstudyuser(self, user):
+		return StudyUser.objects.get(study=self, user=user)
 	
 	def number_users_in_stage(self, stage):
 		"""docstring for number_users_in_stage"""
 		return len(users_in_stage(stage))
 			
 
-	def stages(self):
-		return Stage.objects.filter(study=self)
 
 	def __unicode__(self):
 		return u'%s' % (self.name)
@@ -62,6 +63,9 @@ class Group(models.Model):
 	
 	def __unicode__(self):
 		return u'%s - %s' % (self.study, self.name)		
+
+#	def stages(self):
+#		return [x.stage for x in StageGroup.objects.filter(group=self).order_by('order')]
 		
 class StudyUser(models.Model):
 	study = models.ForeignKey(Study)
@@ -76,14 +80,30 @@ class StudyUser(models.Model):
 	current_session = models.IntegerField('Current Session', default=1)
 	last_action = models.DateTimeField('Last Session Completed')
 
+	def stages(self):
+		return [x.stage for x in StageGroup.objects.filter(group=self.group).order_by('order')]
+
+	def totalstages(self):
+		return StageGroup.objects.filter(group=self.group).count()
+		
 	def save(self):
 		#create timestamps, keep track of user modifying, etc.
 		print "saving..."
 		super(StudyUser,self).save()
-	def getstage(self):
+	
+	def currentstage(self):
 		#get the current stage object
 		currstage = StageGroup.objects.get(group=self.group, order=self.current_stage).stage
 		return currstage
+
+	def deadline(self):
+		ahead = datetime.timedelta(days=currentstage().deadline)
+		return self.last_action + ahead
+		
+	def overdue(self):
+		if datetime.datetime.now() > deadline():
+			return true
+		return false
 		
 	def __unicode__(self):
 		return u'%s - %s(%s)' % (self.user,self.study, self.role)		

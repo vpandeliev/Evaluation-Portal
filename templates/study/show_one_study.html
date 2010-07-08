@@ -2,9 +2,53 @@
 
 {% block content %}
 	<h1>{{study.name}}</h1>
+	
+{% ifequal study_user.role 0 %}
+	<!--stage menu-->
+	{% for stage in stages %}
+		<p> {{stage.name}} 
+		{% ifequal stage study_user.currentstage %}
+		- ACTIVE
+		{% endifequal %}
+		</p>
+	{% endfor %}
+
+	<!--stage block-->
+	{% for stage in stages %}
+		<p> {{stage.name}} 
+		{% ifequal stage study_user.currentstage %}
+	<!--make visible-->
+		{% endifequal %}
+		</p>
+	<!--bits that go into the stage block-->
+		{{stage.name}}
+		{{stage.description}}
+
+		{{study_user.current_session}}/{{stage.sessions}}
+		{%if stage.overdue%}
+			You're overdue!! Bad you!
+		{% else %}
+			Complete by: {{stage.deadline}}
+		{% endif %}
+		<a href="{stage.url}">ACT</a>
+		{{stage.instructions}}
+
+	{% endfor %}
+
+	//accordion menu for study details - description, informed consent, all that sh*t
+	<p>{{study.description}}</p>
+	<p>{{study.consent}}</p>
+	<p>{{study.instructions}}</p>
+	<p>{{study.eligibility}}</p>
+	<p>{{study.reward}}</p>
+{% else %}
+	<!--investigator side
 	<p>(<a href="{% url add_participant_to_study study.id %}">add participant</a> | 
 	<a href="{% url show_users_in_study study.id %}">show users</a> | 
 	<a href="{% url edit_one_study study.id %}">edit</a> |<a href="{% url edit_one_study study.id %}">edit</a> |
-	  <a href="{% url remove_one_study study.id %}" onclick="confirm('Are you sure?')">Delete</a>)</p>
-	<p>{{study.description}}</p>
+	<a href="{% url remove_one_study study.id %}" onclick="confirm('Are you sure?')">Delete</a>)</p>
+-->
+
+{% endif %}
+
 {% endblock %}

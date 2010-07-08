@@ -13,7 +13,7 @@
               <span class="study_status">Status</span>
             </div>
             <ul class="study_stages">
-              {% for stage in study_user.study.stages %}
+              {% for stage in study_user.group.stages %}
                 <li>{{stage.name}}</li>
               {% endfor %}
             </ul>
@@ -26,7 +26,11 @@
           <li>
             <div class="study_header">
               {{ study_user.study.name }}
-              <span class="study_status">Status</span>
+              <span class="study_status">
+		{% if study_user.overdue%}
+		
+		{%endif%}
+	Status</span>
             </div>
             <div class="study_next">
               <span class="next">NEXT:</span> Stage info!
