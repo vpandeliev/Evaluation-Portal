@@ -91,13 +91,13 @@ class StudyUser(models.Model):
 		print "saving..."
 		super(StudyUser,self).save()
 	
-	def currentstage(self):
+	def getcurrentstagenum(self):
 		#get the current stage object
-		currstage = StageGroup.objects.get(group=self.group, order=self.current_stage).stage
-		return currstage
+		currstage = StageGroup.objects.get(group=self.group, order=self.current_stage)
+		return currstage.order
 
 	def deadline(self):
-		ahead = datetime.timedelta(days=currentstage().deadline)
+		ahead = datetime.timedelta(days=getcurrentstage().deadline)
 		return self.last_action + ahead
 		
 	def overdue(self):
@@ -121,7 +121,6 @@ class Stage(models.Model):
 
 	def __unicode__(self):
 		return unicode(self.name)		
-	
 	
 
 	

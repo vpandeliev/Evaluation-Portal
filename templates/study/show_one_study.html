@@ -7,9 +7,17 @@
 	<!--stage menu-->
 	{% for stage in stages %}
 		<p> {{stage.name}} 
-		{% ifequal stage study_user.currentstage %}
-		- ACTIVE
-		{% endifequal %}
+		{% if forloop.counter > study_user.current_stage  %}
+		FUTURE
+		{% else %}
+		
+			{% ifequal stage study_user.getcurrentstage %}
+			CURRENT
+			{% else %}
+			PAST
+			{% endifequal %}
+		{% endif %}
+		
 		</p>
 	{% endfor %}
 
@@ -23,7 +31,7 @@
 	<!--bits that go into the stage block-->
 		{{stage.name}}
 		{{stage.description}}
-
+		{{forloop.counter}}/{{study_user.totalstages}}
 		{{study_user.current_session}}/{{stage.sessions}}
 		{%if stage.overdue%}
 			You're overdue!! Bad you!
