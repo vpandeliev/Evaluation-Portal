@@ -18,9 +18,10 @@ class Study(models.Model):
 	def save(self, *args,**kwargs):
 		#create timestamps, keep track of user
 		#print "saving..."
-		if not Group.objects.get(name="Investigator", study=self):
-			Group.objects.create(name="Investigator", study=self)
 		super(Study, self).save(*args, **kwargs) 
+		if Group.objects.filter(name="Investigator", study=self).count() == 0:
+			Group.objects.create(name="Investigator", study_id=self.id)
+		
 		
 	def create_study_user(self, current_user):
 		"""docstring for create_study_user"""
@@ -95,13 +96,17 @@ class StudyUser(models.Model):
 		#get the current stage object
 		currstage = StageGroup.objects.get(group=self.group, order=self.current_stage)
 		return currstage.order
-
-	def deadline(self):
-		ahead = datetime.timedelta(days=getcurrentstage().deadline)
+	def getcurrentstage(self):
+		#get the current stage object
+		currstage = StageGroup.objects.get(group=self.group, order=self.current_stage).stage
+		return currstage
+	def nextdeadline(self):
+		ahead = datetime.timedelta(days=self.getcurrentstage().deadline)
+		print self.last_action + ahead
 		return self.last_action + ahead
 		
 	def overdue(self):
-		if datetime.datetime.now() > deadline():
+		if datetime.datetime.now() > self.deadline():
 			return true
 		return false
 		

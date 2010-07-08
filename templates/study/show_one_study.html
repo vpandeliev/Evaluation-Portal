@@ -40,7 +40,7 @@
         {%if stage.overdue%}
 			    You're overdue!! Bad you!
 		    {% else %}
-			    Complete by: {{stage.deadline}}
+			    Complete by: {{study_user.nextdeadline|date:"d M Y"}}
 		  {% endif %}
       </div>
       <p>
@@ -60,7 +60,7 @@
 	<a href="{% url remove_one_study study.id %}" onclick="confirm('Are you sure?')">Delete</a>)</p>
 -->
 
-{% endif %}
+{% endifequal %}
 
 <div id="study_manage">
   <button id="left_button"></button>

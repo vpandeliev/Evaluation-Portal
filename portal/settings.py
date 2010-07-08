@@ -1,7 +1,11 @@
 # Django settings for portal project.
 import os
 import sys
+<<<<<<< HEAD
 ROOT_PATH = os.path.dirname(__file__)
+=======
+ROOT_PATH =  os.path.dirname(__file__)
+>>>>>>> d70158115b517f40f0d70b6167d88947e9bb1cb8
 sys.path.insert(0, os.path.join(ROOT_PATH, "../lib"))
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
