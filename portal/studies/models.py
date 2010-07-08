@@ -100,8 +100,9 @@ class StudyUser(models.Model):
 		#get the current stage object
 		currstage = StageGroup.objects.get(group=self.group, order=self.current_stage).stage
 		return currstage
-	def deadline(self):
+	def nextdeadline(self):
 		ahead = datetime.timedelta(days=self.getcurrentstage().deadline)
+		print self.last_action + ahead
 		return self.last_action + ahead
 		
 	def overdue(self):
