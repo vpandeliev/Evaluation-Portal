@@ -16,15 +16,18 @@ from django.contrib.auth.models import User
 @login_required
 def show_many_studies(request):
 	if StudyUser.objects.count > 0:
-		studies = [x.study for x in StudyUser.objects.filter(user=request.user)]
+		#studies = [x.study for x in StudyUser.objects.filter(user=request.user)]
+		study_users = StudyUser.objects.filter(user=request.user)
 	else:
-		studies = []
+		study_users = []
 		
 	return render_to_response('show_many_studies.html', locals(), context_instance=RequestContext(request))
 
 @login_required
 def show_one_study(request,study_id):
 	study = Study.objects.get(id=study_id)
+	study_user = study.getstudyuser(request.user)
+	stages = study_user.stages
 	return render_to_response('show_one_study.html',locals(), context_instance=RequestContext(request))
 	
 @login_required
