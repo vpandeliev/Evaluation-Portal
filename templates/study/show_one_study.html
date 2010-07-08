@@ -2,53 +2,56 @@
 
 {% block content %}
 	<h1>{{study.name}}</h1>
+
 	
 {% ifequal study_user.role 0 %}
-	<!--stage menu-->
-	{% for stage in stages %}
-		<p> {{stage.name}} 
-		{% if forloop.counter > study_user.current_stage  %}
-		FUTURE
-		{% else %}
-		
-			{% ifequal stage study_user.getcurrentstage %}
-			CURRENT
-			{% else %}
-			PAST
-			{% endifequal %}
-		{% endif %}
-		
-		</p>
-	{% endfor %}
-
+  <!--stage menu-->
+  <div id="stages_nav">
+    <ul>
+    {% for stage in stages %} 
+		  {% if forloop.counter > study_user.current_stage  %}
+        <li class="not_active"><a href="" id="stage_box_{{forloop.counter}}" onclick="return false;"></a></li>
+		  {% else %}
+			  {% ifequal stage study_user.getcurrentstage %}
+			    <li class="active"><a href="" id="stage_box_{{forloop.counter}}"></a></li>
+			  {% else %}
+			    <li class="active"><a href="" id="stage_box_{{forloop.counter}}"></a></li>
+			  {% endifequal %}
+		  {% endif %}
+	  {% endfor %}
+    </ul>
+  </div>
 	<!--stage block-->
-	{% for stage in stages %}
-		<p> {{stage.name}} 
-		{% ifequal stage study_user.currentstage %}
-	<!--make visible-->
-		{% endifequal %}
-		</p>
-	<!--bits that go into the stage block-->
-		{{stage.name}}
-		{{stage.description}}
-		{{forloop.counter}}/{{study_user.totalstages}}
-		{{study_user.current_session}}/{{stage.sessions}}
-		{%if stage.overdue%}
-			You're overdue!! Bad you!
-		{% else %}
-			Complete by: {{stage.deadline}}
-		{% endif %}
-		<a href="{stage.url}">ACT</a>
-		{{stage.instructions}}
+  <div id="stage_info">
+  {% for stage in stages %}
+    <div id="stage_{{forloop.counter}}" class="stage_panel">
+      <div class="stage_header">
+        <span><strong>Stage:</strong> {{stage.name}}</span>
+        <a href="" class="button" id="instruction_button_{{forloop.counter}}">Stage Instructions</a>
+        <div class="instructions" style="display:none;" id="instructions_{{forloop.counter}}">
+          {{stage.instructions}}
+        </div>
+      </div>
+      <p class="stage_description">
+        {{stage.description}}
+      </p>
+      <div class="act_container">
+        <a href="" class="button">Act</a>
+        {%if stage.overdue%}
+			    You're overdue!! Bad you!
+		    {% else %}
+			    Complete by: {{stage.deadline}}
+		  {% endif %}
+      </div>
+      <p>
+        {{forloop.counter}}/{{study_user.totalstages}}
+        {{study_user.current_session}}/{{stage.sessions}}
+      </p>
+    </div>
+  {% endfor %}
+  </div>
 
-	{% endfor %}
 
-	//accordion menu for study details - description, informed consent, all that sh*t
-	<p>{{study.description}}</p>
-	<p>{{study.consent}}</p>
-	<p>{{study.instructions}}</p>
-	<p>{{study.eligibility}}</p>
-	<p>{{study.reward}}</p>
 {% else %}
 	<!--investigator side
 	<p>(<a href="{% url add_participant_to_study study.id %}">add participant</a> | 
@@ -58,5 +61,20 @@
 -->
 
 {% endif %}
+
+<div id="study_manage">
+  <button id="left_button"></button>
+  <button id="right_button"></button>
+  <a href="" class="button">Message Center</a>
+  <a href="" class="button">Manage Users</a>
+</div>
+<div id="study_details">
+  <p>{{study.description}}</p>
+	<p>{{study.consent}}</p>
+	<p>{{study.instructions}}</p>
+	<p>{{study.eligibility}}</p>
+	<p>{{study.reward}}</p>
+</div>
+
 
 {% endblock %}

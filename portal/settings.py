@@ -1,8 +1,8 @@
 # Django settings for portal project.
 import os
 import sys
-ROOT_PATH = os.path.dirname(__file__)
-sys.path.insert(0, os.path.join(ROOT_PATH, "../lib"))
+ROOT_PATH = '/home/liam/Documents/Evaluation-Portal' #os.path.dirname(__file__)
+sys.path.insert(0, os.path.join(ROOT_PATH, "lib"))
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -114,3 +114,5 @@ print JS_ROOT
 #JS_BASE_URL = JS_URL[:JS_URL.rfind('/')]
 
 ROOT_URLCONF = 'portal.urls'
+
+
