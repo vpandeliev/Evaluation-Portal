@@ -27,7 +27,7 @@ def show_many_studies(request):
 def show_one_study(request,study_id):
 	study = Study.objects.get(id=study_id)
 	study_user = study.getstudyuser(request.user)
-	stages = study_user.stages
+	stages = study_user.stages()
 	return render_to_response('show_one_study.html',locals(), context_instance=RequestContext(request))
 	
 @login_required
