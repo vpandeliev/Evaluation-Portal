@@ -1,56 +1,56 @@
 {% extends 'base.html' %}
 
 {% block content %}
-	<h1>Studies</h1>
-	<a href="{% url create_one_study %}">Create New Study</a>
- 	<ul>
-		{% for study_inv in studies_as_investigator %}
-			        {% comment %} user is an investigator for current study {% endcomment %}
-			          <li>
-			            <div class="study_header">
-			              {{ study_inv.study.name }}
-			              <span class="study_status">Status</span>
-			            </div>
-			            <ul class="study_stages">
-						<p> Stages: </p>
-			              {% for stage in study_inv.stages %}
-							
-			                <li>{{stage.name}} - {{stage.number_of_users}}</li>
-			              {% endfor %}
-			            </ul>
-			            <a href="" class="button">Export Data</a>
-			            <a href="" class="button">Message Center</a>
-			            <a href="{% url show_one_study study_inv.study.id%}" class="button"> Study Home</a>
-			          </li>
-		{% endfor %}
-      	{% for study_user in studies_as_participant %}
-	
-        			{% comment %} user is a participant for current study {% endcomment %}
-			          <li>
-			            <div class="study_header">
-			              {{ study_user.study.name }}
-			              <span class="study_status">
-					{% if study_user.overdue%}
-		
-					{%endif%}
-				Status</span>
-			            </div>
-			            <div class="study_next">
-			              <span class="next">NEXT:</span> Stage info!
-			            </div>
-			            <div class="study_do_this">
-			              Do this before....
-			            </div>
-			            <a href="" class="button">Act</a>
-			            <div class="study_footer">
-			              <a href="/feedback" class="button">Feedback</a>
-			              <a href="{% url show_one_study study_user.study.id%}" class="button"> Study Home</a>
-			            </div>
-            
-			          </li>
-		
-		{% endfor %}
-	</ul>
+<h1>Studies</h1>
+<a href="{% url create_one_study %}">Create New Study</a>
+
+{% if studies_as_investigator %}
+<h2>Investigating</h2>
+<ul class="many_studies">
+  {% for study_inv in studies_as_investigator %}
+  <li>
+    <h3>{{ study_inv.study.name }}<span class="study_status">Status</span></h3>
+    <ul class="micro_stages">
+    {% for stage in study_inv.stages %}
+      <li>{{stage.name}} - {{stage.number_of_users}}</li>
+    {% endfor %}
+    </ul>
+    <div class="micro_study_options">
+      <a href="" class="button">Export Data</a>
+      <a href="" class="button">Message Center</a>
+      <a href="{% url show_one_study study_inv.study.id%}" class="button"> Study Home</a>
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+
+<!-- Participant -->
+{% if studies_as_participant %}
+<h2>Participating in</h2>
+<ul class="many_studies">
+  {% for study_user in studies_as_participant %}
+  <li>
+    <h3>{{ study_user.study.name }}<span class="study_status">Status</span></h3>
+    <table>
+      <tr>
+        <td><span class="next">NEXT:</span> Stage info!</td>
+        <td>Do this before....</td>
+        <td><a href="" class="button">Act</a></td>
+      </tr>
+    </table>
+    <div class="micro_study_options">
+      <a href="/feedback" class="button">Feedback</a>
+      <a href="{% url show_one_study study_user.study.id%}" class="button"> Study Home</a>
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+
+ 
 {% endblock %}
 
 

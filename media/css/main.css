@@ -171,3 +171,38 @@ a:visited{
 }
 
 
+.many_studies {
+  margin: 0px;
+  padding: 0px;
+}
+
+.many_studies table{
+  width: 100%;
+  margin: 10px 0;
+}
+
+
+.many_studies li{
+  list-style: none;
+  border: 1px solid #ccc;
+  padding: 4px;
+}
+
+.many_studies h3 {
+  margin: 5px;
+}
+
+.micro_study_options{
+  text-align: right;
+  padding: 10px 0;
+}
+
+.micro_stages{
+  text-align: center;
+  margin: 20px 0;
+}
+
+.micro_stages li{
+  display: inline;
+}
+
