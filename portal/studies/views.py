@@ -37,8 +37,8 @@ def show_one_study(request,study_id):
 		stages = studypart.participant_stages()
 		
 	elif role == 2: 
-		#investigator
-		pass
+		studyinv = study.get_study_investigator(request.user)
+
 	else: 
 		#unauthorized URL mucking about with
 		pass

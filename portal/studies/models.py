@@ -44,6 +44,10 @@ class Study(models.Model):
 
 	def get_study_participant(self, user):
 		return StudyParticipant.objects.get(study=self, user=user)
+
+	def get_study_investigator(self, user):
+		return StudyInvestigator.objects.get(study=self, user=user)
+
 #error checking?
 			
 	def __unicode__(self):

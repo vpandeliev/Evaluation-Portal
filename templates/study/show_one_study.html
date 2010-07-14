@@ -54,11 +54,10 @@
 
 
 {% else %}
- 
+{% ifequal role 2 %} 
 //actions need to be i 
 
-{% endfor %}
-
+	
 
 
 	<!--investigator side
@@ -67,9 +66,10 @@
 	<a href="{% url edit_one_study study.id %}">edit</a> |<a href="{% url edit_one_study study.id %}">edit</a> |
 	<a href="{% url remove_one_study study.id %}" onclick="confirm('Are you sure?')">Delete</a>)</p>
 -->
-
+{% else %}
+You are not authorized to view this study.
 {% endifequal %}
-
+{% endifequal %}
 <div id="study_manage">
   <button id="left_button"></button>
   <button id="right_button"></button>
