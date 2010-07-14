@@ -135,3 +135,30 @@ a:visited{
 #study_details{
   border: 1px solid black;
 }
+
+#login_outer{
+  text-align: center;
+}
+
+#login_inner {
+  margin: auto;
+  margin-top: 40px;
+  text-align: left;
+  border: 1px solid #ccc;
+  width: 300px;
+  padding: 4px;
+}
+
+#login_submit {
+  width: 150px;
+  float: right;
+  margin-top: 10px;
+}
+
+.login_input{
+  width: 292px;
+  border: 1px solid #ccc;
+  padding:3px;
+}
+
+
