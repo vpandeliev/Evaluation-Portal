@@ -200,9 +200,22 @@ a:visited{
 .micro_stages{
   text-align: center;
   margin: 20px 0;
+  height: 100px;
 }
 
-.micro_stages li{
-  display: inline;
+.micro_stages tr {
+  height: 100px;
+}
+
+.micro_stage_box{
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border: 1px solid black;
+  display:inline;
+  color: blue;
+}
+
+.micro_stage_name{
+  padding: 15px;
 }
 

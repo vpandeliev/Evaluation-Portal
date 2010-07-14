@@ -10,11 +10,21 @@
   {% for study_inv in studies_as_investigator %}
   <li>
     <h3>{{ study_inv.study.name }}<span class="study_status">Status</span></h3>
-    <ul class="micro_stages">
-    {% for stage in study_inv.stages %}
-      <li>{{stage.name}} - {{stage.number_of_users}}</li>
-    {% endfor %}
-    </ul>
+    <table class="micro_stages" cellspacing="0">
+      <tr>
+      {% for stage in study_inv.stages %}
+        <td>
+          <div class="micro_stage_box">
+            {{stage.number_of_users}}
+          </div>
+          <div class="clear"></div>
+          <div class="micro_stage_name">
+            {{stage.name}}
+          </div>
+        </td>
+      {% endfor %}
+      </tr>
+    </table>
     <div class="micro_study_options">
       <a href="" class="button">Export Data</a>
       <a href="" class="button">Message Center</a>
