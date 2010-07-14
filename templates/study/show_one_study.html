@@ -55,17 +55,60 @@
 
 {% else %}
 {% ifequal role 2 %} 
-
-<p> Stages: </p>
-<ul>
+<!-- Investigator -->
+  <div id="stages_nav">
+    <ul>
+    {% for astage in stages %} 
+		  {% if astage.status > 1  %}
+        <li class="not_active"><a href="" id="stage_box_{{forloop.counter}}" onclick="return false;" class="stage_box">{{astage.number_of_users}}</a></li>
+		  {% else %}
+			  {% ifequal forloop.counter 1 %}
+			    <li class="active"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box">{{astage.number_of_users}}</a></li>
+			  {% else %}
+			    <li class="not_active"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box">{{astage.number_of_users}}</a></li>
+			  {% endifequal %}
+		  {% endif %}
+	{% endfor%}
+</div>
+  </ul>
+<div id="stage_info">
   {% for stage in stages %}
-    <li>{{stage.name}} - {{stage.number_of_users}}</li>
-	<ul>{% for auser in stage.users%}
-		<li>{{auser.user.username}} - {{auser.nextdeadline}}</li>
-		{%endfor%}
-	</ul>	
+    <div id="stage_{{forloop.counter}}" class="stage_panel" {% ifnotequal forloop.counter 1 %}style="display:none;"{% endifnotequal %}>
+      <div class="stage_header">
+        <h2><strong>Stage: </strong> {{stage.name}} ({{stage.number_of_users}})</h2>
+        <a href="" class="button">Manage Everyone</a>
+        <a href="" class="button">Stage Instructions</a>
+      </div>
+      <div class="table_wrapper">
+        <table>
+          <tr>
+            <th> Participant</th>
+            <th> Next Deadline </th>
+            <th> Actions </th>
+          <tr>
+        {% for auser in stage.users%}
+          <tr>
+            <td><a href="">{{auser.user.username}}</a></td>
+            <td>
+              {% if auser.overdue %}
+                <span class="red">{{auser.nextdeadline|date:"d M Y"}}</span>
+              {% else %}
+                <span class="green">{{auser.nextdeadline|date:"d M Y"}}</span>
+              {% endif %}
+            </td>
+            <td>
+              <a href="">Interview</a> |
+              <a href="">Stage Complete</a>
+            </td>
+          <tr>
+        {%endfor%}
+        </table>
+      </div>
+    </div>
   {% endfor %}	
-</ul>
+</div>
+
+
 
 	<!--investigator side
 	<p>(<a href="{% url add_participant_to_study study.id %}">add participant</a> | 
@@ -78,7 +121,7 @@ You are not authorized to view this study.
 {% endifequal %}
 {% endifequal %}
 
-//this will also have to change depending on investigator/participant
+<!-- this will also have to change depending on investigator/participant -->
 <div id="study_manage">
   <button id="left_button"></button>
   <button id="right_button"></button>

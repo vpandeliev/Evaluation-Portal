@@ -99,6 +99,16 @@ a:visited{
 
 }
 
+.stage_header {
+}
+.stage_header h2 {
+  display: inline;
+  position: relative;
+  left: 0;
+  font-size: 120%;
+  font-weight: normal;
+  
+}
 .stage_header a{
   float: right;
   margin-left: 10px;
@@ -115,13 +125,13 @@ a:visited{
 
 .table_wrapper td {
   padding: 5px 0;
+
 }
 
 #study_manage a {
   float: right;
   margin-top: 10px;
- margin-left: 10px;
-
+  margin-left: 10px;
 }
 
 .stage_label{
@@ -129,7 +139,6 @@ a:visited{
 }
 
 #study_manage {
-
   margin-bottom: 10px;
 }
 #study_details{
