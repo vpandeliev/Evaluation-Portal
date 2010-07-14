@@ -46,7 +46,7 @@ class Study(models.Model):
 		return StudyParticipant.objects.get(study=self, user=user)
 
 	def get_study_investigator(self, user):
-		return StudyInvestigator.objects.get(study=self, user=user)
+		return StudyInvestigator.objects.get(study=self, investigator=user)
 
 #error checking?
 			
@@ -79,7 +79,7 @@ class StudyInvestigator(models.Model):
 	investigator = models.ForeignKey(User)
 
 	def stages(self):
-		"""Returns all of a study's stages"""
+		"""Returns all of a study's stages as userstage objects"""
 		stages = Stage.objects.filter(study=self.study)
 		print "haha"
 		print stages
@@ -149,7 +149,10 @@ class Stage(models.Model):
 		return total/len(stagegroups)
 	
 	def number_of_users(self):
-		return UserStage.objects.filter(stage=self, status=1).count()
+		return self.users().count()
+	
+	def users(self):
+		return UserStage.objects.filter(stage=self, status=1).order_by('user')
 			
 class StageGroup(models.Model):
 	group = models.ForeignKey(Group)

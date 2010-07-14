@@ -55,10 +55,17 @@
 
 {% else %}
 {% ifequal role 2 %} 
-//actions need to be i 
 
-	
-
+<p> Stages: </p>
+<ul>
+  {% for stage in stages %}
+    <li>{{stage.name}} - {{stage.number_of_users}}</li>
+	<ul>{% for auser in stage.users%}
+		<li>{{auser.user.username}} - {{auser.nextdeadline}}</li>
+		{%endfor%}
+	</ul>	
+  {% endfor %}	
+</ul>
 
 	<!--investigator side
 	<p>(<a href="{% url add_participant_to_study study.id %}">add participant</a> | 
@@ -70,6 +77,8 @@
 You are not authorized to view this study.
 {% endifequal %}
 {% endifequal %}
+
+//this will also have to change depending on investigator/participant
 <div id="study_manage">
   <button id="left_button"></button>
   <button id="right_button"></button>
