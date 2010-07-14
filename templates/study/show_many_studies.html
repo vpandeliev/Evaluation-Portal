@@ -8,17 +8,19 @@
 			        {% comment %} user is an investigator for current study {% endcomment %}
 			          <li>
 			            <div class="study_header">
-			              {{ study_part.study.name }}
+			              {{ study_inv.study.name }}
 			              <span class="study_status">Status</span>
 			            </div>
 			            <ul class="study_stages">
+						<p> Stages: </p>
 			              {% for stage in study_inv.stages %}
+							
 			                <li>{{stage.name}} - {{stage.number_of_users}}</li>
 			              {% endfor %}
 			            </ul>
 			            <a href="" class="button">Export Data</a>
 			            <a href="" class="button">Message Center</a>
-			            <a href="{% url show_one_study study_user.study.id%}" class="button"> Study Home</a>
+			            <a href="{% url show_one_study study_inv.study.id%}" class="button"> Study Home</a>
 			          </li>
 		{% endfor %}
       	{% for study_user in studies_as_participant %}

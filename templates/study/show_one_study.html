@@ -54,20 +54,7 @@
 
 
 {% else %}
- {% for groupentry in finallist %} 
-	{{groupentry.0.name}}: Stages
-	{% for stage in groupentry.1 %}
-		Stage Name: {{stage.0.name}}
-		Number of users in stage: {{stage.1}}
-		List of users:
-		{% for user in stage.2 %}
-			{{user.0.email}} - Next due date {{user.1}}
-			//stage-specific actions
-			//global user-related actions
-			<a href="">Send message</a> | <a href="">Remove</a>
-		{% endfor%}
-	{% endfor %}
-
+ 
 //actions need to be i 
 
 {% endfor %}

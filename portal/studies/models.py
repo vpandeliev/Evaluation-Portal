@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from tinymce import models as tinymce_models
 import datetime
+from operator import attrgetter
+
 
 class Study(models.Model):
 
@@ -75,7 +77,13 @@ class StudyInvestigator(models.Model):
 	def stages(self):
 		"""Returns all of a study's stages"""
 		stages = Stage.objects.filter(study=self.study)
-		return sorted(stages, key=avg())
+		print "haha"
+		print stages
+		stageusers = [UserStage.objects.filter(stage=x)[0] for x in stages]
+		stageusers.sort(key=attrgetter('order'))
+		print stageusers
+		return [x.stage for x in stageusers]
+		#return [11,22,33]
 			
 
 	def __unicode__(self):
@@ -137,8 +145,8 @@ class Stage(models.Model):
 		return total/len(stagegroups)
 	
 	def number_of_users(self):
-		return StageGroup.objects.filter(stage=self).count()
-	
+		return UserStage.objects.filter(stage=self, status=1).count()
+			
 class StageGroup(models.Model):
 	group = models.ForeignKey(Group)
 	stage = models.ForeignKey(Stage)
@@ -161,6 +169,9 @@ class UserStage(models.Model):
 	end_date = models.DateTimeField('End date', blank=True, null=True)
 	sessions_completed = models.IntegerField('Sessions completed')
 	last_session_completed = models.DateTimeField('Last session completed', blank=True, null=True)
+
+	def __unicode__(self):
+		return u'%s - %s (%s)' % (self.user, self.stage, self.order)
 
 	def save(self, *args,**kwargs):
 		super(UserStage, self).save(*args, **kwargs)
@@ -189,7 +200,7 @@ class UserStage(models.Model):
 		self.order = StageGroup.objects.get(group=self.group(), user=self.user).order
 		
 	def users_in_stage(self, stage_object):
-		return UserStage.objects.filter(stage=stage_object)
+		return UserStage.objects.filter(stage=stage_object, status=1)
 
 	def number_users_in_stage(self, stage_object):
 		"""docstring for number_users_in_stage"""
