@@ -2,51 +2,51 @@
 
 {% block content %}
 	<h1>{{study.name}}</h1>
-
-	
-{% ifequal study_user.role 0 %}
+{% ifequal role 1 %}
   <!--stage menu-->
   <div id="stages_nav">
     <ul>
-    {% for stage in stages %} 
-		  {% if forloop.counter > study_user.current_stage  %}
+    {% for astage in stages %} 
+		  {% if astage.status > 1  %}
         <li class="not_active"><a href="" id="stage_box_{{forloop.counter}}" onclick="return false;" class="stage_box">{{forloop.counter}}</a></li>
 		  {% else %}
-			  {% ifequal stage study_user.getcurrentstage %}
+			  {% ifequal astage.status 1 %}
 			    <li class="active"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box">{{forloop.counter}}</a></li>
 			  {% else %}
 			    <li class="not_active"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box">{{forloop.counter}}</a></li>
 			  {% endifequal %}
 		  {% endif %}
-	  {% endfor %}
-    </ul>
+	{% endfor%}
+
+  </ul>
   </div>
 	<!--stage block-->
+
   <div id="stage_info">
-  {% for stage in stages %}
+	{% for astage in stages %}  
     <div id="stage_{{forloop.counter}}" class="stage_panel"
-      {% ifnotequal stage study_user.getcurrentstage %}style="display:none;"{% endifnotequal %}>
+      {% ifnotequal astage.status 1 %}style="display:none;"{% endifnotequal %}>
       <div class="stage_header">
-        <span><strong>Stage:</strong> {{stage.name}}</span>
+        <span><strong>Stage:</strong> {{astage.stage.name}}</span>
         <a href="" class="button" id="instruction_button_{{forloop.counter}}">Stage Instructions</a>
         <div class="instructions" style="display:none;" id="instructions_{{forloop.counter}}">
-          {{stage.instructions}}
+          {{astage.stage.instructions}}
         </div>
       </div>
       <p class="stage_description">
-        {{stage.description}}
+        {{astage.stage.description}}
       </p>
       <div class="act_container">
         <a href="" class="button">Act</a>
-        {%if stage.overdue%}
+        {%if astage.overdue%}
 			    You're overdue!! Bad you!
 		    {% else %}
-			    Complete by: {{study_user.nextdeadline|date:"d M Y"}}
+			    Complete by: {{astage.nextdeadline|date:"d M Y"}}
 		  {% endif %}
       </div>
       <p>
-        {{forloop.counter}}/{{study_user.totalstages}}
-        {{study_user.current_session}}/{{stage.sessions}}
+        {{astage.order}}/{{studypart.number_of_stages}}
+        Completed: {{astage.sessions_completed}}/{{astage.stage.sessions}}
       </p>
     </div>
   {% endfor %}
@@ -54,6 +54,26 @@
 
 
 {% else %}
+ {% for groupentry in finallist %} 
+	{{groupentry.0.name}}: Stages
+	{% for stage in groupentry.1 %}
+		Stage Name: {{stage.0.name}}
+		Number of users in stage: {{stage.1}}
+		List of users:
+		{% for user in stage.2 %}
+			{{user.0.email}} - Next due date {{user.1}}
+			//stage-specific actions
+			//global user-related actions
+			<a href="">Send message</a> | <a href="">Remove</a>
+		{% endfor%}
+	{% endfor %}
+
+//actions need to be i 
+
+{% endfor %}
+
+
+
 	<!--investigator side
 	<p>(<a href="{% url add_participant_to_study study.id %}">add participant</a> | 
 	<a href="{% url show_users_in_study study.id %}">show users</a> | 

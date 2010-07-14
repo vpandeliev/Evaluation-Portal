@@ -17,33 +17,33 @@ class Study(models.Model):
 	
 	def save(self, *args,**kwargs):
 		#create timestamps, keep track of user
-		#print "saving..."
+		print "saving study"
 		super(Study, self).save(*args, **kwargs) 
-		if Group.objects.filter(name="Investigator", study=self).count() == 0:
-			Group.objects.create(name="Investigator", study_id=self.id)
-		
-		
-	def create_study_user(self, current_user):
-		"""docstring for create_study_user"""
-		StudyUser(study=self,user=current_user,role=1, group=Group.objects.filter(name="Investigator", study=self)).save()
+	
+	def role(self,user):
+		if StudyInvestigator.objects.filter(investigator=user,study=self).count() > 0:
+			return 2
+		elif StudyParticipant.objects.filter(user=user,study=self).count() > 0:
+			return 1
+		else:
+			return 0
+			
+	def set_investigator(self, current_user):
+		"""Assign creator of study to investigator role"""
+		StudyInvestigator(study=self,investigator=current_user).save()
 
-	def users(self):
-		"""docstring for users"""
+	def participants(self):
+		"""Returns a list of all participants in the Study"""
 		return [x.user for x in StudyUser.objects.filter(study=self)]
 
-	def users_in_stage(self, stage):
-		"""docstring for users"""
-		return [x.user for x in StudyUser.objects.filter(current_stage=stage)]
+	def investigators(self):
+		"""Returns a list of all investigators in the Study"""
+		return [x.investigator for x in StudyInvestigator.objects.filter(study=self)]
 
-	def getstudyuser(self, user):
-		return StudyUser.objects.get(study=self, user=user)
-	
-	def number_users_in_stage(self, stage):
-		"""docstring for number_users_in_stage"""
-		return len(users_in_stage(stage))
+	def get_study_participant(self, user):
+		return StudyParticipant.objects.get(study=self, user=user)
+#error checking?
 			
-
-
 	def __unicode__(self):
 		return u'%s' % (self.name)
 
@@ -65,53 +65,54 @@ class Group(models.Model):
 	def __unicode__(self):
 		return u'%s - %s' % (self.study, self.name)		
 
-#	def stages(self):
-#		return [x.stage for x in StageGroup.objects.filter(group=self).order_by('order')]
+	def stages(self):
+		return [x.stage for x in StageGroup.objects.filter(group=self).order_by('order')]
 		
-class StudyUser(models.Model):
+class StudyInvestigator(models.Model):
+	study = models.ForeignKey(Study)
+	investigator = models.ForeignKey(User)
+
+	def stages(self):
+		"""Returns all of a study's stages"""
+		stages = Stage.objects.filter(study=self.study)
+		return sorted(stages, key=avg())
+			
+
+	def __unicode__(self):
+		return u'%s - %s (Investigator)' % (self.investigator.username, self.study)
+
+class StudyParticipant(models.Model):
 	study = models.ForeignKey(Study)
 	user = models.ForeignKey(User)
 	group = models.ForeignKey(Group)
 	
-	CHOICES = ((1, 'Investigator'),(0, 'Participant'))
-	role = models.IntegerField("Role", max_length=1, choices=CHOICES)
+	#CHOICES = ((1, 'Investigator'),(0, 'Participant'))
+	#role = models.IntegerField("Role", max_length=1, choices=CHOICES)
 	#current_condition = models.ForiengKey(Condition)
 	
-	current_stage = models.IntegerField('Current Stage', default=1)
-	current_session = models.IntegerField('Current Session', default=1)
-	last_action = models.DateTimeField('Last Session Completed')
+	#current_stage = models.IntegerField('Current Stage', default=1)
+	#current_session = models.IntegerField('Current Session', default=1)
+	#last_action = models.DateTimeField('Last Session Completed')
 
-	def stages(self):
-		return [x.stage for x in StageGroup.objects.filter(group=self.group).order_by('order')]
+	def participant_stages(self):
+		return UserStage.objects.filter(user=self.user).order_by('order')
 
-	def totalstages(self):
-		return StageGroup.objects.filter(group=self.group).count()
+	def number_of_stages(self):
+		return self.participant_stages().count()
 		
 	def save(self):
 		#create timestamps, keep track of user modifying, etc.
-		print "saving..."
-		super(StudyUser,self).save()
-	
-	def getcurrentstagenum(self):
-		#get the current stage object
-		currstage = StageGroup.objects.get(group=self.group, order=self.current_stage)
-		return currstage.order
-	def getcurrentstage(self):
-		#get the current stage object
-		currstage = StageGroup.objects.get(group=self.group, order=self.current_stage).stage
-		return currstage
-	def nextdeadline(self):
-		ahead = datetime.timedelta(days=self.getcurrentstage().deadline)
-		print self.last_action + ahead
-		return self.last_action + ahead
+#		print "saving..."
+		super(StudyParticipant,self).save()
+
+	def get_current_stage(self):
+		#get the current userstage object
+		return UserStage.objects.get(user=self.user, status=1)
 		
-	def overdue(self):
-		if datetime.datetime.now() > self.deadline():
-			return true
-		return false
-		
+
+			
 	def __unicode__(self):
-		return u'%s - %s(%s)' % (self.user,self.study, self.role)		
+		return u'%s - %s (Participant)' % (self.user,self.study)		
 
 
 		
@@ -120,20 +121,85 @@ class Stage(models.Model):
 	study = models.ForeignKey(Study)
 	sessions = models.IntegerField('Number of sessions')
 	deadline = models.IntegerField('Time to finish session (in days)')
-	url = models.URLField('Stage URL')
+	url = models.CharField('Stage URL', max_length=300)
 	description = tinymce_models.HTMLField('Stage Description')
 	instructions = tinymce_models.HTMLField('Stage Instructions')
 
 	def __unicode__(self):
 		return unicode(self.name)		
-	
 
+	def avg(self):
+		"""docstring for avg"""
+		stagegroups = StageGroup.objects.filter(stage=self)
+		total = 0
+		for x in stagegroups:
+			total += x.order
+		return total/len(stagegroups)
+	
+	def number_of_users(self):
+		return StageGroup.objects.filter(stage=self).count()
 	
 class StageGroup(models.Model):
 	group = models.ForeignKey(Group)
 	stage = models.ForeignKey(Stage)
 	order = models.IntegerField()
-
+	
+#	def stages_in_group(self, group):
+#		"""docstring for stages_in_group"""
+#		return [x.stage for x in StageGroup.objects.filter(group=group).order_by('order')]
+	
 	def __unicode__(self):
 		return u'%s - %s (%s)' % (self.stage, self.group, self.order)
 
+class UserStage(models.Model):
+	user = models.ForeignKey(User)
+	stage = models.ForeignKey(Stage)
+	order = models.IntegerField('Order', editable=False)
+	CHOICES = ((0, 'Completed'),(1, 'Active'),(2, 'Future'))
+	status = models.IntegerField('Status', max_length=1, choices=CHOICES)
+	start_date = models.DateTimeField('Start date', blank=True, null=True)
+	end_date = models.DateTimeField('End date', blank=True, null=True)
+	sessions_completed = models.IntegerField('Sessions completed')
+	last_session_completed = models.DateTimeField('Last session completed', blank=True, null=True)
+
+	def save(self, *args,**kwargs):
+		super(UserStage, self).save(*args, **kwargs)
+		#self.set_order()
+			
+	def group(self):
+		return StudyParticipant.objects.get(user=self.user).group		
+
+	def session_completed(self):
+		self.sessions_completed += 1
+		self.last_session_completed = datetime.datetime.now()
+		if sessions_completed == self.stage.sessions:
+			#this stage is finished
+			self.status = 0
+			self.end_date = datetime.datetime.now()
+			#find next stage
+			next = UserStage.objects.filter(user=self.user, order=self.order+1)
+			if len(next) == 0:
+				#end of study
+				pass
+			else:
+				next[0].status = 1
+				next[0].start_date = datetime.datetime.now()			
+		
+	def set_order(self):
+		self.order = StageGroup.objects.get(group=self.group(), user=self.user).order
+		
+	def users_in_stage(self, stage_object):
+		return UserStage.objects.filter(stage=stage_object)
+
+	def number_users_in_stage(self, stage_object):
+		"""docstring for number_users_in_stage"""
+		return len(self.users_in_stage(stage_object))
+
+	def nextdeadline(self):
+		ahead = datetime.timedelta(days=self.stage.deadline)
+		return self.last_session_completed + ahead
+		
+	def overdue(self):
+		if datetime.datetime.now() > self.nextdeadline():
+			return True
+		return False		

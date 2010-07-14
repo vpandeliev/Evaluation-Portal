@@ -15,19 +15,33 @@ from django.contrib.auth.models import User
 ############### Study
 @login_required
 def show_many_studies(request):
-	if StudyUser.objects.count > 0:
-		#studies = [x.study for x in StudyUser.objects.filter(user=request.user)]
-		study_users = StudyUser.objects.filter(user=request.user)
+	if StudyParticipant.objects.count > 0:
+		studies_as_participant = StudyParticipant.objects.filter(user=request.user)
 	else:
-		study_users = []
+		studies_as_participant = []
+
+	if StudyInvestigator.objects.count > 0:
+		studies_as_investigator = StudyInvestigator.objects.filter(investigator=request.user)
+	else:
+		studies_as_investigator = []
 		
 	return render_to_response('show_many_studies.html', locals(), context_instance=RequestContext(request))
 
 @login_required
 def show_one_study(request,study_id):
 	study = Study.objects.get(id=study_id)
-	study_user = study.getstudyuser(request.user)
-	stages = study_user.stages()
+	role = study.role(request.user)
+	if role == 1:
+		#participant
+		studypart = study.get_study_participant(request.user)
+		stages = studypart.participant_stages()
+		
+	elif role == 2: 
+		#investigator
+		pass
+	else: 
+		#unauthorized URL mucking about with
+		pass
 	return render_to_response('show_one_study.html',locals(), context_instance=RequestContext(request))
 	
 @login_required
@@ -48,7 +62,7 @@ def create_one_study(request):
 				end_date=cd['end_date'],
 				started=cd['started'],
 				description=cd['description'])
-			s.create_study_user(request.user)
+			s.set_investigator(request.user)
 			return HttpResponseRedirect('/study/'+str(s.id))
 	else:
 		#study = Blank()
@@ -69,7 +83,8 @@ def edit_one_study(request,study_id):
 def remove_one_study(request,study_id):
 	"""docstring for remoe_one_study"""
 	s = Study.objects.get(id=study_id)
-	StudyUser.objects.filter(study=s).delete()
+	StudyParticipant.objects.filter(study=s).delete()
+	StudyInvestigator.objects.filter(study=s).delete()
 	
 	s.delete()
 	return HttpResponseRedirect('/study/')
@@ -95,7 +110,9 @@ def add_participant_to_study(request,study_id):
 				user.message_set.create(message=pwd)
 			else:
 				user = user[0]
-			study.create_study_user(user)
+			#study.set_investigator(user)
+			#add participant to study
+			create_user_stages(user)
 			return HttpResponseRedirect('/study/added_to_study/'+ str(user.id)+"/"+str(study.id))
 		else:
 			return render_to_response('add_participant_to_study.html',locals(), context_instance=RequestContext(request))
@@ -103,6 +120,7 @@ def add_participant_to_study(request,study_id):
 		study = Study.objects.get(id=study_id)
 		form = AddParticipantForm()
 		return render_to_response('add_participant_to_study.html',locals(), context_instance=RequestContext(request))
+
 
 @login_required
 def added_to_study(request, study_id, user_id):

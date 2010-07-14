@@ -1,5 +1,5 @@
 from django import forms
-from portal.studies.models import Study
+from portal.studies.models import *
 from django.contrib.admin import widgets
 	
 class NewStudyForm(forms.ModelForm):
@@ -11,3 +11,4 @@ class NewStudyForm(forms.ModelForm):
 class AddParticipantForm(forms.Form):
     email = forms.EmailField()
     role = forms.BooleanField(label="Investigator?", required=False) #participant by default
+
