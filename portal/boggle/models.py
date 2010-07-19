@@ -27,9 +27,12 @@ class Game(models.Model):
     '''
     state = models.PositiveIntegerField(choices=game_states.as_choices(), default=game_states.WAITING_FOR_PLAYERS)
     created_at = models.DateTimeField(default=datetime.datetime.now)
+    round_max = models.IntegerField()
+    game_over_url = models.CharField(max_length=200)
 
     round = property(lambda self: self.state == game_states.IN_PROGRESS and self.round_set.count() and self.round_set.all()[0] or None)
     board = property(lambda self: self.state == game_states.IN_PROGRESS and self.round_set.count() and Board(self.round.board) or None)
+    is_over = property(lambda self: self.round_set.count() >= self.round_max)
 
     class Meta:
         ordering = ['-created_at']
@@ -39,7 +42,7 @@ class Game(models.Model):
     def __unicode__(self):
         return unicode(self.id)
 
-    def start_game(self):
+    def start_round(self):
         assert self.state == game_states.WAITING_FOR_PLAYERS, 'This game has already been started!'
         assert self.player_set.count() >= 1, 'Not enough players to start a game!'
         self.state = game_states.IN_PROGRESS
@@ -50,7 +53,7 @@ class Game(models.Model):
         assert self.state == game_states.IN_PROGRESS, 'Trying to create a new round for a game that is not in progress!'
         self.round_set.create()
     
-    def end_game(self):
+    def end_round(self):
         assert self.state != game_states.COMPLETE, 'Trying to end a game that is already over!'
         self.state = game_states.COMPLETE
         self.save()
@@ -75,7 +78,7 @@ class Game(models.Model):
     def reset_game(self):
         self.state = game_states.WAITING_FOR_PLAYERS
         self.round_set.all().delete()
-        self.start_game()
+        self.start_round()
 
     
 class RoundManager(models.Manager):
@@ -92,7 +95,7 @@ class Round(models.Model):
     number = models.PositiveIntegerField(blank=True, help_text='Round numbering starts at 1.')
     board = models.TextField(blank=True, help_text='Record of values for each cell in the board. The board is a 4 x 4 grid.')
     start = models.DateTimeField(default=datetime.datetime.now, help_text='Start time of the game.')
-    duration = models.PositiveIntegerField(default=180, help_text='Duration of round in seconds.')
+    duration = models.PositiveIntegerField(default=5, help_text='Duration of round in seconds.')
 
     objects = RoundManager()
     
@@ -201,7 +204,7 @@ class Player(models.Model):
 
 def adjust_game_state(sender, instance, **kwargs):
     if not instance.active and instance.game.player_set.active().count() == 0:
-        instance.game.end_game()
+        instance.game.end_round()
 post_save.connect(adjust_game_state, sender=Player)
 
 

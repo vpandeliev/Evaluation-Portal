@@ -17,23 +17,28 @@ def index(request):
 
 
 @login_required
-def create_and_join_new_game(request):
-    game = Game.objects.create()
+def create_new_game(request):
+    play_for = request.GET.get('play_for', 10)
+    return_to = request.GET.get('return_to', '/')    
+    game = Game.objects.create(round_max=play_for, game_over_url=return_to)
     return join_game(request, game.id)
 
 
 @login_required
-def start_game(request, game_id):
+def start_round(request, game_id):
     game = get_object_or_404(Game, pk=game_id)
     # In case somebody else already started the game.
     if game.state == game_states.WAITING_FOR_PLAYERS:
-        game.start_game()
+        game.start_round()
     return HttpResponseRedirect(reverse('play-boggle-game', kwargs={'game_id': game.id}))
 
 
 @login_required
 def next_round(request, game_id):
     game = get_object_or_404(Game, pk=game_id)
+    if game.is_over:
+        game.end_round()
+        return HttpResponseRedirect(reverse('game-over', kwargs={'game_id': game.id}))
     # In case somebody else already started the next round
     if game.round.time_left() == 0:
         game.goto_next_round()
@@ -66,7 +71,19 @@ def join_game(request, game_id):
     # Add player to the new game and redirect to play page.
     game.create_player_for_user(request.user)
     return HttpResponseRedirect(reverse('play-boggle-game', kwargs={'game_id': game.id}))
-    
+
+
+@login_required
+def game_over(request, game_id):
+    '''
+    Displayed after the maximum number of rounds has been reached.
+    '''
+    game = get_object_or_404(Game, pk=game_id)
+    context = {
+        'game': game,
+    }
+    return render_to_response('boggle/game_over.html', context)
+
 
 @login_required
 def play_game(request, game_id):
@@ -79,7 +96,7 @@ def play_game(request, game_id):
     except Player.DoesNotExist:
         # For now, if anything goes wrong just abandone the game without reason
         # TODO: provide user with more info, for example "game is over".
-        return HttpResponseRedirect(reverse('boggle-index'))
+        return HttpResponseRedirect(reverse('game-over', kwargs={'game_id': game.id}))
     context = {
         'title': 'Boggle',
         'game': game,
