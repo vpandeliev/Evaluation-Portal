@@ -512,25 +512,25 @@ var WordList = Class.create({
 
 var TimeLeft = Class.create({
     initialize: function(game, node) {
-        this._node = node;
+        this._node = $(node);
         this._game = game;
         this._timer = null;
         this._value = null;
         new Ajax.Request(this._node.getAttribute('updateURL'), {
             evalJSON: true,
-            onSuccess: this.setInitialValue.bindAsEventListener(this)
+            onSuccess: this.setInitialValue.bind(this)
         });
     },
     setInitialValue: function(transport) {
         this._value = transport.responseJSON;
         this._node.innerHTML = this._value;
-        this._timer = setTimeout(this.decrementValue.bindAsEventListener(this), 1000);
+        this._timer = setTimeout(this.decrementValue.bind(this), 1000);
     },
     decrementValue: function() {
         this._value--;
         if (this._value >= 0) {
             this._node.innerHTML = this._value;
-            this._timer = setTimeout(this.decrementValue.bindAsEventListener(this), 1000);
+            this._timer = setTimeout(this.decrementValue.bind(this), 1000);
         } else {
             this._node.fire('timeleft:done');
         }
@@ -540,7 +540,7 @@ var TimeLeft = Class.create({
 
 var Flash = Class.create({
     initialize: function(node) {
-        this._node = node;
+        this._node = $(node);
         this._timer = null;
     },
     /********************************************************/

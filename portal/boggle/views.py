@@ -18,8 +18,13 @@ def index(request):
 
 @login_required
 def create_new_game(request):
+    '''
+    Optional GET arguments are:
+        play_for - number of rounds to play for, default 10
+        return_to - URL to return to after the maximum # of rounds has been played
+    '''
     play_for = request.GET.get('play_for', 10)
-    return_to = request.GET.get('return_to', '/')    
+    return_to = request.GET.get('return_to', '/')		
     game = Game.objects.create(round_max=play_for, game_over_url=return_to)
     return join_game(request, game.id)
 
@@ -29,7 +34,7 @@ def start_round(request, game_id):
     game = get_object_or_404(Game, pk=game_id)
     # In case somebody else already started the game.
     if game.state == game_states.WAITING_FOR_PLAYERS:
-        game.start_round()
+        game.start_round(mode=boggle_modes.MASTER)
     return HttpResponseRedirect(reverse('play-boggle-game', kwargs={'game_id': game.id}))
 
 
@@ -41,7 +46,7 @@ def next_round(request, game_id):
         return HttpResponseRedirect(reverse('game-over', kwargs={'game_id': game.id}))
     # In case somebody else already started the next round
     if game.round.time_left() == 0:
-        game.goto_next_round()
+        game.goto_next_round(mode=boggle_modes.MASTER)
     return HttpResponseRedirect(reverse('play-boggle-game', kwargs={'game_id': game.id}))
 
 

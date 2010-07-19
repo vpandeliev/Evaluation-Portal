@@ -10,3 +10,9 @@ Waiting for players
 In progress
 Complete
 ''')
+
+boggle_modes = ChoiceList('''
+Normal
+Master
+Challenge cube
+''')

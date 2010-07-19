@@ -4,7 +4,7 @@ from models import *
 
 class RoundInline(admin.TabularInline):
     model = Round
-    fields = ('number', 'board', 'start', 'duration')
+    fields = ('number', 'board', 'start', 'duration', 'mode')
     extra = 0
 
 class PlayerInline(admin.TabularInline):
@@ -30,10 +30,10 @@ class WordListInline(admin.TabularInline):
 
 class RoundAdmin(admin.ModelAdmin):
     fieldsets = (
-        (None, {'fields': ('game', 'number', 'board', 'start', 'duration')}),
+        (None, {'fields': ('game', 'number', 'board', 'start', 'duration', 'mode')}),
         )
     list_filter = ('game',)
-    list_display = ('board', 'game', 'number', 'start', 'duration')
+    list_display = ('board', 'game', 'number', 'start', 'duration', 'mode')
     date_hierarchy = 'start'
     search_fields = ('wordlist__raw_words',)
     inlines = [WordListInline]

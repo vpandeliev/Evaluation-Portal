@@ -42,16 +42,20 @@ class Game(models.Model):
     def __unicode__(self):
         return unicode(self.id)
 
-    def start_round(self):
+    def start_round(self, mode):
+        '''
+        Args:
+            mode - See portal.boggle.choices.boggle_modes
+        '''
         assert self.state == game_states.WAITING_FOR_PLAYERS, 'This game has already been started!'
         assert self.player_set.count() >= 1, 'Not enough players to start a game!'
         self.state = game_states.IN_PROGRESS
-        self.goto_next_round()
+        self.goto_next_round(mode=mode)
         self.save()
 
-    def goto_next_round(self):
+    def goto_next_round(self, mode):
         assert self.state == game_states.IN_PROGRESS, 'Trying to create a new round for a game that is not in progress!'
-        self.round_set.create()
+        self.round_set.create(mode=mode)
     
     def end_round(self):
         assert self.state != game_states.COMPLETE, 'Trying to end a game that is already over!'
@@ -95,7 +99,8 @@ class Round(models.Model):
     number = models.PositiveIntegerField(blank=True, help_text='Round numbering starts at 1.')
     board = models.TextField(blank=True, help_text='Record of values for each cell in the board. The board is a 4 x 4 grid.')
     start = models.DateTimeField(default=datetime.datetime.now, help_text='Start time of the game.')
-    duration = models.PositiveIntegerField(default=5, help_text='Duration of round in seconds.')
+    duration = models.PositiveIntegerField(default=180, help_text='Duration of round in seconds.')
+    mode = models.PositiveIntegerField(choices=boggle_modes.as_choices())
 
     objects = RoundManager()
     
@@ -124,24 +129,24 @@ class Round(models.Model):
         return end > now and (end - now).seconds or 0
 
 
-def set_round_number(sender, instance, **kwargs):
+def shuffle_board_and_set_round_number(sender, instance, **kwargs):
     if instance.number is None:
         # Shuffle the dice and set the board cell values
         # ...
-        instance.board = get_shuffled_board()
+        instance.board = shuffler[instance.mode]()
 
         # Set round number
         previous_round = instance.game.round
         instance.number = previous_round and (previous_round.number + 1) or 1
-pre_save.connect(set_round_number, sender=Round)
+pre_save.connect(shuffle_board_and_set_round_number, sender=Round)
 
 
-def shuffle_board_and_create_wordlists(sender, instance, **kwargs):
+def create_wordlists(sender, instance, **kwargs):
     if not instance.wordlist_set.count():
         # Create new wordlists for each player
         for player in instance.game.player_set.active():
             instance.wordlist_set.create(player=player)
-post_save.connect(shuffle_board_and_create_wordlists, sender=Round)
+post_save.connect(create_wordlists, sender=Round)
     
 
 class PlayerManager(models.Manager):
@@ -256,7 +261,7 @@ class WordList(models.Model):
     def add_word(self, word):
         valid = self.round.is_valid_word(word)
         duplicate = word in self.words
-        score = score_for_word(word)
+        score = scoring[self.round.mode](word)
         score = (not duplicate and valid) and score or 0
         
         self.raw_words = (
