@@ -276,7 +276,8 @@ var SolutionSetDelta = Class.create({
 
 var Board = Class.create({
     initialize: function(game, node) {
-        this._node = node;
+        this._node = $(node);
+        this._makeDOM();
         this._game = game;
         this._cells = this._node.select('.cell').collect(function(node) {return new Cell(this._game, node)}.bind(this));
         // Mapping from cell nodes to Cell objects.
@@ -289,6 +290,32 @@ var Board = Class.create({
             cells.push(cell);
             this._letterToCells.set(cell.letter, cells);
             }.bind(this));
+    },
+    _makeDOM: function() {
+        var cellValues = this._node.getAttribute('cells').split(' ');
+        var shape = this._node.getAttribute('shape').split(' ');
+        var width = new Number(shape[0]);
+        var height = new Number(shape[1]);
+        this._node.insert({top: '<div class="container"></div>'});
+        var container = this._node.down('.container');
+        container.insert({top: '<div id="board-blocker"><h1>Round finished!</h1></div>'});
+        var row, col;
+        for (var rowIndex=0; rowIndex<height; rowIndex++) {
+            row = new Element('div', {
+                'class': 'row row' + rowIndex
+                });
+            container.insert({bottom: row});
+            for (var colIndex=0; colIndex<width; colIndex++) {
+                var letter = cellValues[rowIndex * width + colIndex];
+                col = new Element('div', {
+                    id: 'cell-' + rowIndex + '-' + colIndex,
+                    'class': 'cell col' + colIndex,
+                    letter: letter
+                    });
+                col.innerHTML = letter.replace(/^\*/, '');
+                row.insert({bottom: col});
+            }
+        }
     },
     /********************************************************/
     /* QUERIES                                              */
@@ -330,11 +357,16 @@ var Board = Class.create({
 
 var Cell = Class.create({
     initialize: function(game, node) {
-        this._node = node;
+        this._node = $(node);
         this._game = game;
         this._note = node.down('.note');
         // Attributes
         this.letter = this._node.getAttribute('letter');
+        this._special = this.letter.startsWith('*');
+        this.letter = this.letter.replace(/Qu/, 'Q').replace(/^\*/, '');
+        if (this._special) {
+            this._node.addClassName('special');
+        }
         // Event handlers
         this._node.observe('click', this._game.onCellClick.curry(this).bindAsEventListener(this._game));
     },
@@ -395,9 +427,10 @@ var WordInput = Class.create({
     },
     pop: function() {
         // Remove and return last letter in input
-        var v = this._node.getValue()
-        this._node.setValue(v.slice(0, v.length - 1));
-        return v[v.length - 1];
+        var v = this._node.getValue();
+        var i = 1 + v.endsWith('Qu');
+        this._node.setValue(v.slice(0, v.length - i));
+        return v[v.length - i];
     },
     reset: function() {
         // Remove all letters from input
@@ -442,7 +475,7 @@ var WordInput = Class.create({
             var delta = this._game.solutionSetDeltaForLetter(letter);
             if (delta) {
                 this._game.applySolutionSetDelta(delta);
-                this.push(letter);
+                this.push(letter.replace('Q', 'Qu'));
             }
         }
     }

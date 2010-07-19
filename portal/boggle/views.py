@@ -34,7 +34,7 @@ def start_round(request, game_id):
     game = get_object_or_404(Game, pk=game_id)
     # In case somebody else already started the game.
     if game.state == game_states.WAITING_FOR_PLAYERS:
-        game.start_round(mode=boggle_modes.MASTER)
+        game.start_round(mode=boggle_modes.CHALLENGE_CUBE)
     return HttpResponseRedirect(reverse('play-boggle-game', kwargs={'game_id': game.id}))
 
 
@@ -46,7 +46,7 @@ def next_round(request, game_id):
         return HttpResponseRedirect(reverse('game-over', kwargs={'game_id': game.id}))
     # In case somebody else already started the next round
     if game.round.time_left() == 0:
-        game.goto_next_round(mode=boggle_modes.MASTER)
+        game.goto_next_round(mode=boggle_modes.CHALLENGE_CUBE)
     return HttpResponseRedirect(reverse('play-boggle-game', kwargs={'game_id': game.id}))
 
 
