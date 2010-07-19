@@ -14,9 +14,9 @@ class PlayerInline(admin.TabularInline):
     
 class GameAdmin(admin.ModelAdmin):
     fieldsets = (
-        (None, {'fields': ('created_at', 'state')}),
+        (None, {'fields': ('created_at', 'state', 'round_max', 'game_over_url')}),
         )
-    list_display = ('id', 'created_at', 'state', 'round_set', 'player_set')
+    list_display = ('id', 'created_at', 'state', 'round_set', 'round_max', 'player_set')
     list_filter = ('state',)
     date_hierarchy = 'created_at'
     search_fields = ('player__user__username', 'round__wordlist__raw_words')
