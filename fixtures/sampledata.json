@@ -296,5 +296,41 @@
       "start_date": null, 
       "stage": 2
     }
+  },
+  {
+    "pk": 2, 
+    "model": "auth.user", 
+    "fields": {
+      "username": "party", 
+      "first_name": "", 
+      "last_name": "", 
+      "is_active": true, 
+      "is_superuser": false, 
+      "is_staff": false, 
+      "last_login": "2010-07-19 10:26:05", 
+      "groups": [], 
+      "user_permissions": [], 
+      "password": "sha1$36a10$ac827ef240b2d5a58c863e0340d6d2a1fd7ce126", 
+      "email": "", 
+      "date_joined": "2010-07-13 17:07:39"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "auth.user", 
+    "fields": {
+      "username": "liam", 
+      "first_name": "", 
+      "last_name": "", 
+      "is_active": true, 
+      "is_superuser": true, 
+      "is_staff": true, 
+      "last_login": "2010-07-14 10:18:30", 
+      "groups": [], 
+      "user_permissions": [], 
+      "password": "sha1$1ff7c$ce51b62289a597bc4e9f9eb12d2b579ab993b8cc", 
+      "email": "", 
+      "date_joined": "2010-07-14 10:18:30"
+    }
   }
 ]
