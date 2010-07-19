@@ -50,7 +50,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 		'django.middleware.doc.XViewMiddleware',
-	'lockdown.middleware.LockdownMiddleware',
+    # 'lockdown.middleware.LockdownMiddleware',
 )
 
 
@@ -61,9 +61,16 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
-		'portal.studies',
-			'tinymce',
+    'portal.studies',
+    
+    # Hosted games
+    'portal.boggle',
+    
+    # Libraries
+    'tinymce',
 	'lockdown',
+	'alphacabbage.django.helpers',
+	'alphacabbage.django.choices',
 )
 
 
@@ -91,7 +98,7 @@ TEMPLATE_DIRS = (
 )
 
 
-MEDIA_URL = os.path.join(ROOT_PATH, 'media/')
+MEDIA_URL = '/media/' #os.path.join(ROOT_PATH, 'media/')
 
 TINYMCE_DEFAULT_CONFIG = {
     'plugins': "paste,searchreplace",
@@ -108,11 +115,7 @@ TINYMCE_DEFAULT_CONFIG = {
 }
 
 JS_URL = '%sjs/tiny_mce/tiny_mce.js' % MEDIA_URL
-print JS_URL
 JS_ROOT = os.path.join(MEDIA_ROOT, 'js/tiny_mce')
-print JS_ROOT
 #JS_BASE_URL = JS_URL[:JS_URL.rfind('/')]
 
 ROOT_URLCONF = 'portal.urls'
-
-
