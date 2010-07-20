@@ -35,7 +35,7 @@ def show_one_study(request,study_id):
 		#participant
 		studypart = study.get_study_participant(request.user)
 		stages = studypart.participant_stages()
-		
+		action = studypart.get_current_stage().stage.url
 	elif role == 2: 
 		studyinv = study.get_study_investigator(request.user)
 		stages = studyinv.stages()

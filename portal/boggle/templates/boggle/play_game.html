@@ -1,0 +1,100 @@
+{% extends "boggle/base.html" %}
+{% load choices helpers boggle %}
+
+{% block extra_head %}
+<script src="http://getfirebug.com/release/lite/1.2/firebug-lite-compressed.js" type="text/javascript"></script>
+<script src="{% media_url %}/js/lib/scriptaculous/effects.js" type="text/javascript"></script>	
+<script src="{% media_url %}/js/games/boggle.js" type="text/javascript"></script>	
+{% endblock extra_head %}
+
+{% block actions %}
+	
+	{% ifequal game.state game_states.WAITING_FOR_PLAYERS %}
+	<form action="{% url start-boggle-game game.id %}" method="post">
+		<input type="submit" value="Start game" />
+	</form>
+	{% endifequal %}
+
+	{% ifequal game.state game_states.IN_PROGRESS %}
+	<form id="next-round" action="{% url next-boggle-round game.id %}" method="post" style="display: none">
+		<input type="submit" value="Next round" />
+	</form>
+	{% endifequal %}
+	
+	<form id="query-state" action="{% url query-boggle-game-state game.id %}" method="get" currentState="{{ game.state }}" roundId="{{ game.round.id }}"></form>	
+{% endblock actions %}
+
+{% block hud %}
+<div id="flash-message" style="display: none"></div>
+<div id="game-start">{{ game }}</div>
+<div id="game-state">{{ game.state|choice:"portal.boggle.choices.game_states" }}</div>
+<div id="player-list">
+	<h2>Scores</h2>
+	{% for player in players %}
+	<div class="player {% ifequal player you %}you{% endifequal %}">{{ player }}&nbsp;{% ifequal player you %}<span class="light">(you)</span>{% endifequal %} {{ player.get_game_score }}</div>
+	{% endfor %}
+</div>
+{% endblock hud %}
+
+{% block game %}
+	{% ifequal game.state game_states.IN_PROGRESS %}
+	
+	{% with you.words as words %}
+	<div id="your-words">
+		<div class="container">
+			<h2>Your words</h2>
+			<div id="word-list">
+				<div id="score" class="word">score<span class="score">{{ score }}</span></div>
+				{% for word in words %}
+				<div class="word {{ word.valid|yesno:"valid,invalid"}} {{ word.duplicate|yesno:"duplicate,"}}" word="{{ word }}" score="{{ word.score }}">{{ word }}<span class="score">{{ word.score }}</span></div>
+				{% endfor %}
+			</div>
+		</div>
+		<form id="compare-words" action="{% url compare-words-for-boggle-round game.id %}" method="get"></form>
+		<form id="submit-score" action="{% url submit-score-for-boggle-round game.id %}" method="post"></form>
+	</div>
+	{% endwith %}
+	
+	{% with game.board as board %}
+	<div id="board">
+		<div class="container">
+		<div id="board-blocker"><h1>Round finished!</h1></div>
+		<div class="row row0">
+			{% boggle_cell board 0 0 %}
+			{% boggle_cell board 0 1 %}
+			{% boggle_cell board 0 2 %}
+			{% boggle_cell board 0 3 %}
+		</div>
+		<div class="row row1">
+			{% boggle_cell board 1 0 %}
+			{% boggle_cell board 1 1 %}
+			{% boggle_cell board 1 2 %}
+			{% boggle_cell board 1 3 %}
+		</div>
+		<div class="row row2">
+			{% boggle_cell board 2 0 %}
+			{% boggle_cell board 2 1 %}
+			{% boggle_cell board 2 2 %}
+			{% boggle_cell board 2 3 %}
+		</div>
+		<div class="row row3">
+			{% boggle_cell board 3 0 %}
+			{% boggle_cell board 3 1 %}
+			{% boggle_cell board 3 2 %}
+			{% boggle_cell board 3 3 %}
+		</div>
+		</div>
+	</div>
+	{% endwith %}
+	
+	<div id="controls">
+		<p>Time left in round: <span id="time-left" updateURL="{% url time-left-in-boggle-round game.id %}"></span></p>
+		<form id="word-form" action="{% url add-word-to-boggle-game game.id %}" method="post">			
+			<label for="word">Your next word</label><br/>
+			<input id="word" name="word" type="text" value="" disabled="disabled" /><br/>
+			<span>Just start typing, or click on the board...</span>
+		</form>		
+	</div>
+	
+	{% endifequal %}
+{% endblock game %}

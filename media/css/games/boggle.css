@@ -1,0 +1,171 @@
+body {background: #bbb;}
+#body {
+    position: relative;
+    background: #ccc;
+    margin: 5px auto;
+    padding: 10px;
+    width: 800px;
+    height: 700px;
+    border: solid 5px #b8b8b8;
+    color: #333;
+}
+h1, h2, h3, h4, h5 {font-family: sans-serif; color: #333;}
+h1 {margin: 0 0 1em; padding: 0; top: 10px; left: 10px; color: #999;}
+th, td {text-align: left; padding-right: 1em;}
+
+.container {position: relative;}
+
+#actions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    text-align: right;
+}
+#actions form {display: inline;}
+input[type=submit] {
+    display: inline;
+    color: white;
+    font-size: 12pt;
+    background: #369;
+    border: solid 1px #369;
+}
+
+#game {
+    position: absolute;
+    top: 60px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+}
+
+#hud {position: absolute; top: 0; left: 0; bottom: 0; right: 0;}
+#flash-message {
+    z-index: 100; 
+    position: absolute;
+    top: 200px;
+    left: 100px;
+    width: 600px; 
+    padding: 1em 0;
+    border: solid 1px #333;
+    background-color: #036;
+    color: white;
+    font-weight: bold;
+    font-size: 24pt;
+    text-align: center;
+}
+#game-start {position: absolute; bottom: 0; right: 0; color: #999; font-size: 9pt;}
+#game-state {position: absolute; bottom: 0; left: 0; color: #999; font-size: 9pt;}
+#player-list {position: absolute; top: 0; left: 420px; width: 150px; font-size: 12pt; padding: 0;}
+#player-list h2 {margin: 0; padding: 0;}
+.player.you {color: #369;}
+.player {margin: 1em;}
+.player.you .light {color: #999; font-size: 10pt; font-style: italic;}
+
+#your-words {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+#your-words .container {
+    position: relative;
+    height: 600px;
+    width: 200px;
+}
+#your-words h2 {
+    position: absolute;
+    top: 0;
+    padding: 0;
+    margin: 0;
+}
+#word-list {
+    position: absolute;
+    top: 30px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    padding: 1em;
+    border: solid 2px #bbb;
+    background-color: white;
+    overflow: scroll;
+    text-transform: lowercase;
+    font-size: 14pt;
+    font-family: monospace;
+}
+#score {font-weight: bold; color: #999; border-bottom: solid 1px #ccc;}
+.word {position: relative; margin-bottom: 0.2em;}
+.word .score {position: absolute; right: 0px;}
+.word.invalid {color: red; text-decoration: line-through;}
+.word.duplicate, .word.common {color: blue;}
+.word.other {color: #999;}
+.word:after {font-size: 9pt; font-style: italic;}
+.word.duplicate:after {content: " (dup)";}
+.word.common:after {content: " (common)";}
+.word.other:after {content: " (other)";}
+
+
+#board {
+    position: absolute;
+    top: 30px;
+    left: 0;
+}
+#board .container {
+    position: relative; height: 400px; width: 400px;
+}
+#game.inactive #board-blocker {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 10;
+    background-color: black;
+    opacity: 0.8;
+    text-align: center;
+}
+#game.inactive #board-blocker h1 {
+    margin-top: 100px;
+    color: white;
+}
+#board .cell {
+    background-color: #666;
+    color: white;
+    position: absolute; 
+    padding: 10px; 
+    text-align: center; 
+    font-family: sans-serif; 
+    font-size: 65px; 
+    border: solid 1px black; 
+    border-top-color: #999;
+    border-left-color: #999;
+    border-bottom-color: #333;
+    border-right-color: #333;
+    width: 78px; 
+    height: 78px;
+    cursor: pointer;
+}
+#board .cell .container {height: 78px; width: 78px;}
+#board .cell .note {position: absolute; left: 0; bottom: 0; font-size: 10pt; color: black;}
+#board .cell.active {background-color: #9cf; color: #333;}
+#board .cell.candidate {background-color: #fc9; color: #333;}
+#board .row0 .cell {top: 0;}
+#board .row1 .cell {top: 100px;}
+#board .row2 .cell {top: 200px;}
+#board .row3 .cell {top: 300px;}
+#board .row4 .cell {top: 400px;}
+#board .col0 {left: 0px;}
+#board .col1 {left: 100px;}
+#board .col2 {left: 200px;}
+#board .col3 {left: 300px;}
+#board .col4 {left: 400px;}
+
+#controls {
+    position: absolute;
+    font-size: 12pt;
+    top: 450px;
+    bottom: 20px;
+    left: 0;
+    text-align: center;
+}
+#controls input[type=text] {font-size: 32pt; text-transform: uppercase; text-align: center; border: solid 2px #bbb; background-color: white;}
+
+#time-left {font-weight: bold; font-size: 24pt;}

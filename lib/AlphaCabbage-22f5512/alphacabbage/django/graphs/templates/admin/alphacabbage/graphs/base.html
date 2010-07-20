@@ -1,0 +1,7 @@
+{% extends "admin/base_custom.html" %}
+
+
+{% block bc_inner %}
+{{ block.super }}
+&rsaquo; <a href="{% url graphs:index %}">Graphs</a>
+{% endblock bc_inner %}

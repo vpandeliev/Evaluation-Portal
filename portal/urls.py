@@ -14,6 +14,11 @@ urlpatterns = patterns('',
 	url(r'^accounts/login/$',  login, name="login"),
 	url(r'^accounts/logout/$', logout, name="logout"),
 	url(r'^accounts/register/$', register, name="register"),
+
+    # Hosted games
+    (r'^boggle/', include('portal.boggle.urls')),
+    
+	# Libraries
 	(r'^tinymce/', include('tinymce.urls')),
 	
 )
