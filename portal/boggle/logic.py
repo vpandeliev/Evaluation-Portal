@@ -3,73 +3,77 @@ from random import random
 from choices import *
 
 
-_scores = (
-    0,
-    0, 0, 1, 1,
-    2, 3, 5, 11,
-    11, 11, 11, 11,
-    11, 11, 11, 11,
-    )
-    
-
-def score_for_word(word):
-    return _scores[len(word)]
-
-
 class BoggleDice(object):
     
     '''
-    >>> dice = BoggleDice()
-    >>> len(list(dice))
+    >>> len(BoggleDice().shuffle().split())
     16
+    
+    >>> d = BoggleDice()
+    >>> d.shuffle() != d.shuffle()
+    True
+    >>> len(d.shuffle().split())
+    16
+    
+    >>> w = BoggleDice("""
+    ...     AAAAAA AAAAAA AAAAAA AAAAAA
+    ...     AAAAAA AAAAAA AAAAAA AAAAAA
+    ...     BBBBBB BBBBBB BBBBBB BBBBBB
+    ...     BBBBBB BBBBBB BBBBBB QQQQQQ
+    ... """).shuffle()
+    >>> w.count('A')
+    8
+    >>> w.count('B')
+    7
+    >>> w.count('Qu')
+    1
+    
+    >>> w = BoggleDice("""
+    ...     AAAAAA AAAAAA AAAAAA AAAAAA
+    ...     AAAAAA AAAAAA AAAAAA AAAAAA
+    ...     AAAAAA AAAAAA AAAAAA AAAAAA
+    ...     AAAAAA AAAAAA AAAAAA AAAAAA        
+    ...     """, special_die="BBBBBB").shuffle()
+    >>> w.count('A')
+    15
+    >>> w.count('*B')
+    1
     '''
-        
-    def __init__(self, *dice_list):
-        self.dice = list(dice_list)
+    
+    default_dice = '''
+        AAEEGN ELRTTY AOOTTW ABBJOO
+        EHRTVW CIMOTU DISTTY EIOSST
+        DELRVY ACHOPS HIMNQU EEINSU
+        EEGHNW AFFKPS HLNNRZ DEILRX
+    '''
+            
+    def __init__(self, dice=None, special_die=None):
+        self._dice = [d.strip() for d in (dice or self.default_dice).strip().split()]
+        self._special = special_die
     
     def __iter__(self):
-        while self.dice:
-            i = int(random() * len(self.dice))
-            yield self.roll(self.dice.pop(i))
+        dice = list(self._dice)
+        if self._special:
+            i = int(random() * len(dice))
+            dice[i] = '*' + self._special
+        while dice:
+            i = int(random() * len(dice))
+            die = dice.pop(i)
+            c = self.roll(die.lstrip('*'))
+            if c == 'Q':
+                c = 'Qu'
+            if die.startswith('*'):
+                # Special die
+                c = '*' + c
+            yield c 
     
+    def shuffle(self):
+        return ' '.join(list(self))
+        
     @staticmethod
     def roll(die):
         i = int(random() * len(die))
         return die[i]
-
-        
-_alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-_freq = 'EEEEEEEEEEEEEEEEEEEEEEEIIIIIIIIIIIIIIIIISSSSSSSSSSSSSSSSAAAAAAAAAAAAAAAARRRRRRRRRRRRRRRNNNNNNNNNNNNNNNTTTTTTTTTTTTTOOOOOOOOOOOOLLLLLLLLLLLCCCCCCCCDDDDDDDUUUUUUGGGGGGPPPPPPMMMMMMHHHHBBBBYYYFFFVVKKWWZXJQ'
-
-
-def random_letter():
-    a = _freq
-    i = int(random() * len(a))
-    return a[i]
-
-
-def get_shuffled_board():
-    '''
-    A 4x4 board such as this:
-        A G I X
-        A B T S
-        P Q Z I
-        O D X L
-    Is represented as this:
-        "AGIXABTSPQZIODXL"
-    '''
-    return ''.join(list(BoggleDice()))
-
-
-class Board(object):
-    
-    def __init__(self, cells):
-        self._cells = cells
-    
-    def __getitem__(self, item):
-        assert re.match(r'\d\d', item), 'Invalid cell %s' % item
-        i, j = map(int, item)
-        return self._cells[i*4+j]
         
 
 class LogicMode(object):
@@ -87,63 +91,46 @@ class LogicMode(object):
 
 class Scoring(LogicMode):
     
+    _scores = (
+        0,
+        0, 0, 1, 1,
+        2, 3, 5, 11,
+        11, 11, 11, 11,
+        11, 11, 11, 11,
+        )
+    
     def normal(self, word):
-        return 0
+        return self._scores[len(word)]
 
     def master(self, word):
-        return 0
+        return self.normal(word)
 
     def challenge_cube(self, word):
-        return 0
-        
+        return self.normal(word)
 scoring = Scoring()
-        
+
+
 class Shuffler(LogicMode):
 
     def normal(self):
-        values = BoggleDice(
-            'AAEEGN',
-            'ELRTTY',
-            'AOOTTW',
-            'ABBJOO',
-            'EHRTVW',
-            'CIMOTU',
-            'DISTTY',
-            'EIOSST',
-            'DELRVY',
-            'ACHOPS',
-            'HIMNQU',
-            'EEINSU',
-            'EEGHNW',
-            'AFFKPS',
-            'HLNNRZ',
-            'DEILRX',
-        )
-        return ''.join(list(values))
+        return BoggleDice().shuffle()
 
     def master(self):
-        values = BoggleDice(
-            'AAEEGN',
-            'ELRTTY',
-            'AOOTTW',
-            'ABBJOO',
-            'EHRTVW',
-            'CIMOTU',
-            'DISTTY',
-            'EIOSST',
-            'DELRVY',
-            'ACHOPS',
-            'HIMNQU',
-            'EEINSU',
-            'EEGHNW',
-            'AFFKPS',
-            'HLNNRZ',
-            'DEILRX',
-        )
-        return ''.join(list(values))
+        return BoggleDice("""
+            AAEEGN ELRTTY AOOTTW ABBJOO
+            EHRTVW CIMOTU DISTTY EIOSST
+            DELRVY ACHOPS HIMNQU EEINSU
+            EEGHNW AFFKPS HLNNRZ DEILRX
+        """).shuffle()
 
     def challenge_cube(self):
-        return get_shuffled_board()
-
+        return BoggleDice(special_die="QQQQQQ").shuffle()
 shuffler = Shuffler()
 
+
+def _test():
+    import doctest
+    doctest.testmod()
+ 
+if __name__ == "__main__":
+    _test()

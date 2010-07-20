@@ -145,8 +145,10 @@ input[type=submit] {
 }
 #board .cell .container {height: 78px; width: 78px;}
 #board .cell .note {position: absolute; left: 0; bottom: 0; font-size: 10pt; color: black;}
+#board .cell.special {border-color: black; border-bottom-color: white; border-right-color: white; background-color: #ccc; color: black;}
 #board .cell.active {background-color: #9cf; color: #333;}
 #board .cell.candidate {background-color: #fc9; color: #333;}
+#board .cell.special.active, #board .cell.special.candidate {background-color: #69c;}
 #board .row0 .cell {top: 0;}
 #board .row1 .cell {top: 100px;}
 #board .row2 .cell {top: 200px;}

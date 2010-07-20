@@ -31,7 +31,7 @@ class Game(models.Model):
     game_over_url = models.CharField(max_length=200)
 
     round = property(lambda self: self.state == game_states.IN_PROGRESS and self.round_set.count() and self.round_set.all()[0] or None)
-    board = property(lambda self: self.state == game_states.IN_PROGRESS and self.round_set.count() and Board(self.round.board) or None)
+    board = property(lambda self: self.state == game_states.IN_PROGRESS and self.round_set.count() and self.round.board or None)
     is_over = property(lambda self: self.round_set.count() >= self.round_max)
 
     class Meta:

@@ -166,6 +166,21 @@ class StageGroup(models.Model):
 	def __unicode__(self):
 		return u'%s - %s (%s)' % (self.stage, self.group, self.order)
 
+class Data(models.Model):
+    """A data object"""
+    
+    studyparticipant = models.ForeignKey(StudyParticipant)
+    stage = models.IntegerField('Stage')
+    session = models.IntegerField('Session')
+    timestamp = models.DateTimeField('Timestamp')
+    datum = models.TextField('Datum')
+    
+    def __init__(self, arg):
+        super(Data, self).__init__()
+        self.arg = arg
+    
+    
+        
 class UserStage(models.Model):
 	user = models.ForeignKey(User)
 	stage = models.ForeignKey(Stage)
