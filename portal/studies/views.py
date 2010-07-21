@@ -142,20 +142,16 @@ def added_to_study(request, study_id, user_id):
 @login_required
 def log_datum(request):
     """Logs a single piece of data"""
-    print "HERERE"
     if request.method != 'POST': 
-        print "here is ro"
         return HttpResponseBadRequest()
     studyid = request.POST['study_id']
     timestamp = request.POST['timestamp']
     data = request.POST['data']
-    print "data.write"
     try:
       Data.write(studyid, request.user, timestamp, data)
     except Exception as inst:
-      print type(inst)
+      print inst
     #send: studyid, request.user, time, data
-    print "asdfasdfsf"
     return HttpResponse("YAY!")
 ############### StudyUser
 

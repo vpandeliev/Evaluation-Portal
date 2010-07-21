@@ -178,7 +178,7 @@ class Data(models.Model):
         stage = d.studyparticipant.get_current_stage()
         d.stage = stage.order
         d.session = stage.sessions_completed + 1
-        d.timestamp = datetime.datetime.fromtimestamp(int(time))
+        d.timestamp = datetime.datetime.fromtimestamp(float(time))
         d.datum = data
         d.save()
     

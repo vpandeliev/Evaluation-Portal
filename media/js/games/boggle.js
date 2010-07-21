@@ -86,7 +86,7 @@ var Boggle = Class.create({
               self.addWordToList(word,transport);
               var response = {"study_id":study_id,
                               "data":word + ','+transport.responseJSON["score"],
-                              "timestamp": (new Date).getTime()};
+                              "timestamp": (new Date).getTime()/1000.0};
               new Ajax.Request('/study/send-data',{
                 method: 'post',
                 postBody: 'study_id=' + response['study_id'] + 
