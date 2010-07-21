@@ -72,16 +72,29 @@ var Boggle = Class.create({
         return delta.empty() ? false : delta;
     },
     /********************************************************/
-    /* COMMANDS                                             */
+    /* COMMANDS    (MAKE CHANGE HERE [LIAM])                */
     /********************************************************/
     submitWord: function(word) {
         var form = $('word-form');
+        var self = this;
+        var study_id = location.search.match(/return_to=(\d+)/)[1];
         new Ajax.Request(form.getAttribute('action'), {
             method: 'post',
             evalJS: true,
             postBody: 'word=' + word,
-            onSuccess: this.addWordToList.curry(word).bindAsEventListener(this)
+            onSuccess: function(transport){
+              self.addWordToList(word,transport);
+              var response = {"study_id":study_id,
+                              "data":word + ','+transport.responseJSON["score"],
+                              "timestamp": (new Date).getTime()};
+              new Ajax.Request('/studies/send-data',{
+                method: 'post',
+                postBody: 'result=' + $H(response).toJSON()
+              });
+            }
+          /*this.addWordToList.curry(word).bindAsEventListener(this)*/
         });
+
     },
     addWordToList: function(word, response) {
         this._wordList.addWord(word, response.responseJSON);

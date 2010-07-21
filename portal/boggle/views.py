@@ -28,7 +28,7 @@ def create_new_game(request):
     game = Game.objects.create(round_max=play_for, game_over_url=return_to)
     return join_game(request, game.id)
 
-
+#to change state of next game, need to get parameter for mode type...[LIAM]
 @login_required
 def start_round(request, game_id):
     game = get_object_or_404(Game, pk=game_id)
