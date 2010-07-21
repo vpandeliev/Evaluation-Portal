@@ -175,9 +175,10 @@ class Data(models.Model):
     def write(cls,studyid, user, time, data):
         d = Data()
         d.studyparticipant = Study.objects.get(id=int(studyid)).get_study_participant(user) 
-        d.stage = d.studyparticipant.get_current_stage().order
-        d.session = d.stage.sessions_completed + 1
-        d.timestamp = datetime.fromtimestamp(int(time))
+        stage = d.studyparticipant.get_current_stage()
+        d.stage = stage.order
+        d.session = stage.sessions_completed + 1
+        d.timestamp = datetime.datetime.fromtimestamp(int(time))
         d.datum = data
         d.save()
     
