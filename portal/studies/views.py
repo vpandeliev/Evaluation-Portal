@@ -148,7 +148,7 @@ def log_datum(request):
     data = request.POST['data']
     Data.write(studyid, request.user, timestamp, data)
     #send: studyid, request.user, time, data
-'''
+
     pass
 
 ############### StudyUser
