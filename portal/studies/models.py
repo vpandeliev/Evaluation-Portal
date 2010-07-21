@@ -171,10 +171,6 @@ class Data(models.Model):
     timestamp = models.DateTimeField('Timestamp')
     datum = models.TextField('Datum')
     
-    def __init__(self, arg):
-        super(Data, self).__init__()
-        self.arg = arg
-    
     def write(studyid, user, time, data):
         d = Data()
         d.studyparticipant = Study.objects.get(id=studyid).get_study_participant(user) 
