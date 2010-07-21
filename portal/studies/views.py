@@ -3,6 +3,7 @@ from django.template import RequestContext
 import hashlib
 
 from django.http import HttpResponseRedirect
+from django.http import HttpResponse
 from models import *
 from forms import *
 from django.contrib.auth.decorators import login_required
@@ -141,14 +142,21 @@ def added_to_study(request, study_id, user_id):
 @login_required
 def log_datum(request):
     """Logs a single piece of data"""
+    print "HERERE"
     if request.method != 'POST': 
+        print "here is ro"
         return HttpResponseBadRequest()
     studyid = request.POST['study_id']
     timestamp = request.POST['timestamp']
     data = request.POST['data']
-    Data.write(studyid, request.user, timestamp, data)
+    print "data.write"
+    try:
+      Data.write(studyid, request.user, timestamp, data)
+    except Exception as inst:
+      print type(inst)
     #send: studyid, request.user, time, data
-    return HttpResponseRedirect('study/')
+    print "asdfasdfsf"
+    return HttpResponse("YAY!")
 ############### StudyUser
 
 def invite_user(request,study_id):

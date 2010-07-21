@@ -171,9 +171,10 @@ class Data(models.Model):
     timestamp = models.DateTimeField('Timestamp')
     datum = models.TextField('Datum')
     
-    def write(studyid, user, time, data):
+    @classmethod
+    def write(cls,studyid, user, time, data):
         d = Data()
-        d.studyparticipant = Study.objects.get(id=studyid).get_study_participant(user) 
+        d.studyparticipant = Study.objects.get(id=int(studyid)).get_study_participant(user) 
         d.stage = d.studyparticipant.get_current_stage().order
         d.session = d.stage.sessions_completed + 1
         d.timestamp = datetime.fromtimestamp(int(time))

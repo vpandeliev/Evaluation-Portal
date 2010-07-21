@@ -87,9 +87,11 @@ var Boggle = Class.create({
               var response = {"study_id":study_id,
                               "data":word + ','+transport.responseJSON["score"],
                               "timestamp": (new Date).getTime()};
-              new Ajax.Request('/studies/send-data',{
+              new Ajax.Request('/study/send-data',{
                 method: 'post',
-                postBody: 'result=' + $H(response).toJSON()
+                postBody: 'study_id=' + response['study_id'] + 
+                  '&data=' + response['data'] +
+                  '&timestamp=' + response['timestamp']
               });
             }
           /*this.addWordToList.curry(word).bindAsEventListener(this)*/
