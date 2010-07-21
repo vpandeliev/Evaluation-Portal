@@ -42,7 +42,7 @@ def show_one_study(request,study_id):
 
 	else: 
 		#unauthorized URL mucking about with
-		pass
+		return HttpBadRequest()
 	return render_to_response('show_one_study.html',locals(), context_instance=RequestContext(request))
 	
 @login_required
@@ -136,6 +136,20 @@ def added_to_study(request, study_id, user_id):
 		message = message[0]
 	new = not (message is None)
 	return render_to_response('added_to_study.html',locals(), context_instance=RequestContext(request))
+
+############### Data Collection
+@login_required
+def log_datum(request):
+    """Logs a single piece of data"""
+    if request.method != 'POST': 
+        return HttpResponseBadRequest()
+    studyid = request.POST['study_id']
+    timestamp = request.POST['timestamp']
+    data = request.POST['data']
+    Data.write(studyid, request.user, timestamp, data)
+    #send: studyid, request.user, time, data
+'''
+    pass
 
 ############### StudyUser
 

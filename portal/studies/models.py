@@ -19,7 +19,7 @@ class Study(models.Model):
 	
 	def save(self, *args,**kwargs):
 		#create timestamps, keep track of user
-		print "saving study"
+		
 		super(Study, self).save(*args, **kwargs) 
 	
 	def role(self,user):
@@ -81,11 +81,8 @@ class StudyInvestigator(models.Model):
 	def stages(self):
 		"""Returns all of a study's stages as userstage objects"""
 		stages = Stage.objects.filter(study=self.study)
-		print "haha"
-		print stages
 		stageusers = [UserStage.objects.filter(stage=x)[0] for x in stages]
 		stageusers.sort(key=attrgetter('order'))
-		print stageusers
 		return [x.stage for x in stageusers]
 		#return [11,22,33]
 			
@@ -114,7 +111,6 @@ class StudyParticipant(models.Model):
 		
 	def save(self):
 		#create timestamps, keep track of user modifying, etc.
-#		print "saving..."
 		super(StudyParticipant,self).save()
 
 	def get_current_stage(self):
@@ -179,6 +175,14 @@ class Data(models.Model):
         super(Data, self).__init__()
         self.arg = arg
     
+    def write(studyid, user, time, data):
+        d = Data()
+        d.studyparticipant = Study.objects.get(id=studyid).get_study_participant(user) 
+        d.stage = d.studyparticipant.get_current_stage().order
+        d.session = d.stage.sessions_completed + 1
+        d.timestamp = datetime.fromtimestamp(int(time))
+        d.datum = data
+        d.save()
     
         
 class UserStage(models.Model):

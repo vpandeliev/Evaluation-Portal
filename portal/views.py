@@ -45,6 +45,5 @@ def login(request):
 
 def logout(request):
 	auth.logout(request)
-	print "flag"
 	# Redirect to a success page.
 	return HttpResponseRedirect("/")

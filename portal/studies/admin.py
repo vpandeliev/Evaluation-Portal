@@ -8,7 +8,6 @@ class StudyParticipantAdmin( admin.ModelAdmin ):
 	}
 	
 	def save_model(self, request, obj, form, change):
-		print "saving studyparticipant"
 		#get all stages for the group 
 		for x in StageGroup.objects.filter(group=obj.group).order_by('order'):
 			a = UserStage.objects.filter(user=obj.user, stage=x.stage)
