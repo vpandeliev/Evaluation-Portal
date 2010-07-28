@@ -188,7 +188,9 @@ a:visited{ color: blue;}
   margin-bottom: 10px;
 }
 #study_details{
-  border: 1px solid black;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  padding: 0 5px;
 }
 
 #login_outer{

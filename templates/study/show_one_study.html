@@ -121,9 +121,8 @@
 	<a href="{% url edit_one_study study.id %}">edit</a> |<a href="{% url edit_one_study study.id %}">edit</a> |
 	<a href="{% url remove_one_study study.id %}" onclick="confirm('Are you sure?')">Delete</a>)</p>
 -->
-{% else %}
-You are not authorized to view this study.
-{% endifequal %}
+
+
 
 
 <!-- this will also have to change depending on investigator/participant -->
@@ -133,6 +132,7 @@ You are not authorized to view this study.
   <a href="" class="button">Message Center</a>
   <a href="" class="button">Manage Users</a>
 </div>
+{% endifequal %}
 <div id="study_details">
   <p>{{study.description}}</p>
 	<p>{{study.consent}}</p>
