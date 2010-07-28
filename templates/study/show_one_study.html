@@ -29,22 +29,27 @@
       <div class="stage_header">
         <span><strong>Stage:</strong> {{astage.stage.name}}</span>
         <a href="" class="button" id="instruction_button_{{forloop.counter}}">Stage Instructions</a>
-        <div class="instructions" style="display:none;" id="instructions_{{forloop.counter}}">
-          {{astage.stage.instructions}}
-        </div>
+        <div class="clear"></div>
       </div>
+      <div class="instructions" style="display:none;" id="instructions_{{forloop.counter}}">
+        {{astage.stage.instructions}}
+      </div>
+      <div class="stage_instructions_header">Instructions</div>
       <p class="stage_description">
         {{astage.stage.description}}
       </p>
       <div class="act_container">
-        <a href="/study/{{study_id}}/{{action}}" class="button">Act</a>
+        <div class="act_container_header">Status</div>
+        <p>
         {%if astage.overdue%}
 			    You're overdue!! Bad you!
 		    {% else %}
 			    Complete by: {{astage.nextdeadline|date:"d M Y"}}
-		  {% endif %}
+		    {% endif %}
+        <br /><br /><a href="/study/{{study_id}}/{{action}}" class="button">Act</a>
+        </p>
       </div>
-      <p>
+      <p class="stage_sofar">
         {{astage.order}}/{{studypart.number_of_stages}}
         Completed: {{astage.sessions_completed}}/{{astage.stage.sessions}}
       </p>

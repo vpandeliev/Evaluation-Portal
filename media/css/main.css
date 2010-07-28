@@ -105,14 +105,37 @@ a:visited{ color: blue;}
 }
 
 
+
+/* Show one study*/
 #stage_info{
-  border: 1px solid black;
+  border: 1px solid #ccc;
+}
+
+.stage_panel p{
+
+  padding: 10px 5px;
+  margin: 0;
+  clear: both;'
+}
+
+.stage_header {
+
   padding: 5px;
 
 }
 
-.stage_header {
+.act_container_header {
+  padding: 5px;
+  border-bottom: 1px solid #ccc;
+  background: #eee;
+  font-weight: bold;
 }
+
+.stage_sofar{
+  border-top: 1px solid #ccc;
+  text-align: right;
+}
+
 .stage_header h2 {
   display: inline;
   position: relative;
@@ -124,6 +147,17 @@ a:visited{ color: blue;}
 .stage_header a{
   float: right;
   margin-left: 10px;
+}
+
+.stage_instructions_header{
+  padding: 5px;
+  border-bottom: 1px solid #ccc;
+  background: #eee;
+  font-weight: bold;
+}
+
+.stage_instructions_header a {
+  float: right;
 }
 
 .table_wrapper table{
