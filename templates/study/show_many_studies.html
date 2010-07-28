@@ -2,10 +2,12 @@
 
 {% block content %}
 <h1>Studies</h1>
-<a href="{% url create_one_study %}">Create New Study</a>
+
+
 
 {% if studies_as_investigator %}
 <h2>Investigating</h2>
+<a href="{% url create_one_study %}" class="button">Create New Study</a>
 <ul class="many_studies">
   {% for study_inv in studies_as_investigator %}
   <li>
@@ -43,14 +45,15 @@
   {% for study_user in studies_as_participant %}
   <li>
     <h3>{{ study_user.study.name }}<span class="study_status">Status</span></h3>
-    <table>
-      <tr>
-        <td><span class="next">NEXT:</span> Stage info!</td>
-        <td>Do this before....</td>
-        <td><a href="" class="button">Act</a></td>
-      </tr>
-    </table>
+    <p>
+      Do this before...
+    </p>
+    <p>
+      <span class="next">NEXT:</span> Stage info!
+    </p>
+
     <div class="micro_study_options">
+      <a href="" class="button">Act</a>
       <a href="/feedback" class="button">Feedback</a>
       <a href="{% url show_one_study study_user.study.id%}" class="button"> Study Home</a>
     </div>
