@@ -10,6 +10,9 @@
 	</head>
 	<body>
 		<div id="outer">
+
+		  {% if request.path != "/accounts/login/" %}
+		  
 			<div id="login_menu">
 				{% if user.is_authenticated %}
 					{{user.username}} | <a href="{% url logout %}">Logout</a>
@@ -17,6 +20,7 @@
 					<a href="{% url login %}">Login</a>
 				{% endif%}
 			</div>
+			{% endif %}
 			{% block content %}{% endblock %}
 		</div>
 	</body>

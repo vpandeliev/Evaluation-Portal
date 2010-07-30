@@ -5,3 +5,5 @@ portal/local_settings.py
 */**/*.pyc
 db
 build
+.DS_Store
+*/**/.DS_Store

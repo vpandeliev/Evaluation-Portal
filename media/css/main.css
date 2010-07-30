@@ -193,6 +193,7 @@ a:visited{ color: blue;}
   padding: 0 5px;
 }
 
+
 #login_outer{
   text-align: center;
 }
@@ -202,20 +203,34 @@ a:visited{ color: blue;}
   margin-top: 40px;
   text-align: left;
   border: 1px solid #ccc;
+  background: #eee;
   width: 300px;
-  padding: 4px;
+  padding: 10px;
+  text-shadow: 2px 2px 2px #fff;
+  -moz-box-shadow: 5px 5px 5px #ddd;
+  -webkit-box-shadow: 5px 5px 5px #ddd;
 }
 
 #login_submit {
-  width: 150px;
+  width: 120px;
   float: right;
   margin-top: 10px;
+  border: 1px solid green;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  text-shadow: 1px 1px 1px #fff;
+  font-size: 100%;
+}
+
+#login_submit:hover {
+  background: #ddd;
 }
 
 .login_input{
-  width: 292px;
+  width: 286px;
   border: 1px solid #ccc;
-  padding:3px;
+  padding:5px;
+  font-size: 100%;
 }
 
 /* Show Many Studies */
