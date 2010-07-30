@@ -91,7 +91,8 @@ var Boggle = Class.create({
                 method: 'post',
                 postBody: 'study_id=' + response['study_id'] + 
                   '&data=' + response['data'] +
-                  '&timestamp=' + response['timestamp']
+                  '&timestamp=' + response['timestamp'] +
+                  '&code=bog'
               });
             }
           /*this.addWordToList.curry(word).bindAsEventListener(this)*/
