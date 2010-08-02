@@ -193,7 +193,7 @@ def log_game(request):
 def log_consent(request, study_id):
     """Logs informed consent"""
     try:
-        Data.write(study_id, request.user, datetime.datetime.now(), "Consent given")
+        Data.write(study_id, request.user, datetime.datetime.now(), "Consent given", "CON")
     except Exception as inst:
       print "log_consent", inst
     #send: studyid, request.user, time, data
