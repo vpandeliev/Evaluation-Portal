@@ -170,6 +170,7 @@ class Data(models.Model):
     session = models.IntegerField('Session')
     timestamp = models.DateTimeField('Timestamp')
     datum = models.TextField('Datum')
+    code = models.CharField(max_length=3)
     
     @classmethod
     def write(cls,studyid, user, time, data):
