@@ -181,8 +181,9 @@ def log_game(request):
     timestamp = request.POST['timestamp']
     data = request.POST['data']
     dt = datetime.datetime.fromtimestamp(float(timestamp))
+    code = request.POST['code']
     try:
-      Data.write(studyid, request.user, dt, data)
+      Data.write(studyid, request.user, dt, data,code)
     except Exception as inst:
       print "log_game:" + inst
     #send: studyid, request.user, time, data
