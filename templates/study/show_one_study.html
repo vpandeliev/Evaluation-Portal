@@ -147,13 +147,13 @@
 <div id="study_details">
 	<h2>Description<button onclick="toggle_detail('d1',$(this));" class="right"></button></h2>
   	<p id="d1" style="display:none;">{{study.description|safe}}</p>
-	<h2>Informed Consent<button onclick="toggle_detail('d2');"  class="right"></button></h2>
+	<h2>Informed Consent<button onclick="toggle_detail('d2',$(this));"  class="right"></button></h2>
 	<p id="d2"  style="display:none;">{{study.consent|safe}}</p>
-	<h2>Instructions<button onclick="toggle_detail('d3');"  class="right"></button></h2>
+	<h2>Instructions<button onclick="toggle_detail('d3',$(this));"  class="right"></button></h2>
 	<p id="d3"  style="display:none;">{{study.instructions|safe}}</p>
-	<h2>Eligibility<button onclick="toggle_detail('d4');"  class="right"></button></h2>
+	<h2>Eligibility<button onclick="toggle_detail('d4',$(this));"  class="right"></button></h2>
 	<p id="d4" style="display:none;">{{study.eligibility|safe}}</p>
-	<h2>Reward<button onclick="toggle_detail('d5');"  class="right"></button></h2>
+	<h2>Reward<button onclick="toggle_detail('d5',$(this));"  class="right"></button></h2>
 	<p id="d5" style="display:none;">{{study.reward|safe}}</p>
 </div>
 
