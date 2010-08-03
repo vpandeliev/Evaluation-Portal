@@ -202,12 +202,12 @@ background-color: #ddd
 }
 #study_details{
   margin-top: 5px;
-  border: 1px solid #ccc;
-  padding: 0 5px;
+  /*border: 1px solid #ccc;
+  padding: 0 5px;*/
 }
 
 #study_details h2{
-  border: 1px solid #C1CDCD;
+  border: 1px dotted #C1CDCD;
   padding-top: 6px;
 }
 
