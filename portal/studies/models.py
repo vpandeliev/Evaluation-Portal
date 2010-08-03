@@ -23,12 +23,18 @@ class Study(models.Model):
         super(Study, self).save(*args, **kwargs) 
     
     def role(self,user):
+        a = 0
+        allowed = False
         if StudyParticipant.objects.filter(user=user,study=self).count() > 0:
-            return 1
-        elif StudyInvestigator.objects.filter(investigator=user,study=self).count() > 0:
-            return 2
+            a += 1
+            allowed = True
+        if StudyInvestigator.objects.filter(investigator=user,study=self).count() > 0:
+            a += -1
+            allowed = True
+        if allowed:
+            return a
         else:
-            return 0
+            return -2
             
     def set_investigator(self, current_user):
         """Assign creator of study to investigator role"""

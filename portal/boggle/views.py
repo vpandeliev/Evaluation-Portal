@@ -25,9 +25,10 @@ def create_new_game(request):
     '''
     
     play_for = request.GET.get('play_for', 10)
-    return_to = request.GET.get('return_to', '/')		
+    return_to = request.GET.get('return_to', '/')
+    query = request.GET.urlencode()
     game = Game.objects.create(round_max=play_for, game_over_url=return_to)
-    return join_game(request, game.id)
+    return join_game(request, game.id, query)
 
 #to change state of next game, need to get parameter for mode type...[LIAM]
 @login_required
@@ -35,7 +36,7 @@ def start_round(request, game_id):
     game = get_object_or_404(Game, pk=game_id)
     # In case somebody else already started the game.
     if game.state == game_states.WAITING_FOR_PLAYERS:
-        game.start_round(mode=boggle_modes.CHALLENGE_CUBE)
+        game.start_round(mode=boggle_modes.NORMAL)
 
     return HttpResponseRedirect(reverse('play-boggle-game', kwargs={'game_id': game.id}))
 
@@ -64,7 +65,7 @@ def leave_game(request, game_id):
 
 
 @login_required
-def join_game(request, game_id):
+def join_game(request, game_id, query_string):
     game = get_object_or_404(Game, pk=game_id)
     
     if game.state == game_states.COMPLETE:
@@ -77,7 +78,9 @@ def join_game(request, game_id):
         
     # Add player to the new game and redirect to play page.
     game.create_player_for_user(request.user)
-    return HttpResponseRedirect(reverse('portal.boggle.views.play_game', kwargs={'game_id': game.id}))
+    redirectpath = "/study/boggle/" + str(game.id) + "/play/?" + query_string
+    print redirectpath
+    return HttpResponseRedirect(redirectpath)
 
 
 @login_required
@@ -97,6 +100,8 @@ def play_game(request, game_id):
     '''
     Play a game of boggle.
     '''
+   
+    
     game = get_object_or_404(Game, pk=game_id)
     try:
         player = game.player_set.active().get(user=request.user)
@@ -111,6 +116,7 @@ def play_game(request, game_id):
         'score': game.round and game.round.score_for(player),
         'players': game.player_set.active(),
         'game_states': game_states,
+        'query_string': request.GET.urlencode()
     }
     return render_to_response('boggle/play_game.html', context)
 

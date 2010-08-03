@@ -2,9 +2,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 import hashlib
 
-#from django.http import HttpResponseRedirect
-#from django.http import HttpResponse
-from django import http
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
 from models import *
 from forms import *
 from django.contrib.auth.decorators import login_required
@@ -34,17 +32,17 @@ def show_one_study(request,s_id):
     study_id = s_id
     study = Study.objects.get(id=study_id)
     role = study.role(request.user)
-    if role == 1:
+    if role > -1:
         #participant
         studypart = study.get_study_participant(request.user)
         stages = studypart.participant_stages()
         action = studypart.get_current_stage().stage.url
-    elif role == 2: 
+    elif role == -1: 
         studyinv = study.get_study_investigator(request.user)
         stages = studyinv.stages()
     else: 
         #unauthorized URL mucking about with
-        return HttpBadRequest()
+        return HttpResponseBadRequest()
     return render_to_response('show_one_study.html',locals(), context_instance=RequestContext(request))
     
 @login_required
@@ -171,7 +169,7 @@ def consented(request,study_id):
         log_consent(request, study_id)
     else: 
         #unauthorized URL mucking about with
-        return HttpBadRequest()
+        return HttpResponseBadRequest()
     return HttpResponseRedirect('/study/'+study_id)
 
 

@@ -77,6 +77,7 @@ var Boggle = Class.create({
     submitWord: function(word) {
         var form = $('word-form');
         var self = this;
+        console.log(location)
         var study_id = location.search.match(/study_id=(\d+)/)[1];
         new Ajax.Request(form.getAttribute('action'), {
             method: 'post',
@@ -89,7 +90,7 @@ var Boggle = Class.create({
                               "timestamp": (new Date).getTime()/1000.0};
               new Ajax.Request('/study/send-data',{
                 method: 'post',
-                postBody: 'study_id=' + response['study_id'] + 
+                postBody: 'study_id=' + study_id + 
                   '&data=' + response['data'] +
                   '&timestamp=' + response['timestamp'] +
                   '&code=bog'
@@ -619,7 +620,7 @@ var QueryState = Class.create({
         this._currentRound = new Number(node.getAttribute('roundId'));
 	//console.log(this._currentState, this._currentRound);
         this._waiting = false;
-        this._timer = setTimeout(this.sendQuery.bindAsEventListener(this), 1000);
+        // this._timer = setTimeout(this.sendQuery.bindAsEventListener(this), 1000);
     },
     sendQuery: function() {
         if (!this._waiting) {

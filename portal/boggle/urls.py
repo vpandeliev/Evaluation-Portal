@@ -8,7 +8,7 @@ urlpatterns = patterns('portal.boggle.views',
     url(r'^(?P<game_id>\d+)/next-round/$', 'next_round', name='next-boggle-round'),    
     url(r'^(?P<game_id>\d+)/join/$', 'join_game', name='join-boggle-game'),
     url(r'^(?P<game_id>\d+)/leave/$', 'leave_game', name='leave-boggle-game'),
-    url(r'^(?P<game_id>\d+)/play/$', 'play_game', name='play-boggle-game'),
+    url(r'^(?P<game_id>\d+)/play/', 'play_game', name='play-boggle-game'),
     url(r'^(?P<game_id>\d+)/game-over/$', 'game_over', name='game-over'),
 
     # XHR  
