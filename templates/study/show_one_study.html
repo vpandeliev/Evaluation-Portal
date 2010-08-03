@@ -2,7 +2,7 @@
 
 {% block content %}
 	<h1>{{study.name}}</h1>
-{% ifequal role 1 %}
+{% if role > -1 %}
   <!--stage menu-->
   <div id="stages_nav">
     <ul>
@@ -67,8 +67,9 @@
   </div>
 
 
-{% endifequal %}
-{% ifequal role 2 %} 
+{% else %}
+
+
 <!-- Investigator -->
   <div id="stages_nav">
     <ul>
@@ -82,6 +83,7 @@
 			    <li class="not_active"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box">{{astage.number_of_users}}</a></li>
 			  {% endifequal %}
 		  {% endif %}
+		
 	{% endfor%}
 </div>
   </ul>
@@ -141,7 +143,7 @@
   <a href="" class="button">Message Center</a>
   <a href="" class="button">Manage Users</a>
 </div>
-{% endifequal %}
+{% endif %}
 
 
 <div id="study_details">
