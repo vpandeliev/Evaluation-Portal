@@ -173,7 +173,7 @@ class Data(models.Model):
     code = models.CharField(max_length=3)
     
     @classmethod
-    def write(cls,studyid, user, time, data):
+    def write(cls, studyid, user, time, data, code):
         d = Data()
         d.studyparticipant = Study.objects.get(id=int(studyid)).get_study_participant(user) 
         stage = d.studyparticipant.get_current_stage()
@@ -181,6 +181,7 @@ class Data(models.Model):
         d.session = stage.sessions_completed + 1
         d.timestamp = time
         d.datum = data
+        d.code = code
         d.save()
     
         
@@ -207,8 +208,10 @@ class UserStage(models.Model):
 
     def session_completed(self):
         print "SESSION COMPLETE BITCH"
+        
         self.sessions_completed += 1
         self.last_session_completed = datetime.datetime.now()
+        Data.write(self.stage.study.id, self.user, self.last_session_completed, "session completed", "ssc")
         if self.sessions_completed == self.stage.sessions:
             #this stage is finished
             self.status = 0

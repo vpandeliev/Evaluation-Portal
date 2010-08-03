@@ -2,8 +2,9 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 import hashlib
 
-from django.http import HttpResponseRedirect
-from django.http import HttpResponse
+#from django.http import HttpResponseRedirect
+#from django.http import HttpResponse
+from django import http
 from models import *
 from forms import *
 from django.contrib.auth.decorators import login_required
@@ -150,9 +151,11 @@ def informed_consent(request,study_id):
         studypart = study.get_study_participant(request.user)
         stage = studypart.get_current_stage()
         action = stage.stage.url
+        if stage.order != 1:
+            return http.HttpResponseBadRequest()
     else: 
         #unauthorized URL mucking about with
-        return HttpBadRequest()
+        return http.HttpResponseBadRequest()
     return render_to_response('informed_consent.html',locals(), context_instance=RequestContext(request))
 
 

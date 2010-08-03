@@ -77,7 +77,7 @@ var Boggle = Class.create({
     submitWord: function(word) {
         var form = $('word-form');
         var self = this;
-        var study_id = location.search.match(/return_to=(\d+)/)[1];
+        var study_id = location.search.match(/study_id=(\d+)/)[1];
         new Ajax.Request(form.getAttribute('action'), {
             method: 'post',
             evalJS: true,

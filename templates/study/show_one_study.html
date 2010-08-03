@@ -36,22 +36,31 @@
       </div>
       <div class="stage_instructions_header">Instructions</div>
       <p class="stage_description">
-        {{astage.stage.description}}
+        {{astage.stage.description|safe}}
       </p>
       <div class="act_container">
         <div class="act_container_header">Status</div>
         <p>
-        {%if astage.overdue%}
-			    You're overdue!! Bad you!
-		    {% else %}
-			    Complete by: {{astage.nextdeadline|date:"d M Y"}}
-		    {% endif %}
-        <br /><br /><a href="/study/{{study_id}}/{{action}}" class="button">Act</a>
+        	{%ifequal astage.status 1 %}
+				{%if astage.overdue%}
+				    <span class="red">You're overdue! Next session was due: {{astage.nextdeadline|date:"d M Y"}}</span>
+			    {% else %}
+				    Complete session by: {{astage.nextdeadline|date:"d M Y"}}
+			    {% endif %}
+				<br /><br /><a href="{{action}}" class="button">Act</a>
+			{% else %}{%ifequal astage.status 2 %}
+				This is a future stage. No action is required.
+			{% else %}
+				<span class="green">Stage complete!</span>
+			{% endifequal %}
+			{% endifequal %}
+        
         </p>
       </div>
       <p class="stage_sofar">
-        {{astage.order}}/{{studypart.number_of_stages}}
-        Completed: {{astage.sessions_completed}}/{{astage.stage.sessions}}
+        Stage {{astage.order}} of {{studypart.number_of_stages}}
+		<br/>
+        Completed: {{astage.sessions_completed}} sessions (out of {{astage.stage.sessions}})
       </p>
     </div>
   {% endfor %}
@@ -133,12 +142,19 @@
   <a href="" class="button">Manage Users</a>
 </div>
 {% endifequal %}
+
+
 <div id="study_details">
-  <p>{{study.description}}</p>
-	<p>{{study.consent}}</p>
-	<p>{{study.instructions}}</p>
-	<p>{{study.eligibility}}</p>
-	<p>{{study.reward}}</p>
+	<h2>Description</h2>
+  	<p>{{study.description|safe}}</p>
+	<h2>Informed Consent</h2>
+	<p>{{study.consent|safe}}</p>
+	<h2>Instructions</h2>
+	<p>{{study.instructions|safe}}</p>
+	<h2>Eligibility</h2>
+	<p>{{study.eligibility|safe}}</p>
+	<h2>Reward</h2>
+	<p>{{study.reward|safe}}</p>
 </div>
 
 

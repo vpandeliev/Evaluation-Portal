@@ -13,7 +13,9 @@ h1 { border-bottom: 1px solid #ddd;}
 a:visited{ color: blue;}
 
 .red {color: red;}
+.red a {color: red; text-decoration:none;}
 .green {color:green;}
+.green a {color:green; text-decoration:none;}
 
 .button{
   border: 1px solid #ccc;
@@ -285,4 +287,6 @@ a:visited{ color: blue;}
 .micro_stage_name{
   padding: 15px;
 }
+
+
 

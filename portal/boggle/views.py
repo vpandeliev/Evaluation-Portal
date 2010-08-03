@@ -23,6 +23,7 @@ def create_new_game(request):
         play_for - number of rounds to play for, default 10
         return_to - URL to return to after the maximum # of rounds has been played
     '''
+    
     play_for = request.GET.get('play_for', 10)
     return_to = request.GET.get('return_to', '/')		
     game = Game.objects.create(round_max=play_for, game_over_url=return_to)
@@ -35,6 +36,7 @@ def start_round(request, game_id):
     # In case somebody else already started the game.
     if game.state == game_states.WAITING_FOR_PLAYERS:
         game.start_round(mode=boggle_modes.CHALLENGE_CUBE)
+
     return HttpResponseRedirect(reverse('play-boggle-game', kwargs={'game_id': game.id}))
 
 
@@ -75,7 +77,7 @@ def join_game(request, game_id):
         
     # Add player to the new game and redirect to play page.
     game.create_player_for_user(request.user)
-    return HttpResponseRedirect(reverse('play-boggle-game', kwargs={'game_id': game.id}))
+    return HttpResponseRedirect(reverse('portal.boggle.views.play_game', kwargs={'game_id': game.id}))
 
 
 @login_required

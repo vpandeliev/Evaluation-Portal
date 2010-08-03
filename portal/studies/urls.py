@@ -8,7 +8,7 @@ urlpatterns = patterns('',
     url(r'^(\d+)/ic$', informed_consent, name="informed_consent"),
     url(r'^(\d+)/consented$', consented, name="consented"),
     # Hosted games
-    (r'^(\d+)/boggle/', include('portal.boggle.urls')),
+    (r'^boggle/', include('portal.boggle.urls')),
     url(r'^(\d+)$', show_one_study, name="show_one_study"),
     url(r'^edit/(\d+)', edit_one_study, name="edit_one_study"),
     url(r'^remove/(\d+)', remove_one_study, name="remove_one_study"),

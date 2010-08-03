@@ -15,7 +15,7 @@ urlpatterns = patterns('',
 	url(r'^accounts/logout/$', logout, name="logout"),
 	url(r'^accounts/register/$', register, name="register"),
 
-    
+    #(r'^boggle/', include('portal.boggle.urls')),
     
 	# Libraries
 	(r'^tinymce/', include('tinymce.urls')),

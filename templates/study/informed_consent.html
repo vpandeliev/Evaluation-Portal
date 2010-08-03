@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-	<h1>Informed consent</h1>
-
-	<a href="/study/{{studynum}}"> I do NOT agree </a>
-	<a href="/study/{{studynum}}/consented"> I agree </a>
+	<h2>Informed consent</h2>
+	{{study.consent|safe}}
+	<span class="button red"><a href="/study/{{studynum}}"> I do NOT agree </a></span>
+	<span class="button green"><a href="/study/{{studynum}}/consented"> I agree </a></span>
 {% endblock %}
