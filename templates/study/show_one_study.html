@@ -8,12 +8,12 @@
     <ul>
     {% for astage in stages %} 
 		  {% if astage.status > 1  %}
-        <li class="not_active"><a href="" id="stage_box_{{forloop.counter}}" onclick="return false;" class="stage_box">{{forloop.counter}}</a></li>
+        <li class="not_active"><a href="" id="stage_box_{{forloop.counter}}" onclick="return false;" class="stage_box future">{{forloop.counter}}</a></li>
 		  {% else %}
 			  {% ifequal astage.status 1 %}
-			    <li class="active"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box">{{forloop.counter}}</a></li>
+			    <li class="active"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box present">{{forloop.counter}}</a></li>
 			  {% else %}
-			    <li class="not_active"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box">{{forloop.counter}}</a></li>
+			    <li class="not_active"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box past">{{forloop.counter}}</a></li>
 			  {% endifequal %}
 		  {% endif %}
 	{% endfor%}

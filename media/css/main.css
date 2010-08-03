@@ -81,6 +81,17 @@ a:visited{ color: blue;}
 
 }
 
+.past {
+  background-color: #eee;
+}
+
+.present {
+  background-color: #fff;
+}
+
+.future {
+background-color: #ddd
+}
 .not_active{
   display: inline;
   border: 1px solid white;
@@ -98,7 +109,7 @@ a:visited{ color: blue;}
 .stage_box{
   padding: 10px 15px;
   border: 1px solid black;
-  background: white;
+
   text-decoration: none;
 }
 
