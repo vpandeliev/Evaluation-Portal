@@ -195,6 +195,26 @@ a:visited{ color: blue;}
   padding: 0 5px;
 }
 
+#study_details h2{
+  border: 1px solid #C1CDCD;
+  padding-top: 6px;
+}
+
+.right {
+  float: left;
+  width: 30px;
+  height: 20px;
+  background: url("/media/img/right_arrow.png") no-repeat 3px 0px;
+  border: none;
+}
+
+.down {
+  float: left;
+  width: 30px;
+  height: 25px;
+  background: url("/media/img/down_arrow.png") no-repeat 3px 5px;
+  border: none;
+}
 
 #login_outer{
   text-align: center;

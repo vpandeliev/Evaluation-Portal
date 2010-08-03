@@ -22,6 +22,17 @@ function bindBoxes(){
   });
 }
 
+function toggle_detail(id,obj){
+  $("#" + id).toggle();
+  if ($(obj).attr('class') == 'right'){
+    $(obj).toggleClass('right');
+    $(obj).toggleClass('down');
+  } else {
+    $(obj).toggleClass('down');
+    $(obj).toggleClass('right');
+  }
+}
+
 function init(){
   bindBoxes();
 }
