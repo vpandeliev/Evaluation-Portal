@@ -28,26 +28,32 @@ def show_many_studies(request):
     return render_to_response('show_many_studies.html', locals(), context_instance=RequestContext(request))
 
 @login_required
-def show_one_study(request,s_id):
+def show_one_study(request,s_id, as_part):
     study_id = s_id
+    as_part = int(as_part)
+    request.session['study_id'] = s_id
     study = Study.objects.get(id=study_id)
     role = study.role(request.user)
-    if role > -1:
+    print "Well poop: role " , role , " as_part ", as_part
+    if as_part == 0 and role >= 0:
+        #role >= 0 and as_part == 0
         #participant
         studypart = study.get_study_participant(request.user)
         stages = studypart.participant_stages()
         action = studypart.get_current_stage().stage.url
-    elif role == -1: 
+    elif as_part == 1 and role <= 0: 
+        #investigator
         studyinv = study.get_study_investigator(request.user)
         stages = studyinv.stages()
     else: 
         #unauthorized URL mucking about with
+        print "what the fuck"
         return HttpResponseBadRequest()
     return render_to_response('show_one_study.html',locals(), context_instance=RequestContext(request))
     
 @login_required
 def show_users_in_study(request,study_id):
-    users = Study.objects.get(id=study_id).users()
+    users = Study.objects.get(id=study_id).participants()
     return render_to_response('show_users.html', locals(), context_instance=RequestContext(request))
 
 @login_required
@@ -140,20 +146,21 @@ def added_to_study(request, study_id, user_id):
 ############### Data Collection
 
 @login_required
-def informed_consent(request,study_id):
-    study = Study.objects.get(id=study_id)
+def informed_consent(request):
+    sid = request.session['study_id']
+    study = Study.objects.get(id=sid)
     role = study.role(request.user)
-    if role == 1:
+    if role > -1:
         #participant
-        studynum = study_id
+        studynum = sid
         studypart = study.get_study_participant(request.user)
         stage = studypart.get_current_stage()
         action = stage.stage.url
         if stage.order != 1:
-            return http.HttpResponseBadRequest()
+            return HttpResponseBadRequest()
     else: 
         #unauthorized URL mucking about with
-        return http.HttpResponseBadRequest()
+        return HttpResponseBadRequest()
     return render_to_response('informed_consent.html',locals(), context_instance=RequestContext(request))
 
 
@@ -161,12 +168,12 @@ def informed_consent(request,study_id):
 def consented(request,study_id):
     study = Study.objects.get(id=study_id)
     role = study.role(request.user)
-    if role == 1:
+    if role > -1:
         #participant
         studypart = study.get_study_participant(request.user)
         stage = studypart.get_current_stage()
+        log_consent(request)
         stage.session_completed()
-        log_consent(request, study_id)
     else: 
         #unauthorized URL mucking about with
         return HttpResponseBadRequest()
@@ -178,7 +185,7 @@ def log_game(request):
     """Logs a single piece of data from an in-house game's POST request"""
     if request.method != 'POST': 
         return HttpResponseBadRequest()
-    studyid = request.POST['study_id']
+    studyid = request.session['study_id']
     timestamp = request.POST['timestamp']
     data = request.POST['data']
     dt = datetime.datetime.fromtimestamp(float(timestamp))
@@ -191,10 +198,11 @@ def log_game(request):
     return HttpResponse("YAY!")
 
 @login_required
-def log_consent(request, study_id):
+def log_consent(request):
     """Logs informed consent"""
+    #print "logging consent"
     try:
-        Data.write(study_id, request.user, datetime.datetime.now(), "Consent given", "CON")
+        Data.write(request.session['study_id'], request.user, datetime.datetime.now(), "Consent given", "CON")
     except Exception as inst:
       print "log_consent", inst
     #send: studyid, request.user, time, data

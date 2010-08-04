@@ -7,7 +7,7 @@
 
 {% if studies_as_investigator %}
 <h2>As Investigator</h2>
-<a href="{% url create_one_study %}" class="button">Create New Study</a>
+<a href="/admin/studies/study/add/" class="button">Create New Study</a>
 <ul class="many_studies">
   {% for study_inv in studies_as_investigator %}
   <li>
@@ -32,7 +32,7 @@
     <div class="micro_study_options">
       <a href="" class="button">Export Data</a>
       <a href="" class="button">Message Center</a>
-      <a href="{% url show_one_study study_inv.study.id%}" class="button"> Study Home</a>
+      <a href="{% url show_one_study study_inv.study.id 1%}" class="button"> Study Home</a>
     </div>
   </li>
   {% endfor %}
@@ -57,7 +57,7 @@
     <div class="micro_study_options">
       <a href="" class="button">Act</a>
       <a href="/feedback" class="button">Feedback</a>
-      <a href="{% url show_one_study study_user.study.id%}" class="button"> Study Home</a>
+      <a href="{% url show_one_study study_user.study.id 0%}" class="button"> Study Home</a>
     </div>
   </li>
   {% endfor %}

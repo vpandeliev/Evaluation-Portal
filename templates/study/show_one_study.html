@@ -2,7 +2,7 @@
 
 {% block content %}
 	<h1>{{study.name}}</h1>
-{% if role > -1 %}
+{% ifequal as_part 0 %}
   <!--stage menu-->
   <div id="stages_nav">
     <ul>
@@ -68,7 +68,7 @@
 
 
 {% else %}
-
+{% ifequal as_part 1%}
 
 <!-- Investigator -->
   <div id="stages_nav">
@@ -92,7 +92,7 @@
     <div id="stage_{{forloop.counter}}" class="stage_panel" {% ifnotequal forloop.counter 1 %}style="display:none;"{% endifnotequal %}>
       <div class="stage_header">
         <h2><strong>Stage: </strong> {{stage.name}} ({{stage.number_of_users}})</h2>
-        <a href="" class="button">Manage Everyone</a>
+        <a href="users" class="button">Manage Study Users</a>
         <a href="" class="button">Stage Instructions</a>
       </div>
       <div class="table_wrapper">
@@ -143,8 +143,8 @@
   <a href="" class="button">Message Center</a>
   <a href="" class="button">Manage Users</a>
 </div>
-{% endif %}
-
+{% endifequal %}
+{% endifequal %}
 
 <div id="study_details">
 	<h2>Description<button onclick="toggle_detail('d1',$(this));" class="right"></button></h2>

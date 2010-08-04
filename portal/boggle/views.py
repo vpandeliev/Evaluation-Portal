@@ -49,7 +49,7 @@ def next_round(request, game_id):
         return HttpResponseRedirect(reverse('game-over', kwargs={'game_id': game.id}))
     # In case somebody else already started the next round
     if game.round.time_left() == 0:
-        game.goto_next_round(mode=boggle_modes.CHALLENGE_CUBE)
+        game.goto_next_round(mode=boggle_modes.NORMAL)
     return HttpResponseRedirect(reverse('play-boggle-game', kwargs={'game_id': game.id}))
 
 
@@ -78,9 +78,7 @@ def join_game(request, game_id, query_string):
         
     # Add player to the new game and redirect to play page.
     game.create_player_for_user(request.user)
-    redirectpath = "/study/boggle/" + str(game.id) + "/play/?" + query_string
-    print redirectpath
-    return HttpResponseRedirect(redirectpath)
+    return HttpResponseRedirect(reverse('play-boggle-game', kwargs={'game_id': game.id}))
 
 
 @login_required

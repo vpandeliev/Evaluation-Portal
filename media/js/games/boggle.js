@@ -77,21 +77,18 @@ var Boggle = Class.create({
     submitWord: function(word) {
         var form = $('word-form');
         var self = this;
-        console.log(location)
-        var study_id = location.search.match(/study_id=(\d+)/)[1];
         new Ajax.Request(form.getAttribute('action'), {
             method: 'post',
             evalJS: true,
             postBody: 'word=' + word,
             onSuccess: function(transport){
               self.addWordToList(word,transport);
-              var response = {"study_id":study_id,
-                              "data":word + ','+transport.responseJSON["score"],
+              var response = {"data":word + ','+transport.responseJSON["score"],
                               "timestamp": (new Date).getTime()/1000.0};
               new Ajax.Request('/study/send-data',{
                 method: 'post',
-                postBody: 'study_id=' + study_id + 
-                  '&data=' + response['data'] +
+                postBody:  
+                  'data=' + response['data'] +
                   '&timestamp=' + response['timestamp'] +
                   '&code=bog'
               });

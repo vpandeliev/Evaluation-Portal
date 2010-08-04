@@ -10,13 +10,13 @@
 {% block actions %}
 
 	{% ifequal game.state game_states.WAITING_FOR_PLAYERS %}
-	<form action="{% url start-boggle-game game.id %}?{{query_string}}" method="post">
+	<form action="{% url start-boggle-game game.id %}" method="post">
 		<input type="submit" value="Start game" />
 	</form>
 	{% endifequal %}
 
 	{% ifequal game.state game_states.IN_PROGRESS %}
-	<form id="next-round" action="{% url next-boggle-round game.id %}?{{query_string}}" method="post" style="display: none">
+	<form id="next-round" action="{% url next-boggle-round game.id %}" method="post" style="display: none">
 		<input type="submit" value="Next round" />
 	</form>
 	{% endifequal %}

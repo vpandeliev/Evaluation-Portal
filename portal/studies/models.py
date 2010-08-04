@@ -42,7 +42,7 @@ class Study(models.Model):
 
     def participants(self):
         """Returns a list of all participants in the Study"""
-        return [x.user for x in StudyUser.objects.filter(study=self)]
+        return [x.user for x in StudyParticipant.objects.filter(study=self)]
 
     def investigators(self):
         """Returns a list of all investigators in the Study"""
@@ -127,7 +127,9 @@ class StudyParticipant(models.Model):
             
     def __unicode__(self):
         return u'%s - %s (Participant)' % (self.user,self.study)        
-
+    
+    def log(self):
+        return u'%s,%s' % (self.user.id,self.study.id)
 
         
 class Stage(models.Model):
@@ -190,6 +192,8 @@ class Data(models.Model):
         d.code = code
         d.save()
     
+    def __unicode__(self):
+        return u'%s,%s,%s,%s,%s,%s' % (self.studyparticipant.log(), self.stage, self.session, self.timestamp, self.datum, self.code)
         
 class UserStage(models.Model):
     user = models.ForeignKey(User)
@@ -213,8 +217,6 @@ class UserStage(models.Model):
         return StudyParticipant.objects.get(user=self.user).group       
 
     def session_completed(self):
-        print "SESSION COMPLETE BITCH"
-        
         self.sessions_completed += 1
         self.last_session_completed = datetime.datetime.now()
         Data.write(self.stage.study.id, self.user, self.last_session_completed, "session completed", "ssc")
@@ -232,6 +234,25 @@ class UserStage(models.Model):
                 next[0].start_date = datetime.datetime.now()
                 next[0].save()
         self.save()       
+
+    def stage_completed(self):
+        self.sessions_completed = self.stage.sessions
+        self.last_session_completed = datetime.datetime.now()
+        Data.write(self.stage.study.id, self.user, self.last_session_completed, "session completed", "ssc")
+        self.status = 0
+        self.end_date = datetime.datetime.now()
+        #find next stage
+        next = UserStage.objects.filter(user=self.user, order=self.order+1)
+        if len(next) == 0:
+            #end of study
+            pass
+        else:
+            next[0].status = 1
+            next[0].start_date = datetime.datetime.now()
+            next[0].save()
+        self.save()       
+
+
         
     def set_order(self):
         self.order = StageGroup.objects.get(group=self.group(), user=self.user).order
