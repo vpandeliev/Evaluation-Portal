@@ -194,6 +194,9 @@ class Data(models.Model):
     def __unicode__(self):
         return u'%s,%s,%s,%s,%s,%s' % (self.studyparticipant.log(), self.stage, self.session, self.format_timestamp(), self.datum, self.code)
         
+    def data(self):
+        return u'%s,%s,%s,%s,%s,%s' % (self.studyparticipant.log(), self.stage, self.session, self.format_timestamp(), self.datum, self.code)
+
     def format_timestamp(self):
         t = self.timestamp
         return u'%s,%s,%s,%s,%s,%s,%s' % (t.year, t.month, t.day, t.hour, t.minute, t.second, t.microsecond/1000)
