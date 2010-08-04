@@ -47,12 +47,12 @@
   {% for user_stage in current_stages %}
   <li>
     <h3>{{ user_stage.stage.study.name }}<span class="study_status">
-			{% if overdue %} <span class="red">Overdue</span>
+			{% if overdue %} <span class="red">Overdue!</span>
 			{% else %} <span class="green">Active</span>
 			{% endif %}
 	</span></h3>
     <p>
-      <span class="next">Next stage: {{user_stage.stage.name}} </span></p>
+      <span class="next">Current stage: {{user_stage.stage.name}} </span></p>
 	<p>	{{user_stage.stage.description|safe}}
     </p>
     <p>
