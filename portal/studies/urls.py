@@ -6,7 +6,7 @@ urlpatterns = patterns('',
     url(r'^new$', create_one_study, name="create_one_study"),
     url(r'^send-data$', log_game, name="log_game"),   
     url(r'^ic$', informed_consent, name="informed_consent"),
-    url(r'^(\d+)/consented$', consented, name="consented"),
+    url(r'^consented$', consented, name="consented"),
     # Hosted games
     (r'^boggle/', include('portal.boggle.urls')),
     url(r'^fbog$', finish_boggle_session, name="finish_boggle_session"),

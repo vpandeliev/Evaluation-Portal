@@ -15,8 +15,10 @@
     <h3>{{ study_inv.study.name }}
 	<!--><span class="study_status">Status</span></h3>-->
 	</h3>
+
     <table class="micro_stages" cellspacing="0">
       <tr>
+
       {% for stage in study_inv.stages %}
         <td>
           <div class="micro_stage_box">
@@ -27,7 +29,9 @@
             {{stage.name}}
           </div>
         </td>
+
       {% endfor %}
+
       </tr>
     </table>
     <div class="micro_study_options">
