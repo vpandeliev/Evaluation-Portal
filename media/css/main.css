@@ -32,8 +32,26 @@ float: right;}
   -moz-border-radius: 2px;
 }
 
+.disable{
+  border: 1px solid #ccc;
+  padding: 4px 6px;
+  margin: 0 0 0 2px;
+  text-decoration: none;
+  color: #ccc;
+  background: #eee;
+  /*background: -webkit-gradient(linear, left top, left bottom, from(#eeeeee), to(#cccccc) );
+  background: -moz-linear-gradient(top,  #eeeeee, #cccccc);*/
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+
+}
+
 .button:visited{
   color: black;
+}
+
+.disable:visited{
+  color: #ccc;
 }
 
 #left_button{
