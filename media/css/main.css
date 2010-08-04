@@ -17,6 +17,9 @@ a:visited{ color: blue;}
 .green {color:green;}
 .green a {color:green; text-decoration:none;}
 
+.right_float {
+float: right;}
+
 .button{
   border: 1px solid #ccc;
   padding: 4px 6px;
@@ -29,8 +32,26 @@ a:visited{ color: blue;}
   -moz-border-radius: 2px;
 }
 
+.disable{
+  border: 1px solid #ccc;
+  padding: 4px 6px;
+  margin: 0 0 0 2px;
+  text-decoration: none;
+  color: #ccc;
+  background: #eee;
+  /*background: -webkit-gradient(linear, left top, left bottom, from(#eeeeee), to(#cccccc) );
+  background: -moz-linear-gradient(top,  #eeeeee, #cccccc);*/
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+
+}
+
 .button:visited{
   color: black;
+}
+
+.disable:visited{
+  color: #ccc;
 }
 
 #left_button{
@@ -282,8 +303,8 @@ padding-left: 30px;
 }
 
 .many_studies table{
-  width: 100%;
-  margin: 10px 0;
+  width: 1012px;
+  margin: 10px 5px;
 }
 
 .many_studies li{
@@ -326,6 +347,26 @@ padding-left: 30px;
 
 .micro_stage_name{
   padding: 15px;
+}
+
+.table_stage_info {
+  border-top: solid 1px #ccc;
+  
+
+}
+
+.table_label {
+  width: 20%;
+  font-weight: bold;
+  color: #444;
+}
+.table_stage_info tr {
+  
+}
+
+.table_stage_info td{
+padding: 5px;
+  border-bottom: solid 1px #ccc;
 }
 
 
