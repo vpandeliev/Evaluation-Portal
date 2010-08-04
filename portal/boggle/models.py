@@ -99,7 +99,9 @@ class Round(models.Model):
     number = models.PositiveIntegerField(blank=True, help_text='Round numbering starts at 1.')
     board = models.TextField(blank=True, help_text='Record of values for each cell in the board. The board is a 4 x 4 grid.')
     start = models.DateTimeField(default=datetime.datetime.now, help_text='Start time of the game.')
-    duration = models.PositiveIntegerField(default=180, help_text='Duration of round in seconds.')
+#    duration = models.PositiveIntegerField(default=180, help_text='Duration of round in seconds.')
+    duration = models.PositiveIntegerField(default=30, help_text='Duration of round in seconds.')
+
     mode = models.PositiveIntegerField(choices=boggle_modes.as_choices())
 
     objects = RoundManager()

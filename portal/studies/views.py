@@ -180,7 +180,21 @@ def consented(request,study_id):
         return HttpResponseBadRequest()
     return HttpResponseRedirect('/study/'+study_id)
 
-
+@login_required
+def finish_boggle_session(request):
+    study_id = request.session['study_id']
+    study = Study.objects.get(id=study_id)
+    role = study.role(request.user)
+    if role > -1:
+        #participant
+        studypart = study.get_study_participant(request.user)
+        stage = studypart.get_current_stage()
+        stage.session_completed()
+    else: 
+        #unauthorized URL mucking about with
+        return HttpResponseBadRequest()
+    return HttpResponseRedirect('/study/0/'+str(study_id))
+    
 @login_required
 def log_game(request):
     """Logs a single piece of data from an in-house game's POST request"""
