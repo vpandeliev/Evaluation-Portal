@@ -31,6 +31,7 @@ function toggle_detail(id,obj){
     $(obj).toggleClass('down');
     $(obj).toggleClass('right');
   }
+  return false;
 }
 
 function init(){
