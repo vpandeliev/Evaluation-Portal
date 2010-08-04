@@ -34,6 +34,18 @@ function toggle_detail(id,obj){
   return false;
 }
 
+function show_modal(text){
+  $('#modal_background').toggle();
+  $('#modal_body').empty().append(text);
+  $('#modal_dialog').show()
+  return false;
+}
+
+function close_modal(){
+  $('#modal_background').toggle();
+$('#modal_dialog').toggle()
+}
+
 function init(){
   bindBoxes();
 }

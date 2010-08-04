@@ -28,13 +28,13 @@
       {% ifnotequal astage.status 1 %}style="display:none;"{% endifnotequal %}>
       <div class="stage_header">
         <span><strong>Stage:</strong> {{astage.stage.name}}</span>
-        <a href="" class="button" id="instruction_button_{{forloop.counter}}">Stage Instructions</a>
+        <a href="" class="button" id="instruction_button_{{forloop.counter}}" onclick="return show_modal('{{astage.stage.instructions|safe}}');">Stage Instructions</a>
         <div class="clear"></div>
       </div>
       <div class="instructions" style="display:none;" id="instructions_{{forloop.counter}}">
         {{astage.stage.instructions}}
       </div>
-      <div class="stage_instructions_header">Instructions</div>
+      <div class="stage_instructions_header">Description</div>
       <p class="stage_description">
         {{astage.stage.description|safe}}
       </p>
