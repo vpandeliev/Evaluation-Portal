@@ -1,0 +1,308 @@
+[
+    {
+        "pk": 1, 
+        "model": "studies.study", 
+        "fields": {
+            "reward": "<p>3$ will be donated to the charity of your choice for every intervention session you complete</p>", 
+            "name": "Board Games and Mental Fitness", 
+            "end_date": null, 
+            "started": false, 
+            "consent": "<p>By indicating your consent below, you acknowledge the conditions of this study.</p>\r\n<p><strong>This study is voluntary. You may withdraw at any time without penalty.</strong></p>\r\n<p>I, the undersigned, being aware of all the risks, consent to participating in the study.</p>", 
+            "eligibility": "<p>To be eligible for this study, you must:</p>\r\n<ul>\r\n<li>be 18+ years old</li>\r\n<li>have English as your first language</li>\r\n<li>not suffer from any cognitive illness or deficiency</li>\r\n</ul>", 
+            "instructions": "<p>The study will take place over three stages:</p>\r\n<ul>\r\n<li>Informed consent (1 session) - to be able to participate, you must indicate that you have read and understood our terms.</li>\r\n<li>Intervention (5 sessions) - half of the participants will play board games (such as Boggle) while the other half will engage in mental fitness training over five sessions of approximately half an hour</li>\r\n<li>Debriefing (1 session) - quick recap of the study and indication of anticipated outcomes</li>\r\n</ul>", 
+            "start_date": "2010-08-04", 
+            "description": "<p>With the increasing prevalence of mental fitness training regimens, it becomes necessary to evaluate their benefits as compared to more traditional interventions. In this study, we compare the effects of mental fitness tasks to playing standard board games.</p>"
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "studies.group", 
+        "fields": {
+            "study": 1, 
+            "name": "Board Games"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "studies.group", 
+        "fields": {
+            "study": 1, 
+            "name": "Mental Fitness"
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "studies.studyinvestigator", 
+        "fields": {
+            "study": 1, 
+            "investigator": 1
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "studies.studyinvestigator", 
+        "fields": {
+            "study": 1, 
+            "investigator": 3
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "studies.studyparticipant", 
+        "fields": {
+            "study": 1, 
+            "group": 1, 
+            "user": 4
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "studies.studyparticipant", 
+        "fields": {
+            "study": 1, 
+            "group": 1, 
+            "user": 5
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "studies.studyparticipant", 
+        "fields": {
+            "study": 1, 
+            "group": 1, 
+            "user": 1
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "studies.stage", 
+        "fields": {
+            "description": "<p>This is the first stage of the study. It simply requires that you read about the risks associated with the study and agree to participate.</p>", 
+            "sessions": 1, 
+            "url": "/study/ic", 
+            "study": 1, 
+            "deadline": 10, 
+            "instructions": "<p>To complete this stage, click on the Act button. You will be redirected to a page that explains the purpose of the study and outlines everything you need to know as the participant. You have 10 days to complete this stage. If you consent to participating, you will be able to start the study. If you do not, please e-mail an investigator and we will remove you from the study without penalty.</p>", 
+            "name": "Informed Consent"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "studies.stage", 
+        "fields": {
+            "description": "<p>After the study is complete, we will ask you about your experiences. This will be done outside the portal, using Skype as a video-conferencing platform. Please e-mail an investigator to set up a time to meet. You will be manually cleared past this stage by one of us.</p>", 
+            "sessions": 1, 
+            "url": "http://youtube.com", 
+            "study": 1, 
+            "deadline": 10, 
+            "instructions": "<p>Instead of clicking on Act, please e-mail an investigator to set up a time to complete the study.</p>", 
+            "name": "Debriefing"
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "studies.stage", 
+        "fields": {
+            "description": "<p>In this stage, you will engage in mental fitness training in rounds of approximately 30 minutes. When you are finished, you will be returned to this page.</p>", 
+            "sessions": 5, 
+            "url": "http://youtube.com", 
+            "study": 1, 
+            "deadline": 5, 
+            "instructions": "<p>Click on Act, enjoy.</p>", 
+            "name": "Mental Fitness Training"
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "studies.stage", 
+        "fields": {
+            "description": "<p>In this stage, you will play two 3-minute rounds of Boggle. Your scores will be recorded.</p>", 
+            "sessions": 5, 
+            "url": "/study/boggle/new-game/?play_for=2&return_to=/study/fbog", 
+            "study": 1, 
+            "deadline": 3, 
+            "instructions": "<p><span class=\"stdtxt\">In this fast-paced word-search game you have <strong>3 minutes</strong> to find as many words (3 letters or more) as you can in a grid of 16  letters. Letters must be adjacent (horizontally, vertically or diagonally) and longer words score better.</span></p>", 
+            "name": "Playing Board Games"
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "studies.stagegroup", 
+        "fields": {
+            "group": 1, 
+            "order": 1, 
+            "stage": 1
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "studies.stagegroup", 
+        "fields": {
+            "group": 2, 
+            "order": 2, 
+            "stage": 3
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "studies.stagegroup", 
+        "fields": {
+            "group": 1, 
+            "order": 3, 
+            "stage": 2
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "studies.stagegroup", 
+        "fields": {
+            "group": 2, 
+            "order": 1, 
+            "stage": 1
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "studies.stagegroup", 
+        "fields": {
+            "group": 1, 
+            "order": 2, 
+            "stage": 4
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "studies.stagegroup", 
+        "fields": {
+            "group": 2, 
+            "order": 3, 
+            "stage": 2
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "studies.userstage", 
+        "fields": {
+            "status": 1, 
+            "last_session_completed": "2010-08-04 15:04:32", 
+            "end_date": null, 
+            "sessions_completed": 0, 
+            "order": 1, 
+            "user": 4, 
+            "start_date": "2010-08-04 15:04:32", 
+            "stage": 1
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "studies.userstage", 
+        "fields": {
+            "status": 2, 
+            "last_session_completed": null, 
+            "end_date": null, 
+            "sessions_completed": 0, 
+            "order": 2, 
+            "user": 4, 
+            "start_date": null, 
+            "stage": 4
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "studies.userstage", 
+        "fields": {
+            "status": 2, 
+            "last_session_completed": null, 
+            "end_date": null, 
+            "sessions_completed": 0, 
+            "order": 3, 
+            "user": 4, 
+            "start_date": null, 
+            "stage": 2
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "studies.userstage", 
+        "fields": {
+            "status": 1, 
+            "last_session_completed": "2010-08-04 15:04:40", 
+            "end_date": null, 
+            "sessions_completed": 0, 
+            "order": 1, 
+            "user": 5, 
+            "start_date": "2010-08-04 15:04:40", 
+            "stage": 1
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "studies.userstage", 
+        "fields": {
+            "status": 2, 
+            "last_session_completed": null, 
+            "end_date": null, 
+            "sessions_completed": 0, 
+            "order": 2, 
+            "user": 5, 
+            "start_date": null, 
+            "stage": 4
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "studies.userstage", 
+        "fields": {
+            "status": 2, 
+            "last_session_completed": null, 
+            "end_date": null, 
+            "sessions_completed": 0, 
+            "order": 3, 
+            "user": 5, 
+            "start_date": null, 
+            "stage": 2
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "studies.userstage", 
+        "fields": {
+            "status": 1, 
+            "last_session_completed": "2010-08-04 15:04:52", 
+            "end_date": null, 
+            "sessions_completed": 0, 
+            "order": 1, 
+            "user": 1, 
+            "start_date": "2010-08-04 15:04:52", 
+            "stage": 1
+        }
+    }, 
+    {
+        "pk": 8, 
+        "model": "studies.userstage", 
+        "fields": {
+            "status": 2, 
+            "last_session_completed": null, 
+            "end_date": null, 
+            "sessions_completed": 0, 
+            "order": 2, 
+            "user": 1, 
+            "start_date": null, 
+            "stage": 4
+        }
+    }, 
+    {
+        "pk": 9, 
+        "model": "studies.userstage", 
+        "fields": {
+            "status": 2, 
+            "last_session_completed": null, 
+            "end_date": null, 
+            "sessions_completed": 0, 
+            "order": 3, 
+            "user": 1, 
+            "start_date": null, 
+            "stage": 2
+        }
+    }
+]

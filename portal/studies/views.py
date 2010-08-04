@@ -26,7 +26,7 @@ def show_many_studies(request):
         studies_as_investigator = StudyInvestigator.objects.filter(investigator=request.user)
     else:
         studies_as_investigator = []
-        
+
     return render_to_response('show_many_studies.html', locals(), context_instance=RequestContext(request))
 
 @login_required
@@ -48,7 +48,6 @@ def show_one_study(request,as_inv,s_id):
         stages = studyinv.stages()
     else: 
         #unauthorized URL mucking about with
-        print "what the fuck"
         return HttpResponseBadRequest()
     return render_to_response('show_one_study.html',locals(), context_instance=RequestContext(request))
     
@@ -166,7 +165,8 @@ def informed_consent(request):
 
 
 @login_required
-def consented(request,study_id):
+def consented(request):
+    study_id = int(request.session['study_id'])
     study = Study.objects.get(id=study_id)
     role = study.role(request.user)
     if role > -1:
@@ -178,7 +178,7 @@ def consented(request,study_id):
     else: 
         #unauthorized URL mucking about with
         return HttpResponseBadRequest()
-    return HttpResponseRedirect('/study/'+study_id)
+    return HttpResponseRedirect('/study/0/'+study_id)
 
 @login_required
 def finish_boggle_session(request):

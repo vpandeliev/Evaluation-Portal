@@ -87,12 +87,10 @@ class StudyInvestigator(models.Model):
     def stages(self):
         """Returns all of a study's stages as userstage objects"""
         stages = Stage.objects.filter(study=self.study)
-        stageusers = [UserStage.objects.filter(stage=x)[0] for x in stages]
+        stageusers = [StageGroup.objects.filter(stage=x)[0] for x in stages]
         stageusers.sort(key=attrgetter('order'))
         return [x.stage for x in stageusers]
-        #return [11,22,33]
-            
-
+    
     def __unicode__(self):
         return u'%s - %s (Investigator)' % (self.investigator.username, self.study)
 
@@ -194,7 +192,11 @@ class Data(models.Model):
         d.save()
     
     def __unicode__(self):
-        return u'%s,%s,%s,%s,%s,%s' % (self.studyparticipant.log(), self.stage, self.session, self.timestamp, self.datum, self.code)
+        return u'%s,%s,%s,%s,%s,%s' % (self.studyparticipant.log(), self.stage, self.session, self.format_timestamp(), self.datum, self.code)
+        
+    def format_timestamp(self):
+        t = self.timestamp
+        return u'%s,%s,%s,%s,%s,%s,%s' % (t.year, t.month, t.day, t.hour, t.minute, t.second, t.microsecond/1000)
         
 class UserStage(models.Model):
     user = models.ForeignKey(User)
@@ -233,6 +235,7 @@ class UserStage(models.Model):
             else:
                 next[0].status = 1
                 next[0].start_date = datetime.datetime.now()
+                next[0].last_session_completed = next[0].start_date
                 next[0].save()
         self.save()       
 
