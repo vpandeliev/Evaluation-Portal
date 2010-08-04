@@ -9,6 +9,13 @@
 
 	</head>
 	<body>
+    <div id="modal_background" style="display:none;">
+      <div id="modal_dialog"  style="display:none;">
+        <div id="modal_body"></div>
+        <button  onclick="close_modal();"> Close </button>
+        <div class="clear"></div>
+      </div>
+    </div>
 		<div id="outer">
 
 		  {% if request.path != "/accounts/login/" %}
