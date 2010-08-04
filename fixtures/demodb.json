@@ -95,7 +95,7 @@
             "url": "http://youtube.com", 
             "study": 1, 
             "deadline": 10, 
-            "instructions": "<p>Instead of clicking on Act, please e-mail an investigator to set up a time to complete the study.</p>", 
+            "instructions": "<p>Click on Act to e-mail an investigator to set up a time to complete the study.</p>", 
             "name": "Debriefing"
         }
     }, 
@@ -177,54 +177,6 @@
             "group": 2, 
             "order": 3, 
             "stage": 2
-        }
-    }, 
-    {
-        "pk": 1, 
-        "model": "studies.data", 
-        "fields": {
-            "studyparticipant": 2, 
-            "code": "CON", 
-            "timestamp": "2010-08-04 16:38:08", 
-            "datum": "Consent given", 
-            "session": 1, 
-            "stage": 1
-        }
-    }, 
-    {
-        "pk": 2, 
-        "model": "studies.data", 
-        "fields": {
-            "studyparticipant": 2, 
-            "code": "ssc", 
-            "timestamp": "2010-08-04 16:38:08", 
-            "datum": "session completed", 
-            "session": 1, 
-            "stage": 1
-        }
-    }, 
-    {
-        "pk": 3, 
-        "model": "studies.data", 
-        "fields": {
-            "studyparticipant": 2, 
-            "code": "CON", 
-            "timestamp": "2010-08-04 16:39:33", 
-            "datum": "Consent given", 
-            "session": 1, 
-            "stage": 1
-        }
-    }, 
-    {
-        "pk": 4, 
-        "model": "studies.data", 
-        "fields": {
-            "studyparticipant": 2, 
-            "code": "ssc", 
-            "timestamp": "2010-08-04 16:39:33", 
-            "datum": "session completed", 
-            "session": 1, 
-            "stage": 1
         }
     }, 
     {

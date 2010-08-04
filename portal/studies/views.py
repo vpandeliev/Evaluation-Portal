@@ -178,7 +178,7 @@ def consented(request):
     else: 
         #unauthorized URL mucking about with
         return HttpResponseBadRequest()
-    return HttpResponseRedirect('/study/0/'+study_id)
+    return HttpResponseRedirect('/study/0/'+str(study_id))
 
 @login_required
 def data_dump(request):
@@ -199,10 +199,17 @@ def data_dump(request):
         for line in data:
             FILE.write(line + "\n")
         FILE.close()
+        FILE = open(dumpfile, "r")
+        datadump = ""
+        linelist = FILE.readlines()
+        for x in linelist:
+            datadump = datadump + x + "<br/>"
+            
     else: 
         #unauthorized URL mucking about with
         return HttpResponseBadRequest()
-    return HttpResponseRedirect('/study/1/'+str(study_id))
+    #return HttpResponseRedirect('/study/1/'+str(study_id))
+    return render_to_response("data.html", locals(), context_instance=RequestContext(request))
 
 @login_required
 def finish_boggle_session(request):

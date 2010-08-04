@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<h2>Data</h2>
+	<p>(file also created under portal/data/data-study[study-number].csv)</p>
+	<p>{{datadump|safe}}</p>
+	<p>
+	<span class="button"><a href="/study/"> Back to studies </a></span></p>
+{% endblock %}

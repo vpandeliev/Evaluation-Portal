@@ -40,7 +40,7 @@
         <p>
         	{%ifequal astage.status 1 %}
 				{%if astage.overdue%}
-				    <span class="red">You're overdue! Next session was due: {{astage.nextdeadline|date:"d M Y"}}</span>
+				    <span class="red">You're overdue! Last session was due: {{astage.nextdeadline|date:"d M Y"}}</span>
 			    {% else %}
 				    Complete session by: {{astage.nextdeadline|date:"d M Y"}}
 			    {% endif %}
@@ -89,8 +89,8 @@
     <div id="stage_{{forloop.counter}}" class="stage_panel" {% ifnotequal forloop.counter 1 %}style="display:none;"{% endifnotequal %}>
       <div class="stage_header">
         <h2><strong>Stage: </strong> {{stage.name}} ({{stage.number_of_users}})</h2>
-        <a href="users" class="button">Manage Study Users</a>
-        <a href="" class="button">Stage Instructions</a>
+        <a href="users" class="disable">Manage Study Users</a>
+        <a href="" class="disable">Stage Instructions</a>
       </div>
       <div class="table_wrapper">
         <table>
@@ -111,8 +111,7 @@
             </td>
             <td>
               <a href="">Interview</a> |
-              <a href="">Stage Complete</a> |
-				<a href="">Session Complete</a> |
+              <a href="">Mark Stage Completed</a> |
 				<a href="">Boot</a>
 
             </td>
@@ -141,7 +140,7 @@
   <button id="left_button"></button>
   <button id="right_button"></button>
   <a href="/study/datadump" class="button">Export Data</a>
-  <a href="" class="button">Message Center</a>
+  <a href="" class="disable">Message Center</a>
   <a href="" class="disable">Manage Users</a>
 </div>
 {% endifequal %}
