@@ -181,6 +181,30 @@ def consented(request):
     return HttpResponseRedirect('/study/0/'+study_id)
 
 @login_required
+def data_dump(request):
+    study_id = int(request.session['study_id'])
+    study = Study.objects.get(id=study_id)
+    study_participants = StudyParticipant.objects.filter(study=study)
+    role = study.role(request.user)
+    if role < 1:
+        #investigator
+        dumpfile = "data/data_study_" + str(study_id) + ".csv"
+        data = []
+        for x in study_participants:
+            obj = Data.objects.filter(studyparticipant=x)
+            for y in obj:
+                data.append(y.data())
+        FILE = open(dumpfile, "w")
+        FILE.write("userid,studyid,stage,session,year,month,day,hour,minute,second,millisecond,datum,code\n")
+        for line in data:
+            FILE.write(line + "\n")
+        FILE.close()
+    else: 
+        #unauthorized URL mucking about with
+        return HttpResponseBadRequest()
+    return HttpResponseRedirect('/study/1/'+str(study_id))
+
+@login_required
 def finish_boggle_session(request):
     study_id = request.session['study_id']
     study = Study.objects.get(id=study_id)
