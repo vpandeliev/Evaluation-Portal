@@ -48,21 +48,31 @@
   {% for user_stage in current_stages %}
   <li>
     <h3>{{ user_stage.stage.study.name }}<span class="study_status">
-			{% if overdue %} <span class="red">Overdue!</span>
-			{% else %} <span class="green">Active</span>
+			{% if overdue %} <span class="red right_float">Overdue!</span>
+			{% else %} <span class="green right_float">Active</span>
 			{% endif %}
 	</span></h3>
-    <p>
-      <span class="next">Current stage: {{user_stage.stage.name}} </span></p>
-	<p>	{{user_stage.stage.description|safe}}
-    </p>
-    <p>
-		{%if astage.overdue%}
-		    <span class="red">You're overdue! Next session was due: {{user_stage.nextdeadline|date:"d M Y"}}</span>
-	    {% else %}
-		    Complete session by: {{user_stage.nextdeadline|date:"d M Y"}}
-	    {% endif %}    
-	</p>
+    <table class="table_stage_info" cellspacing="0">
+      <tr>
+        <td class="table_label">Current stage</td>
+        <td>{{user_stage.stage.name}}</td>
+      </tr>
+      <tr>
+        <td class="table_label">Stage Description</td>
+        <td>{{user_stage.stage.description|safe}}</td>
+      </tr>
+      <tr>
+        <td class="table_label"></td>
+        <td>
+          {%if astage.overdue%}
+		        <span class="red">You're overdue! Next session was due: {{user_stage.nextdeadline|date:"d M Y"}}</span>
+	        {% else %}
+		        Complete session by: {{user_stage.nextdeadline|date:"d M Y"}}
+	        {% endif %}
+        </td>
+      </tr>
+    </table>
+    
     <div class="micro_study_options">
       <a href="" class="button">Act</a>
       <a href="/feedback" class="button">Feedback</a>
