@@ -32,7 +32,7 @@
     <div class="micro_study_options">
       <a href="" class="button">Export Data</a>
       <a href="" class="button">Message Center</a>
-      <a href="{% url show_one_study study_inv.study.id 1%}" class="button"> Study Home</a>
+      <a href="{% url show_one_study 1 study_inv.study.id%}" class="button"> Study Home</a>
     </div>
   </li>
   {% endfor %}
@@ -44,20 +44,28 @@
 {% if studies_as_participant %}
 <h2>As Participant</h2>
 <ul class="many_studies">
-  {% for study_user in studies_as_participant %}
+  {% for user_stage in current_stages %}
   <li>
-    <h3>{{ study_user.study.name }}<span class="study_status">Status</span></h3>
+    <h3>{{ user_stage.stage.study.name }}<span class="study_status">
+			{% if overdue %} <span class="red">Overdue</span>
+			{% else %} <span class="green">Active</span>
+			{% endif %}
+	</span></h3>
     <p>
-      Do this before...
+      <span class="next">Next stage: {{user_stage.stage.name}} </span></p>
+	<p>	{{user_stage.stage.description|safe}}
     </p>
     <p>
-      <span class="next">NEXT:</span> Stage info!
-    </p>
-
+		{%if astage.overdue%}
+		    <span class="red">You're overdue! Next session was due: {{user_stage.nextdeadline|date:"d M Y"}}</span>
+	    {% else %}
+		    Complete session by: {{user_stage.nextdeadline|date:"d M Y"}}
+	    {% endif %}    
+	</p>
     <div class="micro_study_options">
       <a href="" class="button">Act</a>
       <a href="/feedback" class="button">Feedback</a>
-      <a href="{% url show_one_study study_user.study.id 0%}" class="button"> Study Home</a>
+      <a href="{% url show_one_study 0 user_stage.stage.study.id%}" class="button"> Study Home</a>
     </div>
   </li>
   {% endfor %}

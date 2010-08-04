@@ -156,6 +156,7 @@ class Stage(models.Model):
         return self.users().count()
     
     def users(self):
+        
         return UserStage.objects.filter(stage=self, status=1).order_by('user')
             
 class StageGroup(models.Model):

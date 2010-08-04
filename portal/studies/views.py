@@ -17,8 +17,10 @@ from django.contrib.auth.models import User
 def show_many_studies(request):
     if StudyParticipant.objects.count > 0:
         studies_as_participant = StudyParticipant.objects.filter(user=request.user)
+        current_stages = [x.get_current_stage() for x in studies_as_participant]
     else:
         studies_as_participant = []
+        current_stages = []
 
     if StudyInvestigator.objects.count > 0:
         studies_as_investigator = StudyInvestigator.objects.filter(investigator=request.user)
@@ -28,20 +30,19 @@ def show_many_studies(request):
     return render_to_response('show_many_studies.html', locals(), context_instance=RequestContext(request))
 
 @login_required
-def show_one_study(request,s_id, as_part):
-    study_id = s_id
-    as_part = int(as_part)
-    request.session['study_id'] = s_id
+def show_one_study(request,as_inv,s_id):
+    study_id = int(s_id)
+    as_inv = int(as_inv)
+    request.session['study_id'] = study_id
     study = Study.objects.get(id=study_id)
     role = study.role(request.user)
-    print "Well poop: role " , role , " as_part ", as_part
-    if as_part == 0 and role >= 0:
+    if as_inv == 0 and role >= 0:
         #role >= 0 and as_part == 0
         #participant
         studypart = study.get_study_participant(request.user)
         stages = studypart.participant_stages()
         action = studypart.get_current_stage().stage.url
-    elif as_part == 1 and role <= 0: 
+    elif as_inv == 1 and role <= 0: 
         #investigator
         studyinv = study.get_study_investigator(request.user)
         stages = studyinv.stages()

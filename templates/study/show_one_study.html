@@ -2,7 +2,7 @@
 
 {% block content %}
 	<h1>{{study.name}}</h1>
-{% ifequal as_part 0 %}
+{% ifequal as_inv 0 %}
   <!--stage menu-->
   <div id="stages_nav">
     <ul>
@@ -68,7 +68,7 @@
 
 
 {% else %}
-{% ifequal as_part 1%}
+{% ifequal as_inv 1%}
 
 <!-- Investigator -->
   <div id="stages_nav">
@@ -102,7 +102,7 @@
             <th> Next Deadline </th>
             <th> Actions </th>
           <tr>
-        {% for auser in stage.users%}
+        {% for auser in stage.users %}
           <tr>
             <td><a href="">{{auser.user.username}}</a></td>
             <td>
