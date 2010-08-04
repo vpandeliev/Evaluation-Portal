@@ -389,6 +389,7 @@ padding: 5px;
   margin: auto;
   margin-top: 200px;
   background: #ddd;
+  opacity: 1;
 }
 
 #modal_dialog button {
