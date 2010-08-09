@@ -279,3 +279,23 @@ class UserStage(models.Model):
         if datetime.datetime.now() > self.nextdeadline():
             return True
         return False        
+
+
+class Message(models.Model):
+    """A message object"""
+
+    subject = models.CharField(max_length=80)
+    date = models.DateField('Date sent')
+    text = tinymce_models.HTMLField('Message Text')
+    author = models.ForeignKey(User)
+    
+    def __unicode__(self):
+        """docstring for __unicode__"""
+        return u'%s - %s' % (self.subject, self.year)
+        
+class MessageRecepient(models.Model):
+    """Join b/w messages and recepients"""
+    
+    recepient = models.ForeignKey(User)
+    message = models.ForeignKey(Message)
+    read = models.BooleanField('Read?', default=False)
