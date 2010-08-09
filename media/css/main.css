@@ -398,5 +398,81 @@ padding: 5px;
   float: right;
 }
 
+/*** Messaging ***/
+#inbox{
+  margin: auto;
+  margin-top: 100px;
+  width: 600px;
+  border: 1px solid red;
+  text-align: left;
+  background: white;
+  -moz-box-shadow: 5px 5px 5px #ccc;
+  -webkit-box-shadow: 5px 5px 5px #ccc;
+}
 
+#inbox h2, h3 {
+  padding: 5px;
+  margin: 5px 0;
+ 
+}
+
+#inbox h2 {
+  text-align: center;
+  color: #302F22;
+  padding: 2px 0;
+  font-size: 200%;
+}
+
+#inbox h3{
+  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  background: #eee;
+  
+ 
+}
+
+#inbox button {
+  float: right;
+  margin-top: 0px;
+}
+
+.unread_header{
+  color: #FA1F36;
+}
+
+#inbox ul{
+  padding: 5px;
+  margin: 0;
+}
+
+#inbox li{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#inbox h4 {
+  margin: 0 0 4px 0;
+}
+
+.unread h4 {
+  border: 1px solid #66632F;
+  background: #B1E500;
+  padding: 4px;
+}
+
+.read h4 {
+  border: 1px solid #8AB5BF;
+  background: #E4F7FF;
+  padding: 4px;
+}
+
+#inbox p{
+  margin: 0;
+  padding: 2px 4px;
+}
+
+.message_info{
+  color: #999;
+}
 

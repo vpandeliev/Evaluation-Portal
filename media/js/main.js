@@ -1,3 +1,48 @@
+/* Messaging */
+function button_handler(button, ids){
+  $("#" + ids + " p").toggle();
+  if($(button).html() == "Open"){
+    $(button).empty().append("Close");
+  }else{
+    $(button).empty().append("Open");
+  }
+}
+
+function highlight(i,color){
+      $(i).css({"background":"yellow"});
+      $(i).animate({"backgroundColor":color}, 1400);
+}
+
+function attach_handlers(){
+  $(".unread li").each(function(){
+    var ids = $(this).attr('id');
+
+    var button1 = "#" + ids + " button";
+    var self = this;
+    $("#" + ids + " button").click(function(){
+      var unread_num = Number($("#unread_count").html());
+      unread_num -= 1;
+      var header = $("#unread_count").html().replace(/\d+/,String(unread_num));
+      $("#unread_count").empty().append(header);
+      highlight("#inbox h3:first","#eee");;
+      $("#" + ids + " button").replaceWith($("<button>").append("Close"));
+      $(".read").prepend($("<li>").attr('id',ids).append($(self).html()));
+      $(self).remove();
+      $("#" + ids + " button").click(function(){button_handler(button1, ids)});
+      highlight("#" + ids + " h4", "#E4F7FF")
+    })
+  })
+
+  $(".read li").each(function(){
+    var ids = $(this).attr('id');
+    var button = "#" + ids + " button";
+    $(button).click(function(){button_handler(button,ids)
+    })
+    
+  })
+}
+/*End message */
+
 var current_box = null;
 var curent_stage = null;
 var last_click = 0;
@@ -48,6 +93,10 @@ $('#modal_dialog').toggle()
 
 function init(){
   bindBoxes();
+  if($('#inbox').length){
+    /* make sure this is only executed if inbox has contents. */
+    attach_handlers();
+  }
 }
 
 

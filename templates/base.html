@@ -15,6 +15,36 @@
         <button  onclick="close_modal();"> Close </button>
         <div class="clear"></div>
       </div>
+      {% if user.is_authenticated %}
+        <div id="inbox">
+          <h2>Messages</h2>
+          <h3 class="unread_header">Unread Messages (<span id="unread_count">{{unreadmsg.length}}</span>)</h3>
+          {%if unreadmsg %}
+          <ul class="unread">
+          
+          {% for item in unreadmsg %}
+            <li id="{{item.id}}">
+              <h4>{{item.alert.subject}}<button>Mark Read</button></h4>
+              <p class="message_info">From: <strong>{{item.alert.author}}</strong> (<em>{{item.alert.date}}</em>)</p>
+              <p>{{item.alert.text|safe}}</p>
+            </li>
+          {% endfor %}
+          </ul>
+          {%else%}<p>No unread messages.</p>{%endif%}
+        <h3>Read Messages</h3>
+        {% if readmsg%}
+        <ul class="read">
+          {% for item in readmsg %}
+            <li id="{{item.id}}">
+              <h4>{{item.alert.subject}}<button>Open</button></h4>
+              <p class="message_info">From: <strong>{{item.alert.author}}</strong> (<em>{{item.alert.date}}</em>)</p>
+              <p>{{item.alert.text|safe}}</p>
+            </li>
+          {% endfor %}
+        </ul>
+        {% else %}<p>No read messages.</p>{%endif%}
+      </div>
+		{% endif%}
     </div>
 		<div id="outer">
 
@@ -22,29 +52,15 @@
 		  
 			<div id="login_menu">
 				{% if user.is_authenticated %}
-					<a href="/study/">{{user.username}}</a> | <a href="{% url logout %}">Logout</a>
+					<a href="/study/">{{user.username}}</a> |
+          <a href="#" onclick="$('#modal_background').show();$('#inbox').show();">Messages</a> | 
+           <a href="{% url logout %}">Logout</a>
 				{% else %}
 					<a href="{% url login %}">Login</a>
 				{% endif%}
 			</div>
 			{% endif %}
-		{% if user.is_authenticated %}
-			<div>
-			<p>Unread Messages:</p>
-			<ul>
-			{% for item in unreadmsg %}
-				<li> {{item.alert.subject}} - {{item.alert.date}}. From: {{item.alert.author}}. {{item.alert.text|safe}}</li>
-			{% endfor %}
-			</ul>
-			<p>Read Messages:</p>
-			<ul>
-			{% for item in readmsg %}
-				<li> {{item.alert.subject}} - {{item.alert.date}}. From: {{item.alert.author}}. {{item.alert.text|safe}}</li>
-			{% endfor %}
-			</ul>
-
-			</div>
-		{% endif%}
+		
 			{% block content %}{% endblock %}
 		</div>
 	</body>
