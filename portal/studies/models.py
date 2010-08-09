@@ -281,7 +281,7 @@ class UserStage(models.Model):
         return False        
 
 
-class Message(models.Model):
+class Alert(models.Model):
     """A message object"""
 
     subject = models.CharField(max_length=80)
@@ -291,11 +291,13 @@ class Message(models.Model):
     
     def __unicode__(self):
         """docstring for __unicode__"""
-        return u'%s - %s' % (self.subject, self.year)
+        return u'%s - %s' % (self.subject, self.date)
         
-class MessageRecepient(models.Model):
+class AlertRecepient(models.Model):
     """Join b/w messages and recepients"""
     
     recepient = models.ForeignKey(User)
-    message = models.ForeignKey(Message)
-    read = models.BooleanField('Read?', default=False)
+    alert = models.ForeignKey(Alert)
+    CHOICES = ((0, 'Unread'),(1, 'Read'))
+    read = models.IntegerField('Read?', max_length=1, choices=CHOICES)
+    

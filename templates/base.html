@@ -28,6 +28,23 @@
 				{% endif%}
 			</div>
 			{% endif %}
+		{% if user.is_authenticated %}
+			<div>
+			<p>Unread Messages:</p>
+			<ul>
+			{% for item in unreadmsg %}
+				<li> {{item.alert.subject}} - {{item.alert.date}}. From: {{item.alert.author}}. {{item.alert.text|safe}}</li>
+			{% endfor %}
+			</ul>
+			<p>Read Messages:</p>
+			<ul>
+			{% for item in readmsg %}
+				<li> {{item.alert.subject}} - {{item.alert.date}}. From: {{item.alert.author}}. {{item.alert.text|safe}}</li>
+			{% endfor %}
+			</ul>
+
+			</div>
+		{% endif%}
 			{% block content %}{% endblock %}
 		</div>
 	</body>
