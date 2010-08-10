@@ -17,8 +17,11 @@ function toggleCloseButton(){
 }
 
 function highlight(i,color){
-      $(i).css({"background":"yellow"});
-      $(i).animate({"backgroundColor":color}, 1400);
+  $(i).css({"background":"yellow"});
+  $(i).animate({"backgroundColor":color}, 1400);
+}
+
+function messageRead(message_id){
 }
 
 function attach_handlers(){
@@ -28,21 +31,38 @@ function attach_handlers(){
   })
   $(".unread li").each(function(){
     var ids = $(this).attr('id');
-
     var button1 = "#" + ids + " button";
     var self = this;
     $("#" + ids + " button").click(function(){
-      var unread_num = Number($("#unread_count").html());
+      $.ajax({
+        url: 'studies/mark-read',
+        type: 'POST',
+        data: {'id':ids},
+        success: function(){
+          var unread_num = Number($("#unread_count").html());
+          unread_num -= 1;
+          if(!unread_num){toggleCloseButton()}
+          var header = $("#unread_count").html().replace(/\d+/,String(unread_num));
+          $("#unread_count").empty().append(header);
+          highlight("#inbox h3:first","#eee");
+          $("#" + ids + " button").replaceWith($("<button>").append("Close"));
+          $(".read").prepend($("<li>").attr('id',ids).append($(self).html()));
+          $(self).remove();
+          $("#" + ids + " button").click(function(){button_handler(button1, ids)});
+          highlight("#" + ids + " h4", "#E4F7FF")
+        }
+      });
+      /*var unread_num = Number($("#unread_count").html());
       unread_num -= 1;
       if(!unread_num){toggleCloseButton()}
       var header = $("#unread_count").html().replace(/\d+/,String(unread_num));
       $("#unread_count").empty().append(header);
-      highlight("#inbox h3:first","#eee");;
+      highlight("#inbox h3:first","#eee");
       $("#" + ids + " button").replaceWith($("<button>").append("Close"));
       $(".read").prepend($("<li>").attr('id',ids).append($(self).html()));
       $(self).remove();
       $("#" + ids + " button").click(function(){button_handler(button1, ids)});
-      highlight("#" + ids + " h4", "#E4F7FF")
+      highlight("#" + ids + " h4", "#E4F7FF")*/
     })
   })
 
