@@ -7,6 +7,14 @@ function button_handler(button, ids){
     $(button).empty().append("Open");
   }
 }
+function toggleCloseButton(){
+  var button = $("#close_message");
+  if($(button).attr("class") == "close_fade"){
+    $(button).attr({"class":"close_nofade"});
+  }else{
+    $(button).attr({"class":"close_fade"});
+  }
+}
 
 function highlight(i,color){
       $(i).css({"background":"yellow"});
@@ -14,6 +22,10 @@ function highlight(i,color){
 }
 
 function attach_handlers(){
+  $("#close_message").click(function(){
+      $('#modal_background').toggle();
+      $('#inbox').toggle()
+  })
   $(".unread li").each(function(){
     var ids = $(this).attr('id');
 
@@ -22,6 +34,7 @@ function attach_handlers(){
     $("#" + ids + " button").click(function(){
       var unread_num = Number($("#unread_count").html());
       unread_num -= 1;
+      if(!unread_num){toggleCloseButton()}
       var header = $("#unread_count").html().replace(/\d+/,String(unread_num));
       $("#unread_count").empty().append(header);
       highlight("#inbox h3:first","#eee");;
