@@ -286,7 +286,7 @@ class Alert(models.Model):
 
     subject = models.CharField(max_length=80)
     date = models.DateField('Date sent')
-    text = tinymce_models.HTMLField('Message Text')
+    text = models.CharField('Message Text', max_length=350)
     author = models.ForeignKey(User)
     
     def __unicode__(self):
