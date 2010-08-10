@@ -17,7 +17,7 @@
       </div>
       {% if user.is_authenticated %}
         <div id="inbox">
-          <h2>Messages</h2>
+          <h2>Messages<button id="close_message" class="close_fade"></button></h2>
           <h3 class="unread_header">Unread Messages (<span id="unread_count">{{unreadmsg|length}}</span>)</h3>
           {%if unreadmsg %}
           <ul class="unread">
