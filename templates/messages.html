@@ -48,18 +48,39 @@
   </div>
   <div id="sent_messages" style="display: none;">
     <h3>Sent Messages</h3>
+    {% if alerts %}
+    <ul>
+    {% for alert in alerts %}
+      <li id="{{alert.id}}">
+        <h4>{{alert.subject}}<button>Open</button></h4>
+        <p style="display:none;" class="message_info">
+          From: <strong>{{alert.author}}</strong> (<em>{{alert.date}}</em>)
+        </p>
+        <p style="display:none;" >{{alert.text|safe}}</p>
+      </li>
+    {% endfor %}
+    </ul>
+    {% else %}
+    <p>No sent messages.</p>
+    {%endif%}
   </div>
 
   <div id="compose_messages" style="display: none;">
     <form>
       <div id="compose_left">
         <p>Participants</p>
-        <table>
-          <tr>
-            <td><input type="checkbox" name="participants" value=""/></td>
-            <td>Participant 1</td>
-          </tr>
-        </table>
+        {% for study in studies %}
+          <p>{{study.name}}</p>
+          {% for participant in study.participants %}
+          <table>
+            <tr>
+              <td><input type="checkbox" name="participants" value="{{participant.id}}"/></td>
+              <td>{{participant.user_name}}</td>
+            </tr>
+          </table>
+          {% endfor %}
+        {% endfor %}
+
       </div>
       <div id="compose_right">
         <label for="subject">
