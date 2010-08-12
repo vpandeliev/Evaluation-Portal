@@ -54,7 +54,8 @@
       <li id="{{alert.id}}">
         <h4>{{alert.subject}}<button>Open</button></h4>
         <p style="display:none;" class="message_info">
-          From: <strong>{{alert.author}}</strong> (<em>{{alert.date}}</em>)
+          To: {{alert.recepients}}<strong>{{alert.author}}</strong> (<em>{{alert.date}}</em>)
+          
         </p>
         <p style="display:none;" >{{alert.text|safe}}</p>
       </li>
