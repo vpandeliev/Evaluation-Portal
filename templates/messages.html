@@ -66,7 +66,7 @@
   </div>
 
   <div id="compose_messages" style="display: none;">
-    <form>
+    <form id="message_form">
       <div id="compose_left">
         <p>Participants</p>
         {% for study in studies %}
@@ -87,11 +87,11 @@
           Subject
         </label>
         <input type="text" name="subject" />
-        <textarea>
+        <textarea name="body">
 
         </textarea>
       </div>
-      <input type="submit" value="Send"/>
+      <input type="submit" value="Send" id="send_message"/>
     </form>
     <div class="clear"></div>
   </div>

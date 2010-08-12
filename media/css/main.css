@@ -552,13 +552,14 @@ background: url("/media/img/close_nofade.png") no-repeat 0px 0px
 }
 
 #compose_left{
-  border: 1px solid black;
+  border: 1px solid #ccc;
   float: left;
   width: 250px;
+  margin-right: 5px;
 }
 
 #compose_right{
-  border: 1px solid black;
+  border: 1px solid #ccc;
   float: left;
   width: 430px;
 }
@@ -568,14 +569,17 @@ background: url("/media/img/close_nofade.png") no-repeat 0px 0px
 }
 
 #compose_right input{
-  width: 420px;
-  border: 1px solid #eee;
+  width: 410px;
+  border: 1px solid #ccc;
   padding: 3px;
+  margin: 5px;
+  
 }
 
 #compose_right textarea{
-  width: 420px;
+  width: 410px;
   border: 1px solid #ccc;
   padding: 3px;
   min-height: 200px;
+ margin: 5px;
 }

@@ -45,11 +45,32 @@ function messageNav(active_tab){
   return false;
 }
 
+
+function sendMessage(){
+  var message = $("#message_form").serialize();
+  $.ajax({
+    url: '/study/alert_send/',
+    type: "POST",
+    data: message,
+    success: function(){alert("Message has been sent");clearMessage();}
+  })
+  return false;
+}
+
+function clearMessage(){
+  $(':input','#message_form')
+ .not(':button, :submit, :reset, :hidden')
+ .val('')
+ .removeAttr('checked')
+ .removeAttr('selected');
+}
+
 function attach_handlers(){
   /*Message nav first*/
   $("#show_received_messages").click(function(){messageNav("received_messages")});
   $("#show_sent_messages").click(function(){messageNav("sent_messages")});
   $("#show_compose_messages").click(function(){messageNav("compose_messages")});
+  $("#send_message").click(function(){sendMessage()});
 
   $("#close_message").click(function(){
       $('#modal_background').toggle();
