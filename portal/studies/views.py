@@ -28,7 +28,7 @@ def show_many_studies(request):
     else:
         studies_as_investigator = []
 
-    return render_to_response('show_many_studies.html', locals(), context_instance=RequestContext(request, processors=[msgproc]))
+    return render_to_response('show_many_studies.html', locals(), context_instance=RequestContext(request))
 
 @login_required
 def show_one_study(request,as_inv,s_id):
@@ -50,12 +50,12 @@ def show_one_study(request,as_inv,s_id):
     else: 
         #unauthorized URL mucking about with
         return HttpResponseBadRequest()
-    return render_to_response('show_one_study.html',locals(), context_instance=RequestContext(request, processors=[msgproc]))
+    return render_to_response('show_one_study.html',locals(), context_instance=RequestContext(request))
     
 @login_required
 def show_users_in_study(request,study_id):
     users = Study.objects.get(id=study_id).participants()
-    return render_to_response('show_users.html', locals(), context_instance=RequestContext(request, processors=[msgproc]))
+    return render_to_response('show_users.html', locals(), context_instance=RequestContext(request))
 
 @login_required
 def create_one_study(request):
@@ -75,7 +75,7 @@ def create_one_study(request):
     else:
         #study = Blank()
         form = NewStudyForm()
-    return render_to_response('new_study.html', locals(), context_instance=RequestContext(request, processors=[msgproc]))
+    return render_to_response('new_study.html', locals(), context_instance=RequestContext(request))
         
 @login_required     
 def edit_one_study(request,study_id):
@@ -85,7 +85,7 @@ def edit_one_study(request,study_id):
     else: #render the form
         study = Study.objects.get(id=study_id)
         form = NewStudyForm(instance=study)
-        return render_to_response('edit_study.html',locals(), context_instance=RequestContext(request, processors=[msgproc]))
+        return render_to_response('edit_study.html',locals(), context_instance=RequestContext(request))
 
 @login_required
 def remove_one_study(request,study_id):
@@ -123,11 +123,11 @@ def add_participant_to_study(request,study_id):
             create_user_stages(user)
             return HttpResponseRedirect('/study/added_to_study/'+ str(user.id)+"/"+str(study.id))
         else:
-            return render_to_response('add_participant_to_study.html',locals(), context_instance=RequestContext(request, processors=[msgproc]))
+            return render_to_response('add_participant_to_study.html',locals(), context_instance=RequestContext(request))
     else: #render the form
         study = Study.objects.get(id=study_id)
         form = AddParticipantForm()
-        return render_to_response('add_participant_to_study.html',locals(), context_instance=RequestContext(request, processors=[msgproc]))
+        return render_to_response('add_participant_to_study.html',locals(), context_instance=RequestContext(request))
 
 
 @login_required
@@ -142,7 +142,7 @@ def added_to_study(request, study_id, user_id):
     else:
         message = message[0]
     new = not (message is None)
-    return render_to_response('added_to_study.html',locals(), context_instance=RequestContext(request, processors=[msgproc]))
+    return render_to_response('added_to_study.html',locals(), context_instance=RequestContext(request))
 
 ############### Data Collection
 
@@ -162,7 +162,7 @@ def informed_consent(request):
     else: 
         #unauthorized URL mucking about with
         return HttpResponseBadRequest()
-    return render_to_response('informed_consent.html',locals(), context_instance=RequestContext(request, processors=[msgproc]))
+    return render_to_response('informed_consent.html',locals(), context_instance=RequestContext(request))
 
 
 @login_required
@@ -210,7 +210,7 @@ def data_dump(request):
         #unauthorized URL mucking about with
         return HttpResponseBadRequest()
     #return HttpResponseRedirect('/study/1/'+str(study_id))
-    return render_to_response("data.html", locals(), context_instance=RequestContext(request, processors=[msgproc]))
+    return render_to_response("data.html", locals(), context_instance=RequestContext(request))
 
 @login_required
 def finish_boggle_session(request):
