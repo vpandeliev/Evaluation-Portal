@@ -49,7 +49,7 @@ function messageNav(active_tab){
 function sendMessage(){
   var message = $("#message_form").serialize();
   $.ajax({
-    url: '/study/alert_send/',
+    url: '/study/alert_send',
     type: "POST",
     data: message,
     success: function(){alert("Message has been sent");clearMessage();}
@@ -60,9 +60,10 @@ function sendMessage(){
 function clearMessage(){
   $(':input','#message_form')
  .not(':button, :submit, :reset, :hidden')
- .val('')
  .removeAttr('checked')
  .removeAttr('selected');
+ $('#message_subject').val('');
+ $('#message_body').val('');
 }
 
 function attach_handlers(){
@@ -70,7 +71,7 @@ function attach_handlers(){
   $("#show_received_messages").click(function(){messageNav("received_messages")});
   $("#show_sent_messages").click(function(){messageNav("sent_messages")});
   $("#show_compose_messages").click(function(){messageNav("compose_messages")});
-  $("#send_message").click(function(){sendMessage()});
+  $("#send_message").click(function(){sendMessage();return false;});
 
   $("#close_message").click(function(){
       $('#modal_background').toggle();

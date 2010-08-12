@@ -272,10 +272,11 @@ def mark_read(request):
 @login_required
 def send_alert(request):
     """Sends a message"""
+    print "here"
     if request.method != 'POST': 
-
         return HttpResponseBadRequest()
-    print "Sending message!"
+
+    print request.POST.getlist('participants')
     return HttpResponse("YAY!")
 
 
