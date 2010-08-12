@@ -255,10 +255,21 @@ def log_consent(request):
     #send: studyid, request.user, time, data
     return HttpResponse("YAY!")
 
+
+@login_required
+def mark_read(request):
+    """Marks a message with a particular ID as read"""
+    if request.method != 'POST': 
+        return HttpResponseBadRequest()
+    msgid = request.session['id']
+    msg = Alert.objects.get(id=msgid)
+    usermsg = AlertRecepient.objects.get(alert=msg, recepient=request.user)
+    usermsg.read = 1
+    usermsg.save()
+    return HttpResponse("YAY!")
+
+
 ############### StudyUser
-
-    
-
 def invite_user(request,study_id):
     pass
     
