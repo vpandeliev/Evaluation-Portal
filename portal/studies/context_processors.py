@@ -15,6 +15,6 @@ def msgproc(request):
     return {
     'unreadmsg': unreadmsg,
     'readmsg': readmsg,
-    'alerts': alerts,
-    'alert_recepients': alert_recepients
+    'alerts': alerts, #messages
+    'alert_recepients': alert_recepients #recepient for each message above
     }
