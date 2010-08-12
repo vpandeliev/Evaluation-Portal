@@ -1,0 +1,42 @@
+<div id="inbox">
+  <h2>
+    Messages
+    <button id="close_message" class="close_fade"></button>
+  </h2>
+  <h3 class="unread_header">
+    Unread Messages (<span id="unread_count">{{unreadmsg|length}}</span>)
+  </h3>
+  {%if unreadmsg %}
+  <ul class="unread">
+  {% for item in unreadmsg %}
+    <li id="{{item.id}}">
+      <h4>{{item.alert.subject}}
+        <button>Mark Read</button>
+      </h4>
+      <p class="message_info">
+        From: <strong>{{item.alert.author}}</strong> (<em>{{item.alert.date}}</em>)
+      </p>
+      <p>{{item.alert.text|safe}}</p>
+    </li>
+  {% endfor %}
+  </ul>
+  {%else%}
+  <p>No unread messages.</p>
+  {%endif%}
+  <h3>Read Messages</h3>
+  {% if readmsg%}
+  <ul class="read">
+  {% for item in readmsg %}
+    <li id="{{item.id}}">
+      <h4>{{item.alert.subject}}<button>Open</button></h4>
+      <p style="display:none;" class="message_info">
+        From: <strong>{{item.alert.author}}</strong> (<em>{{item.alert.date}}</em>)
+      </p>
+      <p style="display:none;" >{{item.alert.text|safe}}</p>
+    </li>
+  {% endfor %}
+  </ul>
+  {% else %}
+  <p>No read messages.</p>
+  {%endif%}
+</div>
