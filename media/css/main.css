@@ -461,7 +461,7 @@ padding: 4px 5px;
   margin: 0;
 }
 
-.unread li, .read li, sent li{
+.unread li, .read li, .sent li{
   list-style: none;
   margin: 0;
   padding: 0;
