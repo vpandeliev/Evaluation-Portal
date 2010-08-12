@@ -301,3 +301,5 @@ class AlertRecepient(models.Model):
     CHOICES = ((0, 'Unread'),(1, 'Read'))
     read = models.IntegerField('Read?', max_length=1, choices=CHOICES)
     
+    
+    
