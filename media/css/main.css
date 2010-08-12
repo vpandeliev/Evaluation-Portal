@@ -10,7 +10,7 @@ font-family: "Arial", sans-serif;
 
 h1 { border-bottom: 1px solid #ddd;}
 
-a:visited{ color: blue;}
+/*a:visited{ color: blue;}*/
 
 .red {color: red;}
 .red a {color: red; text-decoration:none;}
@@ -402,7 +402,7 @@ padding: 5px;
 #inbox{
   margin: auto;
   margin-top: 100px;
-  width: 600px;
+  width: 700px;
   border: 1px solid #ccc;
   text-align: left;
   background: white;
@@ -456,12 +456,12 @@ padding: 4px 5px;
   color: #FA1F36;
 }
 
-#inbox ul{
+.unread ul, .read ul{
   padding: 5px;
   margin: 0;
 }
 
-#inbox li{
+.unread li, .read li{
   list-style: none;
   margin: 0;
   padding: 0;
@@ -511,4 +511,43 @@ background: url("/media/img/close_nofade.png") no-repeat 0px 0px
   background: url("/media/img/close_nofade.png") no-repeat 0px 0px;
 }
 
+/* Message Nav */
+#message_options_nav {
+  margin: 0;
+  padding: 0;
+
+  border-bottom: 3px solid #ccc;
+}
+
+#message_options_nav li{
+  display: inline;
+  margin-bottom:1px;
+  margin-left: 5px;
+}
+
+.not_current_tab{
+  border: 1px solid #888;
+  border-bottom: none;
+  padding: 4px;
+  color: #888;
+  text-decoration:none;
+  background: #eee;
+}
+
+.current_tab{
+  border: 1px solid #7bb24e;
+  border-bottom: none;
+  padding: 4px;
+  text-decoration:none;
+  color: #777;
+  background: #BEFF89;
+}
+
+#sent_messages{
+  margin: 5px;
+}
+
+#compose_messages{
+  margin: 5px;
+}
 

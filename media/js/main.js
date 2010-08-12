@@ -24,7 +24,33 @@ function highlight(i,color){
 function messageRead(message_id){
 }
 
+function messageNav(active_tab){
+  var divs = [
+    "received_messages",
+    "sent_messages",
+    "compose_messages"
+  ]
+
+  for(i=0;i<divs.length;i++){
+    $("#" + divs[i]).hide();
+    $("#show_" + divs[i]).addClass("not_current_tab")
+    if(divs[i] != active_tab){
+      $("#show_" + divs[i]).removeClass("current_tab")
+      
+    }
+  }
+  
+  $("#" + active_tab).show();
+  $("#show_" + active_tab).addClass("current_tab")
+  return false;
+}
+
 function attach_handlers(){
+  /*Message nav first*/
+  $("#show_received_messages").click(function(){messageNav("received_messages")});
+  $("#show_sent_messages").click(function(){messageNav("sent_messages")});
+  $("#show_compose_messages").click(function(){messageNav("compose_messages")});
+
   $("#close_message").click(function(){
       $('#modal_background').toggle();
       $('#inbox').toggle()
@@ -52,17 +78,6 @@ function attach_handlers(){
           highlight("#" + ids + " h4", "#E4F7FF")
         }
       });
-      /*var unread_num = Number($("#unread_count").html());
-      unread_num -= 1;
-      if(!unread_num){toggleCloseButton()}
-      var header = $("#unread_count").html().replace(/\d+/,String(unread_num));
-      $("#unread_count").empty().append(header);
-      highlight("#inbox h3:first","#eee");
-      $("#" + ids + " button").replaceWith($("<button>").append("Close"));
-      $(".read").prepend($("<li>").attr('id',ids).append($(self).html()));
-      $(self).remove();
-      $("#" + ids + " button").click(function(){button_handler(button1, ids)});
-      highlight("#" + ids + " h4", "#E4F7FF")*/
     })
   })
 
