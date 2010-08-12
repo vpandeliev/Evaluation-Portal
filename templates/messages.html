@@ -49,7 +49,7 @@
   <div id="sent_messages" style="display: none;">
     <h3>Sent Messages</h3>
     {% if alerts %}
-    <ul>
+    <ul class="read">
     {% for alert in alerts %}
       <li id="{{alert.id}}">
         <h4>{{alert.subject}}<button>Open</button></h4>
