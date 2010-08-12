@@ -35,7 +35,7 @@ function attach_handlers(){
     var self = this;
     $("#" + ids + " button").click(function(){
       $.ajax({
-        url: 'studies/mark-read',
+        url: '/study/mark-read',
         type: 'POST',
         data: {'id':ids},
         success: function(){

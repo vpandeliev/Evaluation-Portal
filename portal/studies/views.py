@@ -260,13 +260,30 @@ def log_consent(request):
 def mark_read(request):
     """Marks a message with a particular ID as read"""
     if request.method != 'POST': 
+
         return HttpResponseBadRequest()
-    msgid = request.session['id']
+    msgid = int(request.POST['id'])
     msg = Alert.objects.get(id=msgid)
     usermsg = AlertRecepient.objects.get(alert=msg, recepient=request.user)
     usermsg.read = 1
     usermsg.save()
     return HttpResponse("YAY!")
+
+@login_required
+def send_message(request):
+    """Sends a message"""
+    if request.method != 'POST': 
+
+        return HttpResponseBadRequest()
+    msgid = int(request.POST['id'])
+    msg = Alert.objects.get(id=msgid)
+    usermsg = AlertRecepient.objects.get(alert=msg, recepient=request.user)
+    usermsg.read = 1
+    usermsg.save()
+    return HttpResponse("YAY!")
+
+
+
 
 
 ############### StudyUser
