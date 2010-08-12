@@ -456,12 +456,12 @@ padding: 4px 5px;
   color: #FA1F36;
 }
 
-.unread ul, .read ul{
+.unread ul, .read ul, .sent ul{
   padding: 5px;
   margin: 0;
 }
 
-.unread li, .read li{
+.unread li, .read li, sent li{
   list-style: none;
   margin: 0;
   padding: 0;

@@ -109,6 +109,14 @@ function attach_handlers(){
     $(button).click(function(){button_handler(button,ids)
     })
     
+  });
+
+  $(".sent li").each(function(){
+    var ids = $(this).attr('id');
+    var button = "#" + ids + " button";
+    $(button).click(function(){button_handler(button,ids)
+    })
+    
   })
 }
 /*End message */
