@@ -9,7 +9,6 @@ urlpatterns = patterns('',
     url(r'^ic$', informed_consent, name="informed_consent"),
     url(r'^consented$', consented, name="consented"),
     url(r'^datadump$', data_dump, name="data_dump"),
-    url(r'^messages$', outbox, name="outbox"),
     # Hosted games
     (r'^boggle/', include('portal.boggle.urls')),
     url(r'^fbog$', finish_boggle_session, name="finish_boggle_session"),
