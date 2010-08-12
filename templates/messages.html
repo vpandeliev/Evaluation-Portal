@@ -3,43 +3,96 @@
     Messages
     <button id="close_message" class="close_fade"></button>
   </h2>
-  <ul>
-    
+  <ul id="message_options_nav">
+    <li><a href="#" class="current_tab" id="show_received_messages">Recieved</a></li>
+    <li><a href="#" class="not_current_tab" id="show_sent_messages">Sent</a></li>
+    <li><a href="#" class="not_current_tab" id="show_compose_messages">Compose</a></li>
   </ul>
-  <h3 class="unread_header">
-    Unread Messages (<span id="unread_count">{{unreadmsg|length}}</span>)
-  </h3>
-  {%if unreadmsg %}
-  <ul class="unread">
-  {% for item in unreadmsg %}
-    <li id="{{item.id}}">
-      <h4>{{item.alert.subject}}
-        <button>Mark Read</button>
-      </h4>
-      <p class="message_info">
-        From: <strong>{{item.alert.author}}</strong> (<em>{{item.alert.date}}</em>)
-      </p>
-      <p>{{item.alert.text|safe}}</p>
-    </li>
-  {% endfor %}
-  </ul>
-  {%else%}
-  <p>No unread messages.</p>
-  {%endif%}
-  <h3>Read Messages</h3>
-  {% if readmsg%}
-  <ul class="read">
-  {% for item in readmsg %}
-    <li id="{{item.id}}">
-      <h4>{{item.alert.subject}}<button>Open</button></h4>
-      <p style="display:none;" class="message_info">
-        From: <strong>{{item.alert.author}}</strong> (<em>{{item.alert.date}}</em>)
-      </p>
-      <p style="display:none;" >{{item.alert.text|safe}}</p>
-    </li>
-  {% endfor %}
-  </ul>
-  {% else %}
-  <p>No read messages.</p>
-  {%endif%}
+  <div id="received_messages">
+    <h3 class="unread_header">
+      Unread Messages (<span id="unread_count">{{unreadmsg|length}}</span>)
+    </h3>
+    {%if unreadmsg %}
+    <ul class="unread">
+    {% for item in unreadmsg %}
+      <li id="{{item.id}}">
+        <h4>{{item.alert.subject}}
+          <button>Mark Read</button>
+        </h4>
+        <p class="message_info">
+          From: <strong>{{item.alert.author}}</strong> (<em>{{item.alert.date}}</em>)
+        </p>
+        <p>{{item.alert.text|safe}}</p>
+      </li>
+    {% endfor %}
+    </ul>
+    {%else%}
+    <p>No unread messages.</p>
+    {%endif%}
+    <h3>Read Messages</h3>
+    {% if readmsg%}
+    <ul class="read">
+    {% for item in readmsg %}
+      <li id="{{item.id}}">
+        <h4>{{item.alert.subject}}<button>Open</button></h4>
+        <p style="display:none;" class="message_info">
+          From: <strong>{{item.alert.author}}</strong> (<em>{{item.alert.date}}</em>)
+        </p>
+        <p style="display:none;" >{{item.alert.text|safe}}</p>
+      </li>
+    {% endfor %}
+    </ul>
+    {% else %}
+    <p>No read messages.</p>
+    {%endif%}
+  </div>
+  <div id="sent_messages" style="display: none;">
+    <h3>Sent Messages</h3>
+    {% if alerts %}
+    <ul>
+    {% for alert in alerts %}
+      <li id="{{alert.id}}">
+        <h4>{{alert.subject}}<button>Open</button></h4>
+        <p style="display:none;" class="message_info">
+          From: <strong>{{alert.author}}</strong> (<em>{{alert.date}}</em>)
+        </p>
+        <p style="display:none;" >{{alert.text|safe}}</p>
+      </li>
+    {% endfor %}
+    </ul>
+    {% else %}
+    <p>No sent messages.</p>
+    {%endif%}
+  </div>
+
+  <div id="compose_messages" style="display: none;">
+    <form>
+      <div id="compose_left">
+        <p>Participants</p>
+        {% for study in studies %}
+          <p>{{study.name}}</p>
+          {% for participant in study.participants %}
+          <table>
+            <tr>
+              <td><input type="checkbox" name="participants" value="{{participant.id}}"/></td>
+              <td>{{participant.user_name}}</td>
+            </tr>
+          </table>
+          {% endfor %}
+        {% endfor %}
+
+      </div>
+      <div id="compose_right">
+        <label for="subject">
+          Subject
+        </label>
+        <input type="text" name="subject" />
+        <textarea>
+
+        </textarea>
+      </div>
+      <input type="submit" value="Send"/>
+    </form>
+    <div class="clear"></div>
+  </div>
 </div>
