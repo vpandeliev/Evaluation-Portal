@@ -51,10 +51,10 @@
     {% if alerts %}
     <ul class="sent">
     {% for alert in alerts %}
-      <li id="{{alert.id}}">
+      <li id="{{alert.id}}_sent">
         <h4>{{alert.subject}}<button>Open</button></h4>
         <p style="display:none;" class="message_info">
-          To: {{alert.recepients}}<strong>{{alert.author}}</strong> (<em>{{alert.date}}</em>)
+          To: {{alert.recepients}} (<em>{{alert.date}}</em>)
           
         </p>
         <p style="display:none;" >{{alert.text|safe}}</p>

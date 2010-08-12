@@ -1,5 +1,6 @@
 /* Messaging */
 function button_handler(button, ids){
+  console.log("here");
   $("#" + ids + " p").toggle();
   if($(button).html() == "Open"){
     $(button).empty().append("Close");
@@ -107,18 +108,15 @@ function attach_handlers(){
   $(".read li").each(function(){
     var ids = $(this).attr('id');
     var button = "#" + ids + " button";
-    $(button).click(function(){button_handler(button,ids)
-    })
-    
+    $(button).click(function(){button_handler(button,ids);})
   });
 
   $(".sent li").each(function(){
     var ids = $(this).attr('id');
     var button = "#" + ids + " button";
-    $(button).click(function(){button_handler(button,ids)
-    })
-    
+    $(button).click(function(){button_handler(button,ids)})
   })
+
 }
 /*End message */
 
