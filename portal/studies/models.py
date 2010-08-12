@@ -298,6 +298,9 @@ class Alert(models.Model):
         alert_recepients = [x.recepient for x in AlertRecepient.objects.filter(alert=self)]
         return alert_recepients
         
+    def recepients_text(self):
+        return ','.join(self.recepients())
+        
 class AlertRecepient(models.Model):
     """Join b/w messages and recepients"""
     
