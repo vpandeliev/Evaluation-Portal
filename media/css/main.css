@@ -551,3 +551,31 @@ background: url("/media/img/close_nofade.png") no-repeat 0px 0px
   margin: 5px;
 }
 
+#compose_left{
+  border: 1px solid black;
+  float: left;
+  width: 250px;
+}
+
+#compose_right{
+  border: 1px solid black;
+  float: left;
+  width: 430px;
+}
+
+#compose_right label, #compose_right input{
+  display: block;
+}
+
+#compose_right input{
+  width: 420px;
+  border: 1px solid #eee;
+  padding: 3px;
+}
+
+#compose_right textarea{
+  width: 420px;
+  border: 1px solid #ccc;
+  padding: 3px;
+  min-height: 200px;
+}

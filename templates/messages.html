@@ -47,7 +47,7 @@
     {%endif%}
   </div>
   <div id="sent_messages" style="display: none;">
-    SENT
+    <h3>Sent Messages</h3>
   </div>
 
   <div id="compose_messages" style="display: none;">
@@ -56,14 +56,22 @@
         <p>Participants</p>
         <table>
           <tr>
-            <td></td>
-            <td></td>
+            <td><input type="checkbox" name="participants" value=""/></td>
+            <td>Participant 1</td>
           </tr>
         </table>
       </div>
       <div id="compose_right">
+        <label for="subject">
+          Subject
+        </label>
+        <input type="text" name="subject" />
+        <textarea>
 
+        </textarea>
       </div>
+      <input type="submit" value="Send"/>
     </form>
+    <div class="clear"></div>
   </div>
 </div>

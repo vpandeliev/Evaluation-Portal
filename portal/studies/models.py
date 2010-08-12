@@ -293,6 +293,11 @@ class Alert(models.Model):
         """docstring for __unicode__"""
         return u'%s - %s' % (self.subject, self.date)
         
+    def recepients(self):
+        """docstring for recepients"""
+        alert_recepients = [x.recepient for x in AlertRecepient.objects.filter(alert=self)]
+        return alert_recepients
+        
 class AlertRecepient(models.Model):
     """Join b/w messages and recepients"""
     
