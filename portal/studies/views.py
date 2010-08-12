@@ -270,16 +270,12 @@ def mark_read(request):
     return HttpResponse("YAY!")
 
 @login_required
-def send_message(request):
+def send_alert(request):
     """Sends a message"""
     if request.method != 'POST': 
 
         return HttpResponseBadRequest()
-    msgid = int(request.POST['id'])
-    msg = Alert.objects.get(id=msgid)
-    usermsg = AlertRecepient.objects.get(alert=msg, recepient=request.user)
-    usermsg.read = 1
-    usermsg.save()
+    print "Sending message!"
     return HttpResponse("YAY!")
 
 
