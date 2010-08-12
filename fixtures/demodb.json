@@ -304,5 +304,52 @@
             "start_date": null, 
             "stage": 2
         }
+    }, 
+    {
+        "pk": 1, 
+        "model": "studies.alert", 
+        "fields": {
+            "date": "2010-08-09", 
+            "text": "kjnkjdcnskdjvn", 
+            "author": 1, 
+            "subject": "Done yet?"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "studies.alert", 
+        "fields": {
+            "date": "2010-08-20", 
+            "text": "ndvkjsvnkds", 
+            "author": 1, 
+            "subject": "Done now"
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "studies.alertrecepient", 
+        "fields": {
+            "recepient": 1, 
+            "read": 1, 
+            "alert": 1
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "studies.alertrecepient", 
+        "fields": {
+            "recepient": 1, 
+            "read": 1, 
+            "alert": 2
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "studies.alertrecepient", 
+        "fields": {
+            "recepient": 2, 
+            "read": 0, 
+            "alert": 1
+        }
     }
 ]
