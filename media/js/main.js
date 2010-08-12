@@ -76,7 +76,8 @@ function attach_handlers(){
   $("#close_message").click(function(){
       $('#modal_background').toggle();
       $('#inbox').toggle()
-  })
+  });
+
   $(".unread li").each(function(){
     var ids = $(this).attr('id');
     var button1 = "#" + ids + " button";
@@ -99,9 +100,9 @@ function attach_handlers(){
           $("#" + ids + " button").click(function(){button_handler(button1, ids)});
           highlight("#" + ids + " h4", "#E4F7FF")
         }
-      });
+      })
     })
-  })
+  });
 
   $(".read li").each(function(){
     var ids = $(this).attr('id');

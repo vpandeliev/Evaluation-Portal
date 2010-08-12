@@ -477,7 +477,7 @@ padding: 4px 5px;
   padding: 4px;
 }
 
-.read h4 {
+.read h4, .sent h4{
   border: 1px solid #8AB5BF;
   background: #E4F7FF;
   padding: 4px;
@@ -515,7 +515,6 @@ background: url("/media/img/close_nofade.png") no-repeat 0px 0px
 #message_options_nav {
   margin: 0;
   padding: 0;
-
   border-bottom: 3px solid #ccc;
 }
 
