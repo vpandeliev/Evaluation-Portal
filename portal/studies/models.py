@@ -300,6 +300,18 @@ class Alert(models.Model):
         
     def recepients_text(self):
         return ','.join(self.recepients())
+
+    @classmethod
+    def create(cls, subj, content, sender):
+        """docstring for create"""
+
+        a = Alert()
+        a.subject = subj
+        a.text = content
+        a.date = datetime.datetime.now()
+        a.author = sender
+        a.save()
+        return a
         
 class AlertRecepient(models.Model):
     """Join b/w messages and recepients"""
@@ -308,6 +320,22 @@ class AlertRecepient(models.Model):
     alert = models.ForeignKey(Alert)
     CHOICES = ((0, 'Unread'),(1, 'Read'))
     read = models.IntegerField('Read?', max_length=1, choices=CHOICES)
-    
-    
+
+    def __unicode__(self):
+        """docstring for __unicode__"""
+        prefix = ""
+        if self.read == 0:
+            prefix = "UN"
+            
+        return u'%s - %s (%sREAD)' % (self.recepient, self.alert.subject, prefix)
+
+    @classmethod
+    def associate(cls, a, r):
+        """docstring for associate"""
+        ar = AlertRecepient()
+        ar.alert = a
+        ar.recepient = User.objects.get(id=r)
+        ar.read = 0
+        ar.save()
+        
     

@@ -267,7 +267,6 @@ def mark_read(request):
     msgid = int(request.POST['id'])
     
     msg = AlertRecepient.objects.get(id=msgid)
-    print "message got: ", msg.alert
     #usermsg = AlertRecepient.objects.get(alert=msg, recepient=request.user)
     msg.read = 1
     msg.save()
@@ -276,11 +275,23 @@ def mark_read(request):
 @login_required
 def send_alert(request):
     """Sends a message"""
-    print "here"
     if request.method != 'POST': 
         return HttpResponseBadRequest()
-
-    print request.POST.getlist('participants')
+    #print request.POST
+    #create alert
+    try:
+        a = Alert.create(request.POST['subject'], request.POST['body'], request.user)
+    except Exception:
+        print "Alert failed to create"
+    
+    recepients = request.POST.getlist('participants')
+    
+    
+    for x in recepients:
+        #print x, "gets", request.POST.get['body']
+        print x, "gets", request.POST['body']
+        AlertRecepient.associate(a, x)
+        #make alertrecepients
     return HttpResponse("YAY!")
 
 
