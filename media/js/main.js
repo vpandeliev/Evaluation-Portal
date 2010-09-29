@@ -53,6 +53,11 @@ function messageNav(active_tab){
 
 function sendMessage(){
   var message = $("#message_form").serialize();
+  //check to see if one or participants have been selected.
+  if($("input:checked:checked").length == 0){
+    return alert("Must select participants.")
+  }
+
   $.ajax({
     url: '/study/alert_send',
     type: "POST",
