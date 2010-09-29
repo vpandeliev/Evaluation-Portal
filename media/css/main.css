@@ -113,13 +113,15 @@ float: right;}
 .future {
 background-color: #ddd
 }
-.not_active{
+
+
+#stages_nav li{
   display: inline;
   border: 1px solid white;
   padding: 15px 5px;
 }
 
-.active {
+#stages_nav li.active {
   display: inline;
   border: 1px solid black;
   padding: 15px 5px;
