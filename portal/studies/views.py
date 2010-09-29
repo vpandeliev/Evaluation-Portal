@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from context_processors import *
 
+
 #from blank import Blank
 
 
@@ -196,7 +197,7 @@ def data_dump(request):
             for y in obj:
                 data.append(y.data())
         FILE = open(dumpfile, "w")
-        FILE.write("userid,studyid,stage,session,year,month,day,hour,minute,second,millisecond,datum,code\n")
+        FILE.write("userid,studyid,stage,session,year,month,day,hour,minute,second,millisecond,code,datum\n")
         for line in data:
             FILE.write(line + "\n")
         FILE.close()
@@ -238,9 +239,9 @@ def log_game(request):
     dt = datetime.datetime.fromtimestamp(float(timestamp))
     code = request.POST['code']
     try:
-      Data.write(studyid, request.user, dt, data,code)
-    except Exception as inst:
-      print "log_game:" + inst
+        Data.write(studyid, request.user, dt, data,code)
+    except Exception:
+        print "log_game: failed to write"
     #send: studyid, request.user, time, data
     return HttpResponse("YAY!")
 
@@ -250,9 +251,9 @@ def log_consent(request):
     #print "logging consent"
     try:
         Data.write(request.session['study_id'], request.user, datetime.datetime.now(), "Consent given", "CON")
-    except Exception as inst:
-      print "log_consent", inst
-    #send: studyid, request.user, time, data
+    except Exception:
+      print "log_consent: failed"
+     #send: studyid, request.user, time, data
     return HttpResponse("YAY!")
 
 
@@ -260,13 +261,16 @@ def log_consent(request):
 def mark_read(request):
     """Marks a message with a particular ID as read"""
     if request.method != 'POST': 
-
         return HttpResponseBadRequest()
+    print "mark read", request.POST['id']
+
     msgid = int(request.POST['id'])
-    msg = Alert.objects.get(id=msgid)
-    usermsg = AlertRecepient.objects.get(alert=msg, recepient=request.user)
-    usermsg.read = 1
-    usermsg.save()
+    
+    msg = AlertRecepient.objects.get(id=msgid)
+    print "message got: ", msg.alert
+    #usermsg = AlertRecepient.objects.get(alert=msg, recepient=request.user)
+    msg.read = 1
+    msg.save()
     return HttpResponse("YAY!")
 
 @login_required

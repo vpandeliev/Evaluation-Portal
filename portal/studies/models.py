@@ -192,10 +192,10 @@ class Data(models.Model):
         d.save()
     
     def __unicode__(self):
-        return u'%s,%s,%s,%s,%s,%s' % (self.studyparticipant.log(), self.stage, self.session, self.format_timestamp(), self.datum, self.code)
+        return u'%s,%s,%s,%s,%s,%s' % (self.studyparticipant.log(), self.stage, self.session, self.format_timestamp(), self.code, self.datum)
         
     def data(self):
-        return u'%s,%s,%s,%s,%s,%s' % (self.studyparticipant.log(), self.stage, self.session, self.format_timestamp(), self.datum, self.code)
+        return u'%s,%s,%s,%s,%s,%s' % (self.studyparticipant.log(), self.stage, self.session, self.format_timestamp(), self.code, self.datum)
 
     def format_timestamp(self):
         t = self.timestamp

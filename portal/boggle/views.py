@@ -1,4 +1,4 @@
-import json
+from django.utils import simplejson as json
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, get_object_or_404
