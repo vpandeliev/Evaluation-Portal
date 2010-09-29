@@ -1,6 +1,10 @@
 /* Messaging */
+/*
+button_handler toggles the message open close buttons. It is called
+from within attach_handlers.
+*/
+
 function button_handler(button, ids){
-  console.log("here");
   $("#" + ids + " p").toggle();
   if($(button).html() == "Open"){
     $(button).empty().append("Close");
@@ -84,6 +88,7 @@ function attach_handlers(){
     var button1 = "#" + ids + " button";
     var self = this;
     $("#" + ids + " button").click(function(){
+
       $.ajax({
         url: '/study/mark-read',
         type: 'POST',
