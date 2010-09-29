@@ -5,8 +5,10 @@
   </h2>
   <ul id="message_options_nav">
     <li><a href="#" class="current_tab" id="show_received_messages">Recieved</a></li>
-    <li><a href="#" class="not_current_tab" id="show_sent_messages">Sent</a></li>
-    <li><a href="#" class="not_current_tab" id="show_compose_messages">Compose</a></li>
+    {% if investigator %}
+      <li><a href="#" class="not_current_tab" id="show_sent_messages">Sent</a></li>
+      <li><a href="#" class="not_current_tab" id="show_compose_messages">Compose</a></li>
+    {% endif %}
   </ul>
   <div id="received_messages">
     <h3 class="unread_header">
