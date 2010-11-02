@@ -90,7 +90,7 @@ var Boggle = Class.create({
                 postBody:  
                   'data=' + response['data'] +
                   '&timestamp=' + response['timestamp'] +
-                  '&code=bog'
+                  '&code=BOG'
               });
             }
           /*this.addWordToList.curry(word).bindAsEventListener(this)*/

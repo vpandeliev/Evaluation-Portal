@@ -28,7 +28,16 @@ def show_many_studies(request):
         studies_as_investigator = StudyInvestigator.objects.filter(investigator=request.user)
     else:
         studies_as_investigator = []
-
+    
+    part = len(studies_as_participant)
+    inv = len(studies_as_investigator)
+    
+    if part+inv == 1:
+        if part > inv:
+            return show_one_study(request, 0, studies_as_participant[0].study.id)
+        else:
+            return show_one_study(request, 1, studies_as_investigator[0].study.id)
+        
     return render_to_response('show_many_studies.html', locals(), context_instance=RequestContext(request))
 
 @login_required
@@ -46,8 +55,11 @@ def show_one_study(request,as_inv,s_id):
         action = studypart.get_current_stage().stage.url
     elif as_inv == 1 and role <= 0: 
         #investigator
+        conditions = []
         studyinv = study.get_study_investigator(request.user)
-        stages = studyinv.stages()
+        groups = Group.objects.filter(study=study);
+        for g in groups:
+            conditions.append({'group':g, 'stages': StageGroup.stages_in_group(g)})
     else: 
         #unauthorized URL mucking about with
         return HttpResponseBadRequest()
@@ -165,6 +177,19 @@ def informed_consent(request):
         return HttpResponseBadRequest()
     return render_to_response('informed_consent.html',locals(), context_instance=RequestContext(request))
 
+@login_required
+def questionnaire(request):
+    if request.method == 'POST':
+        form = QForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            print cd
+            log(request,"QUE",cd)
+            return HttpResponseRedirect('/study/0/'+ str(request.session['study_id']))
+    else:
+        form = QForm()
+    return render_to_response('questionnaire.html', {'form': form, 'button': 'Submit'})
+
 
 @login_required
 def consented(request):
@@ -175,7 +200,7 @@ def consented(request):
         #participant
         studypart = study.get_study_participant(request.user)
         stage = studypart.get_current_stage()
-        log_consent(request)
+        log(request, "CON", "Consent Given")
         stage.session_completed()
     else: 
         #unauthorized URL mucking about with
@@ -239,20 +264,20 @@ def log_game(request):
     dt = datetime.datetime.fromtimestamp(float(timestamp))
     code = request.POST['code']
     try:
-        Data.write(studyid, request.user, dt, data,code)
+        Data.write(studyid, request.user, dt, code,data)
     except Exception:
         print "log_game: failed to write"
     #send: studyid, request.user, time, data
     return HttpResponse("YAY!")
 
 @login_required
-def log_consent(request):
-    """Logs informed consent"""
-    #print "logging consent"
+def log(request, code, datum):
+    """Logs things"""
+    #print "logging"
     try:
-        Data.write(request.session['study_id'], request.user, datetime.datetime.now(), "Consent given", "CON")
+        Data.write(request.session['study_id'], request.user, datetime.datetime.now(), code, datum)
     except Exception:
-      print "log_consent: failed"
+      print "logging: failed"
      #send: studyid, request.user, time, data
     return HttpResponse("YAY!")
 
@@ -293,7 +318,6 @@ def send_alert(request):
         AlertRecepient.associate(a, x)
         #make alertrecepients
     return HttpResponse("YAY!")
-
 
 
 

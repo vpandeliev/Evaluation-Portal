@@ -91,6 +91,9 @@ class StudyInvestigator(models.Model):
         stageusers.sort(key=attrgetter('order'))
         return [x.stage for x in stageusers]
     
+    def stages_per_condition(self, cond):
+        return StageGroup.objects.filter(group=cond).order_by('order')
+        
     def __unicode__(self):
         return u'%s - %s (Investigator)' % (self.investigator.username, self.study)
 
@@ -162,9 +165,10 @@ class StageGroup(models.Model):
     stage = models.ForeignKey(Stage)
     order = models.IntegerField()
     
-#   def stages_in_group(self, group):
-#       """docstring for stages_in_group"""
-#       return [x.stage for x in StageGroup.objects.filter(group=group).order_by('order')]
+    @classmethod
+    def stages_in_group(cls, group):
+        """docstring for stages_in_group"""
+        return [x.stage for x in StageGroup.objects.filter(group=group).order_by('order')]
     
     def __unicode__(self):
         return u'%s - %s (%s)' % (self.stage, self.group, self.order)
@@ -180,7 +184,7 @@ class Data(models.Model):
     code = models.CharField(max_length=3)
     
     @classmethod
-    def write(cls, studyid, user, time, data, code):
+    def write(cls, studyid, user, time, code, data):
         d = Data()
         d.studyparticipant = Study.objects.get(id=int(studyid)).get_study_participant(user) 
         stage = d.studyparticipant.get_current_stage()
@@ -225,7 +229,7 @@ class UserStage(models.Model):
     def session_completed(self):
         self.sessions_completed += 1
         self.last_session_completed = datetime.datetime.now()
-        Data.write(self.stage.study.id, self.user, self.last_session_completed, "session completed", "ssc")
+        Data.write(self.stage.study.id, self.user, self.last_session_completed, "SSC", "Session Completed")
         if self.sessions_completed == self.stage.sessions:
             #this stage is finished
             self.status = 0

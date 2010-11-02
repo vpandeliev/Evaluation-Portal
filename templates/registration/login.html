@@ -6,18 +6,17 @@
   {% if errors %}
     <p class="error">Sorry, that's not a valid username or password</p>
   {% endif %}
-
   <form action="" method="post">
-    <label for="username">User name</label><br />
+    <label for="username">Username</label><br />
     <input class="login_input" type="text" name="username" value="" id="username"><br />
     <label for="password">Password</label><br />
     <input class="login_input" type="password" name="password" value="" id="password"><br />
   
-    <input id="login_submit" type="submit" value="login" />
+    <input class="actbutton" id="login_submit" type="submit" value="login" />
     <input type="hidden" name="next" value="{{ next|escape }}" />
   </form>
   <div class="clear"></div>
-	<p> Don't have an account? <a href="{%url register%}">Get one here!</a></p>
+	<p style="display:none;"> Don't have an account? <a href="{%url register%}">Get one here!</a></p>
 
   </div>
 </div>

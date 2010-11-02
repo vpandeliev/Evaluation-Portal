@@ -4,6 +4,13 @@ body {
   
 }
 
+.supergrey {
+    background-color: #333333;
+}
+.orange {
+    background-color: #ED500A;
+}
+
 body, input, textarea {
 font-family: "Arial", sans-serif;
 }
@@ -19,6 +26,21 @@ h1 { border-bottom: 1px solid #ddd;}
 
 .right_float {
 float: right;}
+
+.actbutton{
+  border: 1px solid #ccc;
+  padding: 6px;
+  text-decoration: none;
+  font-size: 120%;
+  color: white;
+  background: green;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+}
+
+.actbutton:hover {
+    background: green;
+}
 
 .button{
   border: 1px solid #ccc;
@@ -76,11 +98,40 @@ float: right;}
 
 #login_menu{
   text-align: right;
+  vertical-align: text-bottom;
   border: 1px solid #ccc;
   border-top: none;
   padding: 5px;
-  background: #eee;
+  height:60px;
+  /*background: #eee;*/
+  color: white;
 
+}
+
+#login_links {
+    padding-top:30px;
+}
+#login_menu a {
+}
+#login_menu img {
+    float: left;
+    display: inline;
+}
+#login_menu a:visited, a:link {
+    text-decoration: none;
+    color: white;
+}
+
+#login_menu a:hover{
+    text-decoration: none;
+    color: #ED500A;
+}
+
+#login_menu h2 {
+    text-align: center;
+    font-size: 150%;
+    height: 30px;
+    float: left;
 }
 
 #header {
@@ -89,6 +140,28 @@ float: right;}
 }
 
 /* Studies */
+
+
+.past {
+  background-color: white;
+  color: black;
+}
+
+.past img{
+    border: none;
+    height: 20px;
+}
+
+.present {
+  background-color: #ed500a;
+  color: white;
+}
+
+.future {
+background-color: #828282;
+color: white;
+}
+
 #stages_nav{
   text-align: center;
 }
@@ -101,20 +174,6 @@ float: right;}
   padding: 0;
 
 }
-
-.past {
-  background-color: #eee;
-}
-
-.present {
-  background-color: #fff;
-}
-
-.future {
-background-color: #ddd
-}
-
-
 #stages_nav li{
   display: inline;
   border: 1px solid white;
@@ -122,6 +181,33 @@ background-color: #ddd
 }
 
 #stages_nav li.active {
+  display: inline;
+  border: 1px solid black;
+  padding: 15px 5px;
+  background: #FFFC00;
+}
+
+#inv_stages_nav {
+  text-align: center;
+  display:block;
+}
+
+#inv_stages_nav ul li ul{
+  margin: auto;
+  height: 80px;
+  position: relative;
+  top: 20px;
+  padding: 0;
+
+}
+
+#inv_stages_nav li{
+  display: inline;
+  border: 1px solid white;
+  padding: 15px 5px;
+}
+
+#inv_stages_nav li.active {
   display: inline;
   border: 1px solid black;
   padding: 15px 5px;
@@ -144,57 +230,46 @@ background-color: #ddd
 
 /* Show one study*/
 #stage_info{
-  border: 1px solid #ccc;
+  /*border: 1px solid #ccc;*/
 }
 
 .stage_panel p{
 
-  padding: 10px 5px;
+
   margin: 0;
   clear: both;'
 }
+
 
 .stage_header {
 
   padding: 5px;
 
 }
-
-.act_container_header {
-  padding: 5px;
-  border-bottom: 1px solid #ccc;
-  background: #eee;
-  font-weight: bold;
+.stage_header table {
+    border-collapse: collapse;
+    background-color: #FEFFEC;
 }
-
-.stage_sofar{
-  border-top: 1px solid #ccc;
-  text-align: right;
+.stage_header table tr td {
+    border: 1px solid;
+    padding: 15px;
+    
 }
 
 .stage_header h2 {
   display: inline;
   position: relative;
   left: 0;
-  font-size: 120%;
-  font-weight: normal;
+  font-size: 150%;
+  font-weight: bold;
   
 }
 .stage_header a{
-  float: right;
-  margin-left: 10px;
+  float: left;
+  margin-top: 15px;
 }
 
-.stage_instructions_header{
-  padding: 5px;
-  border-bottom: 1px solid #ccc;
-  background: #eee;
-  font-weight: bold;
-}
 
-.stage_instructions_header a {
-  float: right;
-}
 
 .table_wrapper table{
   width: 100%;
@@ -222,7 +297,7 @@ background-color: #ddd
 }
 
 #study_manage {
-  margin-bottom: 10px;
+    padding:15px;
 }
 #study_details{
   margin-top: 5px;
@@ -260,6 +335,7 @@ padding-left: 30px;
 
 #login_outer{
   text-align: center;
+
 }
 
 #login_inner {
@@ -279,15 +355,15 @@ padding-left: 30px;
   width: 120px;
   float: right;
   margin-top: 10px;
-  border: 1px solid green;
+  /*border: 1px solid green;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   text-shadow: 1px 1px 1px #fff;
-  font-size: 100%;
+  font-size: 100%;*/
 }
 
 #login_submit:hover {
-  background: #ddd;
+  /*background: #ddd;*/
 }
 
 .login_input{

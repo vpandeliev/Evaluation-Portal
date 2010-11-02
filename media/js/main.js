@@ -154,6 +154,18 @@ function bindBoxes(){
     $("#" + $(this).attr("id").replace("_box","")).show();
     return false;
   })
+  
+  $("#inv_stages_nav li a").click(function(){
+    curr = $("#inv_stages_nav li.active");
+    if (curr.attr("cond")!=$(this).attr("cond")) {
+     curr.removeClass("active");   
+    }
+    
+    $(this).closest("li").addClass("active");
+    $(".stage_panel").hide();
+    $("#" + $(this).attr("id").replace("box_","")).show();
+    return false;
+  })
 }
 
 /*

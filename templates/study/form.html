@@ -5,8 +5,8 @@
     {% endif %}
 
     <form action="" method="post">
-        <ul>
-            {{ form.as_ul }}
-        </ul>
-        <input type="submit" value="Add" />
+	<table id="formtable">
+            {{ form.as_table }}
+	</table>
+        <input type="submit" value="{{button}}" />
     </form>

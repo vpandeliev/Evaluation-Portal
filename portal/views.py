@@ -6,7 +6,9 @@ from django.shortcuts import render_to_response
 
 def home(request):
 	"""docstring for home"""
-	return render_to_response("home.html")
+	if request.user.is_authenticated():
+	    return HttpResponseRedirect("/study/")
+	return HttpResponseRedirect("/accounts/login")
 	
 	
 def register(request):

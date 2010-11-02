@@ -3,161 +3,145 @@
 {% block content %}
 	<h1>{{study.name}}</h1>
 {% ifequal as_inv 0 %}
-  <!--stage menu-->
-  <div id="stages_nav">
-    <ul>
-    {% for astage in stages %} 
-		  {% if astage.status > 1  %}
-        <li class="not_active"><a href="" id="stage_box_{{forloop.counter}}" onclick="return false;" class="stage_box future">{{forloop.counter}}</a></li>
-		  {% else %}
-			  {% ifequal astage.status 1 %}
-			    <li class="active"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box present">{{forloop.counter}}</a></li>
+
+	 <!--stage menu-->
+	  <div id="stages_nav">
+	    <ul>
+	    {% for astage in stages %} 
+			  {% if astage.status > 1  %}
+	        <li class="not_active"><a href="" id="stage_box_{{forloop.counter}}" onclick="return false;" class="stage_box future">{{astage.stage}}</a></li>
 			  {% else %}
-			    <li class="not_active"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box past">{{forloop.counter}}</a></li>
-			  {% endifequal %}
-		  {% endif %}
-	{% endfor%}
+				  {% ifequal astage.status 1 %}
+				    <li class="active"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box present">{{astage.stage}}</a></li>
+				  {% else %}
+				    <li class="not_active"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box past"><img src="{{MEDIA_URL}}img/tick.png"></img>{{astage.stage}}</a></li>
+				  {% endifequal %}
+			  {% endif %}
+		{% endfor%}
 
-  </ul>
-  </div>
-	<!--stage block-->
+	  </ul>
+	  </div>
+		<!--stage block-->
 
-  <div id="stage_info">
-	{% for astage in stages %}  
-    <div id="stage_{{forloop.counter}}" class="stage_panel"
-      {% ifnotequal astage.status 1 %}style="display:none;"{% endifnotequal %}>
-      <div class="stage_header">
-        <span><strong>Stage:</strong> {{astage.stage.name}}</span>
-        <a href="" class="button" id="instruction_button_{{forloop.counter}}" onclick="return show_modal('{{astage.stage.instructions|safe}}');">Stage Instructions</a>
-        <div class="clear"></div>
-      </div>
-      <div class="stage_instructions_header">Description</div>
-      <p class="stage_description">
-        {{astage.stage.description|safe}}
-      </p>
-      <div class="act_container">
-        <div class="act_container_header">Status</div>
-        <p>
-        	{%ifequal astage.status 1 %}
-				{%if astage.overdue%}
-				    <span class="red">You're overdue! Last session was due: {{astage.nextdeadline|date:"d M Y"}}</span>
-			    {% else %}
-				    Complete session by: {{astage.nextdeadline|date:"d M Y"}}
-			    {% endif %}
-				<br /><br /><a href="{{action}}" class="button">Act</a>
-			{% else %}{%ifequal astage.status 2 %}
-				This is a future stage. No action is required.
-			{% else %}
-				<span class="green">Stage complete!</span>
-			{% endifequal %}
-			{% endifequal %}
-        
-        </p>
-      </div>
-      <p class="stage_sofar">
-        Stage {{astage.order}} of {{studypart.number_of_stages}}
-		<br/>
-        Completed: {{astage.sessions_completed}} sessions (out of {{astage.stage.sessions}})
-      </p>
-    </div>
-  {% endfor %}
-  </div>
+	  <div id="stage_info">
+		{% for astage in stages %}  
+
+	    <div id="stage_{{forloop.counter}}" class="stage_panel"
+	      {% ifnotequal astage.status 1 %}style="display:none;"{% endifnotequal %}>
+	      <div class="stage_header">
+			<table width="900"><tr><td>
+	       <h2> Description</h2>
+
+	        {{astage.stage.instructions|safe}}
+<br/>
+			<h2>Status</h2><br/>
+	        <h2>
+	        	{%ifequal astage.status 1 %}
+					{%if astage.overdue%}
+					    <span class="red">Session due: {{astage.nextdeadline|date:"d M Y"}}</span>
+				    {% else %}
+					    Session due: {{astage.nextdeadline|date:"d M Y"}}
+				    {% endif %}
+					
+				{% else %}{%ifequal astage.status 2 %}
+					Future stage: no action required.
+				{% else %}
+					<span class="green">Stage complete!</span>
+				{% endifequal %}
+				{% endifequal %}
+
+	        </h2>
+	      </td><td width="20%">
+	      <span style="display: block"><p style="font-weight: bold;">Sessions Completed:</p>
+		<h2> {{astage.sessions_completed}} (of {{astage.stage.sessions}})</h2></span>
+		<div style="height:80px;">
+		{%ifequal astage.status 1 %}<a href="{{action}}" class="actbutton">Start Session</a>{% endifequal%}</div>
+		</td></tr></table>
+	    </div></div>
+	  {% endfor %}
+	  </div>
+	
+
+	
+
+ 
+
 
 
 {% else %}
 {% ifequal as_inv 1%}
 
 <!-- Investigator -->
-  <div id="stages_nav">
-    <ul>
-    {% for astage in stages %} 
-		  {% if astage.status > 1  %}
-        <li class="not_active"><a href="" id="stage_box_{{forloop.counter}}" onclick="return false;" class="stage_box present">{{astage.number_of_users}}</a></li>
-		  {% else %}
-			  {% ifequal forloop.counter 1 %}
-			    <li class="active"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box present">{{astage.number_of_users}}</a></li>
-			  {% else %}
-			    <li class="not_active"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box present">{{astage.number_of_users}}</a></li>
-			  {% endifequal %}
-		  {% endif %}
+
+<div>
+  <a href="/study/datadump" class="actbutton">Export Data</a>
+</div>
+<br/><br/>
+<div><img src="/media/img/mockup.png" width=1000></img></div>
+<!-->
+<div id="inv_stages_nav">
+<ul>
+    {% for cond in conditions %}
+	<li>
+ 		Condition: {{cond.group.name}}
 		
+		<ul>{% for astage in cond.stages %}
+		  {% if astage.status > 1  %}
+        	<li class="not_active"><a href="" cond="{{cond.group.id}}" id="box_stage_{{cond.group.id}}_{{forloop.counter}}" onclick="return false;" class="stage_box present">{{astage}} - {{astage.number_of_users}}</a></li>
+		  {% else %}
+			    <li class="not_active"><a href="" cond="{{cond.group.id}}" id="box_stage_{{cond.group.id}}_{{forloop.counter}}" class="stage_box present">{{astage}} - {{astage.number_of_users}}</a></li>
+		  {% endif %}
+
+		{% endfor%}
+		</ul>
+	</li>	
+	
+	
+
+	
+	
 	{% endfor%}
-</div>
-  </ul>
-<div id="stage_info">
-  {% for stage in stages %}
-    <div id="stage_{{forloop.counter}}" class="stage_panel" {% ifnotequal forloop.counter 1 %}style="display:none;"{% endifnotequal %}>
-      <div class="stage_header">
-        <h2><strong>Stage: </strong> {{stage.name}} ({{stage.number_of_users}})</h2>
-        <a href="users" class="disable">Manage Study Users</a>
-        <a href="" class="disable">Stage Instructions</a>
-      </div>
-      <div class="table_wrapper">
-        <table>
-          <tr>
-            <th> Participant</th>
-            <th> Next Deadline </th>
-            <th> Actions </th>
-          <tr>
-        {% for auser in stage.users %}
-          <tr>
-            <td><a href="">{{auser.user.username}}</a></td>
-            <td>
-              {% if auser.overdue %}
-                <span class="red">{{auser.nextdeadline|date:"d M Y"}}</span>
-              {% else %}
-                <span class="green">{{auser.nextdeadline|date:"d M Y"}}</span>
-              {% endif %}
-            </td>
-            <td>
-              <a href="">Interview</a> |
-              <a href="">Mark Stage Completed</a> |
-				<a href="">Boot</a>
-
-            </td>
-          <tr>
-        {%endfor%}
-        </table>
-      </div>
-    </div>
-  {% endfor %}	
+</ul>
+{% for cond in conditions %}
+{% for stage in cond.stages %}
+	    <div id="stage_{{cond.group.id}}_{{forloop.counter}}" class="stage_panel" style="display:none;">
+	      <div class="stage_header">
+	        <h2><strong>Stage: </strong> {{stage.name}} ({{stage.number_of_users}})</h2>
+	        </div>
+	    </div>
+		  {% endfor %}{% endfor %}
+		-->
 </div>
 
 
 
-	<!--investigator side
-	<p>(<a href="{% url add_participant_to_study study.id %}">add participant</a> | 
-	<a href="{% url show_users_in_study study.id %}">show users</a> | 
-	<a href="{% url edit_one_study study.id %}">edit</a> |<a href="{% url edit_one_study study.id %}">edit</a> |
-	<a href="{% url remove_one_study study.id %}" onclick="confirm('Are you sure?')">Delete</a>)</p>
+
+
+	
+	
+	
+	
+
+  
+
+
+
+
+
+{% endifequal %}
+{% endifequal %}
+<!-->
+	<div style="display:none" id="study_details">
+		<h2><a href="" onclick="return toggle_detail('d1',$(this));" class="right">Description</a></h2>
+	  	<div id="d1" style="display:none;">{{study.description|safe}}</div>
+		<h2><a href=""  onclick="return toggle_detail('d2',$(this));false;"  class="right">Informed Consent</a></h2>
+		<div id="d2"  style="display:none;">{{study.consent|safe}}</div>
+		<h2><a href="" onclick="return toggle_detail('d3',$(this));"  class="right">Instructions</a></h2>
+		<div id="d3"  style="display:none;">{{study.instructions|safe}}</div>
+		<h2><a href="" onclick="return toggle_detail('d4',$(this));"  class="right">Eligibility</a></h2>
+		<div id="d4" style="display:none;">{{study.eligibility|safe}}</div>
+		<h2><a href="" onclick="return toggle_detail('d5',$(this));"  class="right">Reward</a></h2>
+		<div id="d5" style="display:none;">{{study.reward|safe}}</div>
+</div>
 -->
-
-
-
-
-<!-- this will also have to change depending on investigator/participant -->
-<div id="study_manage">
-  <button id="left_button"></button>
-  <button id="right_button"></button>
-  <a href="/study/datadump" class="button">Export Data</a>
-  <a href="/study/messages" class="button">Message Center</a>
-  <a href="" class="disable">Manage Users</a>
-</div>
-{% endifequal %}
-{% endifequal %}
-
-<div id="study_details">
-	<h2><a href="" onclick="return toggle_detail('d1',$(this));" class="right">Description</a></h2>
-  	<div id="d1" style="display:none;">{{study.description|safe}}</div>
-	<h2><a href=""  onclick="return toggle_detail('d2',$(this));false;"  class="right">Informed Consent</a></h2>
-	<div id="d2"  style="display:none;">{{study.consent|safe}}</div>
-	<h2><a href="" onclick="return toggle_detail('d3',$(this));"  class="right">Instructions</a></h2>
-	<div id="d3"  style="display:none;">{{study.instructions|safe}}</div>
-	<h2><a href="" onclick="return toggle_detail('d4',$(this));"  class="right">Eligibility</a></h2>
-	<div id="d4" style="display:none;">{{study.eligibility|safe}}</div>
-	<h2><a href="" onclick="return toggle_detail('d5',$(this));"  class="right">Reward</a></h2>
-	<div id="d5" style="display:none;">{{study.reward|safe}}</div>
-</div>
-
-
 {% endblock %}

@@ -3,12 +3,16 @@
 	<head>
 		<title>{% block title %}{% endblock %}</title>
 		 <link rel="stylesheet" type="text/css" href="/media/css/main.css" media="screen">
+		 <link rel="stylesheet" type="text/css" href="/media/css/tabs.css" media="screen">
      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.js"></script>
   <script type="text/javascript" src="/media/js/main.js"></script>
 
+
+
 	</head>
 	<body>
+
     <div id="modal_background" style="display:none;">
       <div id="modal_dialog"  style="display:none;">
         <div id="modal_body"></div>
@@ -21,18 +25,22 @@
     </div>
 		<div id="outer">
 
-		  {% if request.path != "/accounts/login/" %}
+
 		  
-			<div id="login_menu">
+			<div id="login_menu" class="supergrey">
+				<img src="/media/img/tangra_logo.png"></img>
+				<div id="login_links">
 				{% if user.is_authenticated %}
-					<a href="/study/">{{user.username}}</a> |
-          <a href="#" onclick="$('#modal_background').show();$('#inbox').show();">Messages</a> | 
+					Welcome, <a href="/study/">{{user.username}}</a> |
+          <a href="/">My Studies</a> |
+					<a href="#" onclick="$('#modal_background').show();$('#inbox').show();">Messages</a> | 
            <a href="{% url logout %}">Logout</a>
 				{% else %}
-					<a href="{% url login %}">Login</a>
+					Welcome to Tangra: The Mental Fitness Evaluation Portal
 				{% endif%}
+				</div>
 			</div>
-			{% endif %}
+
 		
 			{% block content %}{% endblock %}
 		</div>
