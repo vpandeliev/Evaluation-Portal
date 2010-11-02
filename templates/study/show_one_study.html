@@ -3,18 +3,25 @@
 {% block content %}
 	<h1>{{study.name}}</h1>
 {% ifequal as_inv 0 %}
-
+<div id="supertabs">
+<ul>
+<li class="tablink on" id="tab1">Study Progress</li>
+<li class="tablink" id="tab2">About Study</li>
+<li class="tablink" id="tab3">Contact Investigator</li>
+</ul>
+</div>
 	 <!--stage menu-->
-	  <div id="stages_nav">
+<div id="tab1box" class="tab" >
+	  <div id="stages_nav" num="{{stages.count}}">
 	    <ul>
 	    {% for astage in stages %} 
 			  {% if astage.status > 1  %}
-	        <li class="not_active"><a href="" id="stage_box_{{forloop.counter}}" onclick="return false;" class="stage_box future">{{astage.stage}}</a></li>
+	        <li class="stage not_active"><span class="future"><a href="" id="stage_box_{{forloop.counter}}" onclick="return false;" class="stage_box">{{astage.stage}}</a></span></li>
 			  {% else %}
 				  {% ifequal astage.status 1 %}
-				    <li class="active"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box present">{{astage.stage}}</a></li>
+				    <li class="stage active"><span class="present"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box">{{astage.stage}}</a></span></li>
 				  {% else %}
-				    <li class="not_active"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box past"><img src="{{MEDIA_URL}}img/tick.png"></img>{{astage.stage}}</a></li>
+				    <li class="stage not_active"><span class="past"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box"><img src="{{MEDIA_URL}}img/tick.png"></img>{{astage.stage}}</a></span></li>
 				  {% endifequal %}
 			  {% endif %}
 		{% endfor%}
@@ -61,10 +68,15 @@
 	  {% endfor %}
 	  </div>
 	
-
+</div>
 	
-
+<div id="tab2box" class="tab" style="display:none">
+Tab 2
+</div>
  
+<div id="tab3box" class="tab" style="display:none">
+Tab 3
+</div>
 
 
 

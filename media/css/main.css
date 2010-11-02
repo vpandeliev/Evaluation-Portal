@@ -4,6 +4,9 @@ body {
   
 }
 
+ul {
+    list-style: none;
+}
 .supergrey {
     background-color: #333333;
 }
@@ -142,51 +145,143 @@ float: right;}
 /* Studies */
 
 
-.past {
+.past a {
   background-color: white;
   color: black;
-}
 
-.past img{
-    border: none;
-    height: 20px;
 }
-
-.present {
-  background-color: #ed500a;
+.past a:after {
   color: white;
 }
 
-.future {
+
+.past a img{
+    border: none;
+    height: 15px;
+}
+
+.present a {
+  background-color: #ed500a;
+  color: white;
+}
+.present a:after {
+  color: #ed500a;
+  
+}
+.future a {
 background-color: #828282;
 color: white;
 }
 
+.future a:after {
+  color: #828282;
+}
 #stages_nav{
   text-align: center;
 }
 
 #stages_nav ul{
   margin: auto;
-  height: 80px;
   position: relative;
   top: 20px;
+  margin-bottom: 50px;
   padding: 0;
+  overflow: hidden;
+  list-style: none;
 
 }
 #stages_nav li{
-  display: inline;
-  border: 1px solid white;
-  padding: 15px 5px;
+  display: block;
+  /*border: 1px solid white;
+  padding: 15px 5px;*/
+  float:left;
+
+}
+#stages_nav li a {
+        
+        text-decoration: none;
+        padding: 10px 10px 10px 10px;
+        position: relative;
+        display: block;
+        float:left;
+        height: 40px;
+        width: 90%;
+
+
+
+}
+/*
+#stages_nav li a:after{
+    content: " ";
+        overflow:hidden;
+            display: block;
+            width: 0;
+            height: 0;
+            border-top: 50px solid transparent;           
+            border-bottom: 50px solid transparent;
+            border-left: 30px solid;
+            position: absolute;
+            top: 50%;
+            margin-top: -50px;
+            left: 100%;
+            z-index: 2;
+
 }
 
-#stages_nav li.active {
-  display: inline;
-  border: 1px solid black;
-  padding: 15px 5px;
-  background: #FFFC00;
+#stages_nav li a:before {
+        content: " ";
+        display: block;
+        width: 0;
+        height: 0;
+        border-top: 50px solid transparent;
+        border-bottom: 50px solid transparent;
+        border-left: 30px solid white;
+        position: absolute;
+        top: 50%;
+        margin-top: -50px;
+        margin-left: 1px;
+        left: 100%;
+        z-index: 1;
 }
+*/
+#stages_nav li.active a{
+  display: block;
+ color: yellow;
 
+/*  padding: 15px 5px;
+  background: #FFFC00;*/
+}
+#supertabs ul {
+border-bottom: 1px solid #333333; /* set border COLOR as desired */
+padding-bottom: 5px;
+}
+#supertabs ul li {
+display: inline;
+position:relative;
+margin-right: 5px;
+padding: 5px 10px 5px 10px;
+border-top: 1px solid #333333; /* set border COLOR as desired */
+border-left: 1px solid #333333; /* set border COLOR as desired */
+border-right: 1px solid #333333; /* set border COLOR as desired */
+    cursor: hand; 
+    cursor: pointer; 
+    -webkit-border-top-right-radius: 5px 5px;
+    -webkit-border-top-left-radius: 5px 5px;
+    -moz-border-radius-topright: 5px 5px;
+    -moz-border-radius-topleft: 5px 5px;
+    
+    
+}
+.on{
+    position:relative;
+    top: 1px;
+    background-color: white;
+}
+.supertabs ul li a, a:visited, a:hover {
+    
+    text-decoration: none;
+
+}
 #inv_stages_nav {
   text-align: center;
   display:block;
@@ -209,7 +304,7 @@ color: white;
 
 #inv_stages_nav li.active {
   display: inline;
-  border: 1px solid black;
+  border: 10px solid black;
   padding: 15px 5px;
   background: #FFFC00;
 }
@@ -217,9 +312,8 @@ color: white;
 /*link within list item*/
 .stage_box{
   padding: 10px 15px;
-  border: 1px solid black;
 
-  text-decoration: none;
+
 }
 
 .clear {
