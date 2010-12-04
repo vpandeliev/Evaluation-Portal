@@ -1,0 +1,32 @@
+body {
+    width: 100%;
+}
+
+#wrap {
+    width: 900px;
+}
+#grid {
+    background-color: #aaa;
+    position: absolute;
+    left: 195px;
+    top: 95px;
+    width: 600px;
+    height: 600px;
+    border: 5px solid #555;
+}
+
+#button {
+    position: absolute;
+    left: 200px;
+    top: 500px;
+    width: 300px;
+    height: 100px;
+    background-color: #aaa;
+}
+.car{
+    width: 96px;
+    height: 96px;
+    position:absolute;
+    background-color: #f00;
+    border: 2px solid;
+}

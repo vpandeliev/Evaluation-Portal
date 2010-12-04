@@ -22,10 +22,10 @@ h1 { border-bottom: 1px solid #ddd;}
 
 /*a:visited{ color: blue;}*/
 
-.red {color: red;}
-.red a {color: red; text-decoration:none;}
-.green {color:green;}
-.green a {color:green; text-decoration:none;}
+.red {background-color: red; color: white;}
+.red a {background-color: red; text-decoration:none; color:white;}
+.green {background-color:green;color:white;}
+.green a {background-color:green; text-decoration:none;color:white;}
 
 .right_float {
 float: right;}
@@ -36,13 +36,16 @@ float: right;}
   text-decoration: none;
   font-size: 120%;
   color: white;
-  background: green;
+  /*background: green;*/
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
 }
 
+.actbutton a, a:hover, a:visited {
+    /*color: white;*/
+}
 .actbutton:hover {
-    background: green;
+    /*background: green;*/
 }
 
 .button{
@@ -145,36 +148,34 @@ float: right;}
 /* Studies */
 
 
-.past a {
+.past {
   background-color: white;
-  color: black;
-
 }
-.past a:after {
-  color: white;
+.past a {
+    color: black;
+    
 }
-
 
 .past a img{
     border: none;
     height: 15px;
 }
 
-.present a {
+.present {
   background-color: #ed500a;
   color: white;
 }
-.present a:after {
-  color: #ed500a;
-  
+
+.present a {
+    color: white;
 }
-.future a {
+.future {
 background-color: #828282;
 color: white;
 }
 
-.future a:after {
-  color: #828282;
+.future a {
+    color:white;
 }
 #stages_nav{
   text-align: center;
@@ -245,8 +246,7 @@ color: white;
 }
 */
 #stages_nav li.active a{
-  display: block;
- color: yellow;
+
 
 /*  padding: 15px 5px;
   background: #FFFC00;*/
