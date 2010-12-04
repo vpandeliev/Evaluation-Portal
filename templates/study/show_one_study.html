@@ -16,12 +16,12 @@
 	    <ul>
 	    {% for astage in stages %} 
 			  {% if astage.status > 1  %}
-	        <li class="stage not_active"><span class="future"><a href="" id="stage_box_{{forloop.counter}}" onclick="return false;" class="stage_box">{{astage.stage}}</a></span></li>
+	        <li class="stage not_active future"><a href="" id="stage_box_{{forloop.counter}}" onclick="return false;" class="stage_box">{{astage.stage}}</a></li>
 			  {% else %}
 				  {% ifequal astage.status 1 %}
-				    <li class="stage active"><span class="present"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box">{{astage.stage}}</a></span></li>
+				    <li class="stage active present"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box">{{astage.stage}}</a></li>
 				  {% else %}
-				    <li class="stage not_active"><span class="past"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box"><img src="{{MEDIA_URL}}img/tick.png"></img>{{astage.stage}}</a></span></li>
+				    <li class="stage not_active past"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box"><img src="{{MEDIA_URL}}img/tick.png"></img>{{astage.stage}}</a></li>
 				  {% endifequal %}
 			  {% endif %}
 		{% endfor%}
@@ -62,7 +62,13 @@
 	      <span style="display: block"><p style="font-weight: bold;">Sessions Completed:</p>
 		<h2> {{astage.sessions_completed}} (of {{astage.stage.sessions}})</h2></span>
 		<div style="height:80px;">
-		{%ifequal astage.status 1 %}<a href="{{action}}" class="actbutton">Start Session</a>{% endifequal%}</div>
+		{%ifequal astage.status 1 %}
+			{%if astage.overdue %}
+				<a href="{{action}}" class="actbutton red">Start Session</a>
+			{%else %}
+				<a href="{{action}}" class="actbutton green">Start Session</a>
+			{% endif %}
+		{% endifequal%}</div>
 		</td></tr></table>
 	    </div></div>
 	  {% endfor %}
@@ -71,7 +77,18 @@
 </div>
 	
 <div id="tab2box" class="tab" style="display:none">
-Tab 2
+	<div id="study_details">
+		<h2><a href="" onclick="return toggle_detail('d1',$(this));" class="right">Description</a></h2>
+	  	<div id="d1" style="display:none;">{{study.description|safe}}</div>
+		<h2><a href=""  onclick="return toggle_detail('d2',$(this));false;"  class="right">Informed Consent</a></h2>
+		<div id="d2"  style="display:none;">{{study.consent|safe}}</div>
+		<h2><a href="" onclick="return toggle_detail('d3',$(this));"  class="right">Instructions</a></h2>
+		<div id="d3"  style="display:none;">{{study.instructions|safe}}</div>
+		<h2><a href="" onclick="return toggle_detail('d4',$(this));"  class="right">Eligibility</a></h2>
+		<div id="d4" style="display:none;">{{study.eligibility|safe}}</div>
+		<h2><a href="" onclick="return toggle_detail('d5',$(this));"  class="right">Reward</a></h2>
+		<div id="d5" style="display:none;">{{study.reward|safe}}</div>
+</div>
 </div>
  
 <div id="tab3box" class="tab" style="display:none">
@@ -143,17 +160,6 @@ Tab 3
 {% endifequal %}
 {% endifequal %}
 <!-->
-	<div style="display:none" id="study_details">
-		<h2><a href="" onclick="return toggle_detail('d1',$(this));" class="right">Description</a></h2>
-	  	<div id="d1" style="display:none;">{{study.description|safe}}</div>
-		<h2><a href=""  onclick="return toggle_detail('d2',$(this));false;"  class="right">Informed Consent</a></h2>
-		<div id="d2"  style="display:none;">{{study.consent|safe}}</div>
-		<h2><a href="" onclick="return toggle_detail('d3',$(this));"  class="right">Instructions</a></h2>
-		<div id="d3"  style="display:none;">{{study.instructions|safe}}</div>
-		<h2><a href="" onclick="return toggle_detail('d4',$(this));"  class="right">Eligibility</a></h2>
-		<div id="d4" style="display:none;">{{study.eligibility|safe}}</div>
-		<h2><a href="" onclick="return toggle_detail('d5',$(this));"  class="right">Reward</a></h2>
-		<div id="d5" style="display:none;">{{study.reward|safe}}</div>
-</div>
+	
 -->
 {% endblock %}
