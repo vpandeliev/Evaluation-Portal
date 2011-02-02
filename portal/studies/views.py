@@ -10,16 +10,18 @@ from django.contrib.auth.models import User
 from context_processors import *
 
 
-#from blank import Blank
-
+BOGGLE_DURATION = 20
 
 
 ############### Study
+
+
+
 @login_required
 def show_many_studies(request):
     if StudyParticipant.objects.count > 0:
         studies_as_participant = StudyParticipant.objects.filter(user=request.user)
-        current_stages = [x.get_current_stage() for x in studies_as_participant]
+        current_stages = [x.get_current_stages() for x in studies_as_participant]
     else:
         studies_as_participant = []
         current_stages = []
@@ -168,7 +170,7 @@ def informed_consent(request):
         #participant
         studynum = sid
         studypart = study.get_study_participant(request.user)
-        stage = studypart.get_current_stage()
+        stage = studypart.get_current_stage(studynum)
         action = stage.stage.url
         if stage.order != 1:
             return HttpResponseBadRequest()
@@ -183,7 +185,6 @@ def questionnaire(request):
         form = QForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            print cd
             log(request,"QUE",cd)
             return HttpResponseRedirect('/study/0/'+ str(request.session['study_id']))
     else:
@@ -239,7 +240,37 @@ def data_dump(request):
     return render_to_response("data.html", locals(), context_instance=RequestContext(request))
 
 @login_required
+def choose_game(request):
+    global BOGGLE_DURATION
+    study_id = request.session['study_id']
+    study = Study.objects.get(id=study_id)
+    sp = StudyParticipant.objects.get(user=request.user, study=study)
+    us = sp.get_current_stage()
+    sc = us.sessions_completed
+    us.start_stage()
+    if sc%2 == 0:
+        return HttpResponseRedirect('/study/boggle/new-game/?play_for=1&return_to=/study/fbog&dur=' + str(BOGGLE_DURATION))
+    else:
+        return HttpResponseRedirect('/study/rushhour/play')
+
+@login_required
 def finish_boggle_session(request):
+    study_id = request.session['study_id']
+    study = Study.objects.get(id=study_id)
+    role = study.role(request.user)
+    if role > -1:
+        #participant
+        studypart = StudyParticipant.objects.get(study=study,user=request.user)
+        stage = studypart.get_current_stage()
+        stage.session_completed()
+    else: 
+        #unauthorized URL mucking about with
+        return HttpResponseBadRequest()
+    return HttpResponseRedirect('/study/0/'+str(study_id))
+
+
+@login_required
+def finish_rushhour_session(request):
     study_id = request.session['study_id']
     study = Study.objects.get(id=study_id)
     role = study.role(request.user)
@@ -251,8 +282,9 @@ def finish_boggle_session(request):
     else: 
         #unauthorized URL mucking about with
         return HttpResponseBadRequest()
-    return HttpResponseRedirect('/study/0/'+str(study_id))
-    
+    return HttpResponseRedirect('/study/0/'+str(study_id)) 
+
+
 @login_required
 def log_game(request):
     """Logs a single piece of data from an in-house game's POST request"""

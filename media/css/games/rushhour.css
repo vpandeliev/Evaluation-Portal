@@ -1,27 +1,65 @@
 body {
-    width: 100%;
+background-color: #ddd;
 }
 
 #wrap {
-    width: 900px;
+    width: 700px;
+    margin-left: auto ;
+    margin-right: auto ;
+
+    
 }
 #grid {
     background-color: #aaa;
     position: absolute;
-    left: 195px;
-    top: 95px;
+    left: 150px;
+    top: 50px;
     width: 600px;
     height: 600px;
     border: 5px solid #555;
+    z-index: 1;
+}
+
+#scorediv {
+	position:relative;
+	top:350px;
+	left: 360px;
+	width: 300px;
+	z-index: 5;
+	
+}
+#target {
+    background-color: #aaa;
+    position: absolute;
+    left: 395px;
+    top: 295px;
+    width: 200px;
+    height: 100px;
+    border-top: 5px dashed #555;
+    border-bottom: 5px dashed #555;
+    border-right: 5px dashed #555;
+    z-index: 2;
 }
 
 #button {
-    position: absolute;
-    left: 200px;
-    top: 500px;
-    width: 300px;
-    height: 100px;
+    position: relative;
+    left: 0px;
+    top: 430px;
+    width: 200px;
+    height: 70px;
     background-color: #aaa;
+    
+    text-align: center;
+    vertical-align: middle;
+    font-size: 26px;
+    font-style: bold;
+    border: 4px solid #555;
+    -moz-border-radius: 16px;
+    border-radius: 16px;
+
+}
+#button:hover {
+    cursor: pointer;
 }
 .car{
     width: 96px;
@@ -29,4 +67,7 @@ body {
     position:absolute;
     background-color: #f00;
     border: 2px solid;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    z-index: 5;
 }

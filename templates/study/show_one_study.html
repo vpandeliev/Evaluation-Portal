@@ -36,7 +36,7 @@
 	    <div id="stage_{{forloop.counter}}" class="stage_panel"
 	      {% ifnotequal astage.status 1 %}style="display:none;"{% endifnotequal %}>
 	      <div class="stage_header">
-			<table width="900"><tr><td>
+			<table width="900" style="margin-left: auto; margin-right:auto;"><tr><td>
 	       <h2> Description</h2>
 
 	        {{astage.stage.instructions|safe}}

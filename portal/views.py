@@ -29,16 +29,23 @@ def register(request):
 		})
 
 def login(request):
+	if 'next' not in request.REQUEST.keys():
+		next = '/study/'
+	else:
+		next = request.REQUEST['next']
 	errors = False
 	if request.method == 'POST':
+
 		username = request.POST.get('username', '')
 		password = request.POST.get('password', '')
+		
 		user = auth.authenticate(username=username, password=password)
 		if user is not None and user.is_active:
 			# Correct password, and the user is marked "active"
 			auth.login(request, user)
 			# Redirect to a success page.
-			return HttpResponseRedirect("/study/")
+			return HttpResponseRedirect(request.POST.get('next',''))
+				
 		else:
 			errors = True
 			return render_to_response("registration/login.html", locals())

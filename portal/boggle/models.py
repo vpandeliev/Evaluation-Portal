@@ -14,6 +14,7 @@ from logic import *
 from words import english
 
 
+
 class GameStateManager(models.Manager):
     '''
     Manager for the current game state.
@@ -29,6 +30,7 @@ class Game(models.Model):
     created_at = models.DateTimeField(default=datetime.datetime.now)
     round_max = models.IntegerField()
     game_over_url = models.CharField(max_length=200)
+    round_duration = models.PositiveIntegerField(default=180)
 
     round = property(lambda self: self.state == game_states.IN_PROGRESS and self.round_set.count() and self.round_set.all()[0] or None)
     board = property(lambda self: self.state == game_states.IN_PROGRESS and self.round_set.count() and self.round.board or None)
@@ -55,7 +57,7 @@ class Game(models.Model):
 
     def goto_next_round(self, mode):
         assert self.state == game_states.IN_PROGRESS, 'Trying to create a new round for a game that is not in progress!'
-        self.round_set.create(mode=mode)
+        self.round_set.create(mode=mode, duration=self.round_duration)
     
     def end_round(self):
         assert self.state != game_states.COMPLETE, 'Trying to end a game that is already over!'

@@ -1,35 +1,65 @@
-var gridsize = 50;
+var gridsize = 70;
 var div;
 var occupied = new Array(36);
 var allow;    
+var redcar;
+var end;
+var left_limit;
+var top_limit;
+var prevx;
+var prevy;
+var moves;
+var level;
+var starttime;
+var maxmoves;
 
+function submit_score() {
+    //console.log("submit");
+    endtime = (new Date).getTime()/1000.0;
+    timetaken = endtime - starttime;
 
+    data = 'data=' + level + "," + moves + "," + timetaken  +'&timestamp=' + endtime +'&code=RSH'
+    //console.log(data);
+    jQuery.post("/study/send-data", data, false);
     
+}
+
 
 function update(id){
   
  //poll for position
      set[id].move(gettopleftsquare(id));
      collision_grid();
-     //print_grid();
-     if (set[id].target && set[id].x == 5){
-         console.log("victory");
+     if (set[id].x != prevx || set[id].y != prevy) {
+		sc = maxmoves - moves
+		str = "<p>Your moves: " + moves + "</p>";
+		$('#score').html(str);
+         moves++;
+
+         //console.log(moves);
      }
+     //print_grid();
+/*     if (set[id].target && set[id].x == 7){
+         alert("victory");
+     }*/
+    if (set[redcar].x + set[redcar].freespace().plus == 5){
+        getleft = left_limit + 5 + gridsize * 6;
+        end = true;
 
-}
-
-function print_grid() {
-     var i;
-     for (i = 0; i < 6; i++) {
-         console.log(occupied[6*i] + "," + occupied[6*i+1] + "," + occupied[6*i+2] + "," + occupied[6*i+3] + "," + occupied[6*i+4] + "," + occupied[6*i+5]);
+        $('#'+redcar).animate({left: getleft}, 3000);
+        submit_score();
+        $('#button').delay(5000).fadeTo("slow",1.0);
+        //console.log("Victory");
     }
+
 }
+
 
 function gettopleftsquare(id){
     pos = $('#'+id).offset();
     d = div.offset();
-    pos.top = (pos.top - d.top - 5)/gridsize + 1;
-    pos.left = (pos.left - d.left - 5)/gridsize + 1;
+    pos.top = Math.round((pos.top - d.top - 5)/gridsize) + 1;
+    pos.left = Math.round((pos.left - d.left - 5)/gridsize) + 1;
     return pos;
 }
 
@@ -74,7 +104,8 @@ function Car(id,len, orient, xin, yin, theone){
         collision_grid();
         
         if (this.target){
-            this.color = '#f00'
+            this.color = '#f00';
+            redcar = this.id;
         }
         else {
             this.color = genHex(this.id); 
@@ -162,13 +193,32 @@ return colors[id];
     
 
 $(document).ready(function(){
+    //$('#button').hide();
+    $('#button').click(function(){
+        location.reload();
+		//window.location.replace("/study/frush");
+		
+    });
+    $('#button2').click(function(){
+        /*location.reload();*/
+		window.location.replace("/study/frush");
+		
+    });
+    starttime = (new Date).getTime()/1000.0;
     set = {};
     setc = {};
-
-    jQuery.get("level", function(data){
-        eval('setc = ' + data + ';');
-        //setc = jQuery.parseJSON(data);
-        console.log(setc);
+    end = false;
+    moves = 1;
+    div = $('#grid');
+    left_limit = div.offset().left + 5;
+    top_limit = div.offset().top + 5;
+        a = jQuery.parseJSON(div.attr('level'));
+        
+        level = a['level'];
+		maxmoves = div.attr('moves');
+        eval('setc = ' + a['content'] + ';');
+        //
+        //console.log(setc);
         var i = 0;
         for (var a in setc.cars) {
             c = setc.cars[a];
@@ -179,11 +229,18 @@ $(document).ready(function(){
         for (var carr in set) {
                set[carr].init();
            }
-            div = $('#grid');
+            
             div.css({
                 width: gridsize * 6,
                 height: gridsize * 6
              });
+             div2 = $('#target');
+             div2.css({
+                 width: gridsize * 2 + 5,
+                 height: gridsize,
+                 top: top_limit - 5 + gridsize * 2,
+                 left: left_limit + gridsize * 6
+              });
              var i;
              for (i = 0; i < 36; i++) {
                  occupied[i] = false;
@@ -198,7 +255,10 @@ $(document).ready(function(){
             
              $('.car')
                 .drag("start",function( ev, dd ){
+                    if (!end){
                    car = set[this.id];
+                   prevx = car.x
+                   prevy = car.y
                    dd.limit = div.offset();
                    dd.limit.top += 5;
                    dd.limit.left += 5;
@@ -207,7 +267,13 @@ $(document).ready(function(){
 
                    if (car.orientation){ 
                        allow.left = dd.limit.left + (car.x - car.freespace().minus - 1) * gridsize;
+                       //console.log(allow.left);
                        allow.right = dd.limit.left + (car.x + car.freespace().plus - 1) * gridsize;
+                       //console.log(allow.right);
+                       if (car.target && car.x + car.freespace().plus == 5){
+                           allow.right = dd.limit.left + 6 * gridsize + 5;
+                       }
+
                   }
                   else {
                        allow.top = dd.limit.top + (car.y - car.freespace().minus - 1) * gridsize;
@@ -215,28 +281,41 @@ $(document).ready(function(){
                        //allow.bottom = dd.limit.top + car.freespace().plus * gridsize;
                        //console.log(allow.bottom);
                        }
-
+                    }
                 })
                 .drag("end", function(ev,dd){
-
-                    if (set[this.id].orientation) {
-
+                    //console.log(dd);
+                    if (!end){
+                        car = set[this.id]
+                    if (car.orientation) {
+                        if (car.target && car.x > 6){
+                            $( this ).css({
+                               //top: Math.min( dd.limit.bottom, Math.max( dd.limit.top, Math.round(dd.offsetY/gridsize) * gridsize ) ),
+                               left: allow.right
+                            });   
+                            
+                        }
+                        else {
+                            //console.log(dd.offsetX);
+                            
                         $( this ).css({
                            //top: Math.min( dd.limit.bottom, Math.max( dd.limit.top, Math.round(dd.offsetY/gridsize) * gridsize ) ),
-                           left: Math.min( allow.right, Math.max( allow.left, Math.round(dd.offsetX/gridsize) * gridsize ) )
+                           left: Math.min( allow.right, Math.max( allow.left, Math.round((dd.offsetX - left_limit)/gridsize) * gridsize + left_limit) )
                         });   
+                        }
                     }
                     else {
 
                         $( this ).css({
-                           top: Math.min(allow.bottom, Math.max( allow.top, Math.round(dd.offsetY/gridsize) * gridsize ) ),
+                           top: Math.min(allow.bottom, Math.max( allow.top, Math.round((dd.offsetY - top_limit)/gridsize) * gridsize + top_limit)  ),
                            //left: Math.min( dd.limit.right, Math.max( dd.limit.left, Math.round(dd.offsetX/gridsize) * gridsize ) )
                         });   
                     }
                     update(this.id);
-
+                }
                 })
                 .drag(function( ev, dd ){
+                    if (!end){
                    if (set[this.id].orientation) {
                        $( this ).css({
                           //top: Math.min( dd.limit.bottom, Math.max( dd.limit.top, dd.offsetY) ),
@@ -248,46 +327,15 @@ $(document).ready(function(){
                           top: Math.min( allow.bottom, Math.max( allow.top, dd.offsetY) ),
                           //left: Math.min( dd.limit.right, Math.max( dd.limit.left, dd.offsetX) )
                        });
-                  }
+                  }}
                 });
 
         
         
         
-    });
+
 });    
-//    eval('var setc = {"cars" : [{"len": 2, "or": true, "x": 1, "y": 1, "theone": false},{"len": 3, "or": false, "x": 1, "y": 2, "theone": false},{"len": 2, "or": false, "x": 1, "y": 5, "theone": false},{"len": 2, "or": true, "x": 2, "y": 3, "theone": true},    {"len": 3, "or": false, "x": 4, "y": 2, "theone": false},{"len": 3, "or": false, "x": 6, "y": 1, "theone": false},{"len": 2, "or": true, "x": 5, "y": 5, "theone": false},{"len": 3, "or": true, "x": 3, "y": 6, "theone": false},]};');
-//    eval('var setc = {"cars" : [{"len": 2, "or": true, "x": 4, "y": 3, "theone": true},{"len": 2, "or": false, "x": 2, "y": 4, "theone": false},]};');
-/*
-    set[5] = new Car(5,3,false, 4,2,false);
-    set[6] = new Car(6,3,false, 6,1,false);
-    set[7] = new Car(7,2,true, 5,5,false);
-    set[8] = new Car(8,3,true, 3,6,false);
-  */  
-   
+
+ 
 
 
-/*
-submitWord: function(word) {
-    var form = $('word-form');
-    var self = this;
-    new Ajax.Request(form.getAttribute('action'), {
-        method: 'post',
-        evalJS: true,
-        postBody: 'word=' + word,
-        onSuccess: function(transport){
-          self.addWordToList(word,transport);
-          var response = {"data":word + ','+transport.responseJSON["score"],
-                          "timestamp": (new Date).getTime()/1000.0};
-          new Ajax.Request('/study/send-data',{
-            method: 'post',
-            postBody:  
-              'data=' + response['data'] +
-              '&timestamp=' + response['timestamp'] +
-              '&code=BOG'
-          });
-        }
-
-    });
-
-},*/

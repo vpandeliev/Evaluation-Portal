@@ -49,7 +49,8 @@ class Study(models.Model):
         return [x.investigator for x in StudyInvestigator.objects.filter(study=self)]
 
     def get_study_participant(self, user):
-        return StudyParticipant.objects.get(study=self, user=user)
+        s = StudyParticipant.objects.get(study=self, user=user)
+        return s
 
     def get_study_investigator(self, user):
         return StudyInvestigator.objects.get(study=self, investigator=user)
@@ -121,6 +122,10 @@ class StudyParticipant(models.Model):
         super(StudyParticipant,self).save()
 
     def get_current_stage(self):
+        #get the current userstage object
+        return UserStage.objects.get(user=self.user, study=self.study, status=1)
+
+    def get_current_stages(self):
         #get the current userstage object
         return UserStage.objects.get(user=self.user, status=1)
         
@@ -215,6 +220,8 @@ class UserStage(models.Model):
     end_date = models.DateTimeField('End date', blank=True, null=True)
     sessions_completed = models.IntegerField('Sessions completed')
     last_session_completed = models.DateTimeField('Last session completed', blank=True, null=True)
+    curr_session_started = models.DateTimeField('Current session started', blank=True, null=True)
+    study = models.ForeignKey(Study)
 
     def __unicode__(self):
         return u'%s - %s (%s)' % (self.user, self.stage, self.order)
@@ -263,7 +270,9 @@ class UserStage(models.Model):
             next[0].save()
         self.save()       
 
-
+    def start_stage(self):
+        self.curr_session_started = datetime.datetime.now()
+        self.save()
         
     def set_order(self):
         self.order = StageGroup.objects.get(group=self.group(), user=self.user).order

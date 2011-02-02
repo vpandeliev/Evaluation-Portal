@@ -36,6 +36,7 @@ float: right;}
   text-decoration: none;
   font-size: 120%;
   color: white;
+background-color: #333;
   /*background: green;*/
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
@@ -193,8 +194,8 @@ color: white;
 }
 #stages_nav li{
   display: block;
-  /*border: 1px solid white;
-  padding: 15px 5px;*/
+  border: 1px solid #333;
+  padding: 15px 5px;
   float:left;
 
 }
@@ -205,7 +206,7 @@ color: white;
         position: relative;
         display: block;
         float:left;
-        height: 40px;
+        height: 20px;
         width: 90%;
 
 
@@ -214,7 +215,7 @@ color: white;
 /*
 #stages_nav li a:after{
     content: " ";
-        overflow:hidden;
+    overflow:hidden;
             display: block;
             width: 0;
             height: 0;

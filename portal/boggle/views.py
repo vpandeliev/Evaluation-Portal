@@ -22,12 +22,14 @@ def create_new_game(request):
     Optional GET arguments are:
         play_for - number of rounds to play for, default 10
         return_to - URL to return to after the maximum # of rounds has been played
+        dur - Duration of each round
     '''
     
     play_for = request.GET.get('play_for', 10)
     return_to = request.GET.get('return_to', '/')
+    dur = request.GET.get('dur', 180)
     query = request.GET.urlencode()
-    game = Game.objects.create(round_max=play_for, game_over_url=return_to)
+    game = Game.objects.create(round_max=play_for, game_over_url=return_to, round_duration=dur)
     return join_game(request, game.id, query)
 
 #to change state of next game, need to get parameter for mode type...[LIAM]

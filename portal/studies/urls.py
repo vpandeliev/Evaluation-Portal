@@ -9,12 +9,16 @@ urlpatterns = patterns('',
     url(r'^ic$', informed_consent, name="informed_consent"),
     url(r'^consented$', consented, name="consented"),
     url(r'^datadump$', data_dump, name="data_dump"),
+    url(r'^choose_game$', choose_game, name="choose_game"),
     url(r'^alert_send$', send_alert, name="send_alert"),
     url(r'^quest$', questionnaire, name="questionnaire"),
 
     # Hosted games
     (r'^boggle/', include('portal.boggle.urls')),
-    url(r'^fbog$', finish_boggle_session, name="finish_boggle_session"),
+    (r'^rushhour/', include('portal.rushhour.urls')),
+    url(r'^get_current_stage(study_id)
+$', finish_boggle_session, name="finish_boggle_session"),
+    url(r'^frush$', finish_rushhour_session, name="finish_rushhour_session"),
     url(r'^(\d+)/(\d+)$', show_one_study, name="show_one_study"),
     url(r'^edit/(\d+)', edit_one_study, name="edit_one_study"),
     url(r'^remove/(\d+)', remove_one_study, name="remove_one_study"),

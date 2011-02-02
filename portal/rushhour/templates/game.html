@@ -17,8 +17,20 @@
 </head>
 <body>
 <div id="wrap">
-<div id="grid"></div>
+<div id="grid" moves={{moves}} level="{{ content }}"></div>
+<div id="target"></div>	
+<div id="scorediv">
+	<p>Level {{level.order}} - {{level.difficulty}}</p>
+	<p>Minimum moves: {{level.moves}}</p>
+	<span id="score">
+		<p>Your moves: 0</p>
+		
+	</span>
 	
 </div>
+<div id="button"><p>Next level</p></div>
+<div id="button2"><p>Back to Study</p></div>
+</div>
+
 </body>
 </html>

@@ -1,8 +1,8 @@
 $(document).ready(function() {
     
     num = $('#stages_nav').attr('num');
-    console.log(100/num+"%");
-    $('.stage').css('width', 100/num + '%')    
+	width = $('#stages_nav').width();
+    $('.stage').css('width', 1/num * width - num*2 - 2 + 'px')    
     $('.tablink', this).bind('click', function(){
     
         currtab = $(this);

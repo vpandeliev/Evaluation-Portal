@@ -118,7 +118,8 @@
         "fields": {
             "description": "<p>In this stage, you will play two 3-minute rounds of Boggle. Your scores will be recorded.</p>", 
             "sessions": 5, 
-            "url": "/study/boggle/new-game/?play_for=2&return_to=/study/fbog", 
+            "url": "/study/boggle/new-game/?play_for=2&return_to=/study/fbog
+", 
             "study": 1, 
             "deadline": 3, 
             "instructions": "<p>In this game you have<strong> 3 minutes </strong>to find as many words as possible on a 4x4 letter grid. Good luck!</p>", 
