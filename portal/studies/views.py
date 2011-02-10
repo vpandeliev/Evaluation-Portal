@@ -10,7 +10,9 @@ from django.contrib.auth.models import User
 from context_processors import *
 
 
-BOGGLE_DURATION = 20
+BOGGLE_DURATION = 180
+BOGGLE_ROUNDS = 10
+SESSION_DURATION = 5
 
 
 ############### Study
@@ -170,7 +172,7 @@ def informed_consent(request):
         #participant
         studynum = sid
         studypart = study.get_study_participant(request.user)
-        stage = studypart.get_current_stage(studynum)
+        stage = studypart.get_current_stage()
         action = stage.stage.url
         if stage.order != 1:
             return HttpResponseBadRequest()
@@ -242,6 +244,7 @@ def data_dump(request):
 @login_required
 def choose_game(request):
     global BOGGLE_DURATION
+    global BOGGLE_ROUNDS
     study_id = request.session['study_id']
     study = Study.objects.get(id=study_id)
     sp = StudyParticipant.objects.get(user=request.user, study=study)
@@ -249,12 +252,41 @@ def choose_game(request):
     sc = us.sessions_completed
     us.start_stage()
     if sc%2 == 0:
-        return HttpResponseRedirect('/study/boggle/new-game/?play_for=1&return_to=/study/fbog&dur=' + str(BOGGLE_DURATION))
+        return HttpResponseRedirect('/study/boggle/new-game/?play_for='+str(BOGGLE_ROUNDS)+'&return_to=/study/ftask/BOG&dur=' + str(BOGGLE_DURATION))
     else:
         return HttpResponseRedirect('/study/rushhour/play')
 
 @login_required
-def finish_boggle_session(request):
+def choose_task(request):
+    study_id = request.session['study_id']
+    study = Study.objects.get(id=study_id)
+    sp = StudyParticipant.objects.get(user=request.user, study=study)
+    us = sp.get_current_stage()
+    sc = us.sessions_completed
+    us.start_stage()
+    if sc%2 == 0:
+        return HttpResponseRedirect('/study/fitbrains/0')
+    else:
+        return HttpResponseRedirect('/study/fitbrains/1')
+
+@login_required
+def show_task(request, game):
+    global SESSION_DURATION
+    sd = SESSION_DURATION
+    if game == '1':
+        gametitle = "Wonder-Juice Machine"
+        link = "wonder_juice_machine"
+    else:
+        gametitle = "Paradise Island II"
+        link = "paradise_island"
+    return render_to_response('fitbrains.html', locals(),context_instance=RequestContext(request))
+
+@login_required
+def show_wonderjuice(request):
+    return render_to_response('wonderjuice.html', context_instance=RequestContext(request))
+
+@login_required
+def finish_session(request):
     study_id = request.session['study_id']
     study = Study.objects.get(id=study_id)
     role = study.role(request.user)
@@ -268,21 +300,11 @@ def finish_boggle_session(request):
         return HttpResponseBadRequest()
     return HttpResponseRedirect('/study/0/'+str(study_id))
 
-
 @login_required
-def finish_rushhour_session(request):
-    study_id = request.session['study_id']
-    study = Study.objects.get(id=study_id)
-    role = study.role(request.user)
-    if role > -1:
-        #participant
-        studypart = study.get_study_participant(request.user)
-        stage = studypart.get_current_stage()
-        stage.session_completed()
-    else: 
-        #unauthorized URL mucking about with
-        return HttpResponseBadRequest()
-    return HttpResponseRedirect('/study/0/'+str(study_id)) 
+def finish_task(request,code):
+    log(request,code,"Task Finished")
+    return HttpResponseRedirect('/study/fsess')
+
 
 
 @login_required

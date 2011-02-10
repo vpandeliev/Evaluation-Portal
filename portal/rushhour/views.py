@@ -16,10 +16,10 @@ def play_rushhour_game(request):
     stage = sp.get_current_stage()
     #compare current time to timeout
     elapsed = datetime.datetime.now() - stage.curr_session_started
-    if elapsed > datetime.timedelta(minutes=3):
-        pass
-        #return HttpResponseBadRequest()
-    obj = Data.objects.filter(code='RSH', studyparticipant=sp)
+    if elapsed > datetime.timedelta(seconds=3):
+        print elapsed, elapsed > datetime.timedelta(seconds=3)
+        return HttpResponseRedirect("/study/ftask/RSH")
+    obj = Data.objects.filter(code='RSL', studyparticipant=sp)
     max = 0
     for a in obj:
         curr = int(a.datum.split(',')[0])

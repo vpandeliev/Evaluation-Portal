@@ -570,13 +570,13 @@ var TimeLeft = Class.create({
     },
     setInitialValue: function(transport) {
         this._value = transport.responseJSON;
-        this._node.innerHTML = this._value;
+        this._node.innerHTML = (Math.floor(this._value/60)) +":"+(String("0" + this._value%60).slice(-2));
         this._timer = setTimeout(this.decrementValue.bind(this), 1000);
     },
     decrementValue: function() {
         this._value--;
         if (this._value >= 0) {
-            this._node.innerHTML = this._value;
+            this._node.innerHTML = (Math.floor(this._value/60)) +":"+(String("0" + this._value%60).slice(-2));
             this._timer = setTimeout(this.decrementValue.bind(this), 1000);
         } else {
             this._node.fire('timeleft:done');

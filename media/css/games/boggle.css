@@ -15,6 +15,16 @@ th, td {text-align: left; padding-right: 1em;}
 
 .container {position: relative;}
 
+.rules p {
+    font-size: 1.2em;
+}
+.rules ul li{
+    font-size: 1.2em;
+}
+.rules ul li ul li{
+    font-size: 1.0em;
+}
+
 #actions {
     position: absolute;
     top: 10px;

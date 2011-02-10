@@ -12,9 +12,9 @@ class StudyParticipantAdmin( admin.ModelAdmin ):
 		for x in StageGroup.objects.filter(group=obj.group).order_by('order'):
 			a = UserStage.objects.filter(user=obj.user, stage=x.stage)
 			if x.order == 1 and len(a)<1:
-				UserStage.objects.create(user=obj.user, stage=x.stage, study=self.study, order=x.order, sessions_completed=0, status=1, start_date=datetime.datetime.now(), last_session_completed=datetime.datetime.now())
+				UserStage.objects.create(user=obj.user, stage=x.stage, study=obj.study, order=x.order, sessions_completed=0, status=1, start_date=datetime.datetime.now(), last_session_completed=datetime.datetime.now())
 			elif len(a)<1:
-				UserStage.objects.create(user=obj.user, stage=x.stage, study=self.study, order=x.order, sessions_completed=0, status=2)
+				UserStage.objects.create(user=obj.user, stage=x.stage, study=obj.study, order=x.order, sessions_completed=0, status=2)
 			else:
 				pass
 		obj.save()

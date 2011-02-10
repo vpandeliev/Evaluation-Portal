@@ -4,7 +4,7 @@
 <div id="login_outer">
   <div id="login_inner">
   {% if errors %}
-    <p class="error">Sorry, that's not a valid username or password</p>
+    <p class="error">Sorry, that's not a valid username or password.</p>
   {% endif %}
   <form action="" method="post">
     <label for="username">Username</label><br />
@@ -12,7 +12,7 @@
     <label for="password">Password</label><br />
     <input class="login_input" type="password" name="password" value="" id="password"><br />
   
-    <input class="actbutton" id="login_submit" type="submit" value="login" />
+    <input class="actbutton grey" id="login_submit" type="submit" value="login" />
     <input type="hidden" name="next" value="{{ next|escape }}" />
   </form>
   <div class="clear"></div>

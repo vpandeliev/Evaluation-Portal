@@ -18,7 +18,7 @@ function submit_score() {
     endtime = (new Date).getTime()/1000.0;
     timetaken = endtime - starttime;
 
-    data = 'data=' + level + "," + moves + "," + timetaken  +'&timestamp=' + endtime +'&code=RSH'
+    data = 'data=' + level + "," + moves + "," + timetaken  +'&timestamp=' + endtime +'&code=RSL'
     //console.log(data);
     jQuery.post("/study/send-data", data, false);
     
@@ -201,7 +201,7 @@ $(document).ready(function(){
     });
     $('#button2').click(function(){
         /*location.reload();*/
-		window.location.replace("/study/frush");
+		window.location.replace("/study/ftask/RSH");
 		
     });
     starttime = (new Date).getTime()/1000.0;

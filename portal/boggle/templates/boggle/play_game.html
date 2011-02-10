@@ -28,12 +28,13 @@
 <div id="flash-message" style="display: none"></div>
 <div id="game-start">{{ game }}</div>
 <div id="game-state">{{ game.state|choice:"portal.boggle.choices.game_states" }}</div>
-<div id="player-list">
+<!--<div id="player-list">
 	<h2>Scores</h2>
 	{% for player in players %}
 	<div class="player {% ifequal player you %}you{% endifequal %}">{{ player }}&nbsp;{% ifequal player you %}<span class="light">(you)</span>{% endifequal %} {{ player.get_game_score }}</div>
 	{% endfor %}
 </div>
+-->
 {% endblock hud %}
 
 {% block game %}
@@ -68,5 +69,37 @@
 		</form>		
 	</div>
 	
+	{% endifequal %}
+	{% ifequal game.state game_states.WAITING_FOR_PLAYERS %}
+	<div class="rules">
+	<h2>How to Play:</h2>
+	<p>The game board in Boggle consists of 4x4 letter tiles.
+</p>
+<p>	You have 3 minutes to find as many words as you can on the grid. Words are composed of adjacent tiles (either horizontally, vertically or diagonally). You can start a word with any of the sixteen tiles, and you can move to the next one in any direction you like. Words must be at least three letters long.
+</p>
+<p>
+	When you see a word, just start typing it on the keyboard. It will automatically show up on the Boggle board. When you have finished typing your word, press the Enter key and it will be submitted.
+</p>
+<p>
+	Words within words are allowed, for instance, you may enter spare, spa and spar, and they will count as different words, but you may not use the same tile twice when entering a word.
+</p>
+<p>
+	If you make a mistake while typing the word, simply press Backspace and the latest letter you entered will be erased.
+</p>
+<p>
+	Scoring:
+	<ul>
+	<li>If your word is in our dictionary, you gain points based on the length of the word:
+		<ul>
+			<li>3-4 letters: 1 point</li><li>
+			5 letters: 2 points</li><li>
+			6 letters: 3 points</li><li>
+			7 letters: 5 points</li><li>
+			8+ letters: 11 points</li></ul></li>
+	<li>If your word is not in our dictionary, or you have already entered the word, you don't get any points.</li>
+	</ul>
+	</p>
+	<p>Press the <b>Start game </b> button at the top to begin playing.</p>
+	</div>
 	{% endifequal %}
 {% endblock game %}
