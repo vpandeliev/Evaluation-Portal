@@ -1,0 +1,37 @@
+body {
+background-color: #ddd;
+}
+
+#wrap {
+    width: 700px;
+    margin-left: auto ;
+    margin-right: auto ;
+
+    
+}
+.hidable {
+    margin-left:auto; 
+    margin-right:auto;
+    text-align:center;   
+}
+#instr {
+    width:600px; 
+    margin-top: 0px;
+}
+
+#instr p {
+    font-size: 1.2em;
+    text-align:left;
+}
+
+#fixation {
+    width:80px; 
+    margin-top: 230px;
+    font-size:2.0em;     
+}
+
+#stim {
+    width:40px; 
+    margin-top: 200px;
+    font-size:6.0em;
+}

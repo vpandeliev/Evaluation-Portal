@@ -4,6 +4,9 @@ body {
   
 }
 
+.active a {
+    font-style: italic;
+}
 ul {
     list-style: none;
 }

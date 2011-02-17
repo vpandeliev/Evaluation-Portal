@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     # Hosted games
     (r'^boggle/', include('portal.boggle.urls')),
     (r'^rushhour/', include('portal.rushhour.urls')),
+    (r'^assess/', include('portal.assess.urls')),
     url(r'^fsess$', finish_session, name="finish_session"),
     url(r'^ftask/([A-Z]+)$', finish_task, name="finish_task"),
     url(r'^(\d+)/(\d+)$', show_one_study, name="show_one_study"),

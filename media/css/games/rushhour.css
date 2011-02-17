@@ -42,24 +42,42 @@ background-color: #ddd;
 }
 
 #button {
-    position: relative;
-    left: 0px;
-    top: 430px;
-    width: 200px;
-    height: 70px;
-    background-color: #aaa;
-    
-    text-align: center;
-    vertical-align: middle;
-    font-size: 26px;
-    font-style: bold;
-    border: 4px solid #555;
-    -moz-border-radius: 16px;
-    border-radius: 16px;
+      background-color: green;
+      color:white;
+      position: relative;
+      left: 0px;
+      top: 410px;
+        border: 3px solid #555;
+        padding: 6px;
+        text-decoration: none;
+        text-align: center;
+        font-size: 120%;
+        color: white;
+        width: 200px;
+      /*background-color: #333;*/
+        /*background: green;*/
+        -webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
 
 }
+
+}
+a {
+    font-size: 1.4em;
+    text-decoration: none;
+    color: #000;
+    padding-top:30px;
+}
+a:visited{
+    color: #000;
+}
+
 #button:hover {
     cursor: pointer;
+}
+
+#rules p{
+    font-size: 1.2em;
 }
 .car{
     width: 96px;

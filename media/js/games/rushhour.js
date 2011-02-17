@@ -14,13 +14,12 @@ var starttime;
 var maxmoves;
 
 function submit_score() {
-    //console.log("submit");
     endtime = (new Date).getTime()/1000.0;
     timetaken = endtime - starttime;
-
     data = 'data=' + level + "," + moves + "," + timetaken  +'&timestamp=' + endtime +'&code=RSL'
     //console.log(data);
     jQuery.post("/study/send-data", data, false);
+     
     
 }
 
@@ -47,8 +46,9 @@ function update(id){
         end = true;
 
         $('#'+redcar).animate({left: getleft}, 3000);
+        
+        $('#button').delay(3000).fadeTo("slow",1.0);
         submit_score();
-        $('#button').delay(5000).fadeTo("slow",1.0);
         //console.log("Victory");
     }
 
@@ -193,15 +193,15 @@ return colors[id];
     
 
 $(document).ready(function(){
-    //$('#button').hide();
+    $('#button').hide();
     $('#button').click(function(){
         location.reload();
-		//window.location.replace("/study/frush");
+		//window.location.replace("/study/ftask/RSH");
 		
     });
     $('#button2').click(function(){
         /*location.reload();*/
-		window.location.replace("/study/ftask/RSH");
+		//window.location.replace("/study/ftask/RSH");
 		
     });
     starttime = (new Date).getTime()/1000.0;

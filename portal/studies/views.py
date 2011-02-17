@@ -10,9 +10,9 @@ from django.contrib.auth.models import User
 from context_processors import *
 
 
-BOGGLE_DURATION = 180
-BOGGLE_ROUNDS = 10
-SESSION_DURATION = 5
+BOGGLE_DURATION = 20
+BOGGLE_ROUNDS = 1
+SESSION_DURATION = 1
 
 
 ############### Study
@@ -106,7 +106,7 @@ def edit_one_study(request,study_id):
 
 @login_required
 def remove_one_study(request,study_id):
-    """docstring for remoe_one_study"""
+    """docstring for remove_one_study"""
     s = Study.objects.get(id=study_id)
     StudyParticipant.objects.filter(study=s).delete()
     StudyInvestigator.objects.filter(study=s).delete()
@@ -243,18 +243,18 @@ def data_dump(request):
 
 @login_required
 def choose_game(request):
-    global BOGGLE_DURATION
-    global BOGGLE_ROUNDS
     study_id = request.session['study_id']
     study = Study.objects.get(id=study_id)
+    bd = study.boggle_duration
+    br = study.boggle_rounds
     sp = StudyParticipant.objects.get(user=request.user, study=study)
     us = sp.get_current_stage()
     sc = us.sessions_completed
     us.start_stage()
     if sc%2 == 0:
-        return HttpResponseRedirect('/study/boggle/new-game/?play_for='+str(BOGGLE_ROUNDS)+'&return_to=/study/ftask/BOG&dur=' + str(BOGGLE_DURATION))
+        return HttpResponseRedirect('/study/boggle/new-game/?play_for='+str(br)+'&return_to=/study/ftask/BOG&dur=' + str(bd))
     else:
-        return HttpResponseRedirect('/study/rushhour/play')
+        return HttpResponseRedirect('/study/rushhour/rules')
 
 @login_required
 def choose_task(request):
@@ -271,8 +271,9 @@ def choose_task(request):
 
 @login_required
 def show_task(request, game):
-    global SESSION_DURATION
-    sd = SESSION_DURATION
+    study_id = request.session['study_id']
+    study = Study.objects.get(id=study_id)
+    sd = study.task_session_duration
     if game == '1':
         gametitle = "Wonder-Juice Machine"
         link = "wonder_juice_machine"
@@ -310,15 +311,20 @@ def finish_task(request,code):
 @login_required
 def log_game(request):
     """Logs a single piece of data from an in-house game's POST request"""
+
     if request.method != 'POST': 
+
         return HttpResponseBadRequest()
     studyid = request.session['study_id']
+
     timestamp = request.POST['timestamp']
     data = request.POST['data']
+
     dt = datetime.datetime.fromtimestamp(float(timestamp))
     code = request.POST['code']
+
     try:
-        Data.write(studyid, request.user, dt, code,data)
+        Data.write(studyid, request.user, dt, code, data)
     except Exception:
         print "log_game: failed to write"
     #send: studyid, request.user, time, data

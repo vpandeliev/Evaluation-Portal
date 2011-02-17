@@ -71,6 +71,7 @@ INSTALLED_APPS = (
     # Hosted games
     'portal.boggle',
     'portal.rushhour',
+    'portal.assess',
     
     # Libraries
     'tinymce',

@@ -27,13 +27,13 @@ t.startTimer();
 var counter = {
     i: 60,
     whendone: null,
-    period: 1200, // in milliseconds
+    period: 60000, // in milliseconds
     timer: null,
     start: function() {
         if (counter.i > 0){
         counter.i -= 1;
 //        $('#timer').html("<h2>"+(Math.floor(counter.i/60)) +":"+(String("0" + counter.i%60).slice(-2))+" minutes</h2>");
-        $('#timer').html("<h2>Time left to play: "+(counter.i+1)+" minutes</h2>");
+        $('#timer').html("<h2>Time left to play: "+(counter.i+1)+ ((counter.i == 0) ? " minute" : " minutes") + "</h2>");
 
         counter.timer = setTimeout(counter.start, counter.period);}
         else {

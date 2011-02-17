@@ -17,6 +17,11 @@ class Study(models.Model):
     eligibility = tinymce_models.HTMLField('Eligibility Criteria')
     reward = tinymce_models.HTMLField('Compensation and Reward')
     
+    #added to customize durations
+    boggle_duration = models.IntegerField("Boggle Round Duration (seconds)")
+    boggle_rounds = models.IntegerField("Number of Boggle Rounds Per Session")
+    task_session_dur = models.IntegerField("Session Duration (minutes)")
+
     def save(self, *args,**kwargs):
         #create timestamps, keep track of user
         
