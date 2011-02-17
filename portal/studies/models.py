@@ -23,6 +23,7 @@ class Study(models.Model):
     task_session_dur = models.IntegerField("Session Duration (minutes)")
 
     def save(self, *args,**kwargs):
+        
         #create timestamps, keep track of user
         
         super(Study, self).save(*args, **kwargs) 
