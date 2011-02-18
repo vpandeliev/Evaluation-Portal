@@ -29,10 +29,10 @@ def register(request):
 		})
 
 def login(request):
-	if 'next' not in request.REQUEST.keys():
-		next = '/study/'
-	else:
-		next = request.REQUEST['next']
+	#if 'next' not in request.REQUEST.keys():
+	next = '/study/'
+	#else:
+	#	next = request.REQUEST['next']
 	errors = False
 	if request.method == 'POST':
 
