@@ -1,7 +1,7 @@
 from django.http import *
 from django.shortcuts import render_to_response
 from models import *
-from studies.models import *
+from portal.studies import models as sm
 import random, datetime
 from django.utils import simplejson
 from django.contrib.auth.decorators import login_required
@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 def play_rushhour_game(request):
     """docstring for play"""
     study_id = request.session['study_id']
-    study = Study.objects.get(id=study_id)
+    study = sm.Study.objects.get(id=study_id)
     sd = study.task_session_dur
     sp = study.get_study_participant(request.user)
     stage = sp.get_current_stage()
