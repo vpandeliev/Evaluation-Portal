@@ -2,7 +2,7 @@
 from django.http import *
 from django.shortcuts import render_to_response
 from models import *
-from studies.models import *
+from portal.studies.models import *
 import random, datetime
 from django.utils import simplejson
 from django.contrib.auth.decorators import login_required
