@@ -141,7 +141,7 @@ class StudyParticipant(models.Model):
         return u'%s - %s (Participant)' % (self.user,self.study)        
     
     def log(self):
-        return u'%s,%s' % (self.user.id,self.study.id)
+        return u'%s,%s' % (self.user.username,self.study.id)
 
         
 class Stage(models.Model):
