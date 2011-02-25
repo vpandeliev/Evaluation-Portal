@@ -1,14 +1,15 @@
 <!DOCTYPE HTML>
+{% load helper %}
 <html>
 	<head>
 		<title>{% block title %}{% endblock %}</title>
-		 <link rel="stylesheet" type="text/css" href="/media/css/main.css" media="screen">
-		 <link rel="stylesheet" type="text/css" href="/media/css/tabs.css" media="screen">
+		 <link rel="stylesheet" type="text/css" href="{% media_url %}css/main.css" media="screen">
+		 <link rel="stylesheet" type="text/css" href="{% media_url %}css/tabs.css" media="screen">
      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.js"></script>
-  <script type="text/javascript" src="/media/js/main.js"></script>
-  <script type="text/javascript" src="/media/js/tabs.js"></script>
-  <script type="text/javascript" src="/media/js/timer.js"></script>
+  <script type="text/javascript" src="{% media_url %}js/main.js"></script>
+  <script type="text/javascript" src="{% media_url %}js/tabs.js"></script>
+  <script type="text/javascript" src="{% media_url %}js/timer.js"></script>
 
 
 
@@ -30,7 +31,7 @@
 
 		  
 			<div id="login_menu" class="supergrey">
-				<img src="/media/img/tangra_logo.png"></img>
+				<img src="{% media_url %}img/tangra_logo.png"></img>
 				<div id="login_links">
 				{% if user.is_authenticated %}
 					Welcome, <a href="/study/">{{user.username}}</a> |

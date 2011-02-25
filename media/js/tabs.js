@@ -5,7 +5,7 @@ $(document).ready(function() {
     $('.tablink', this).bind('click', function(){
     
         currtab = $(this);
-        console.log("currtab");
+        //console.log("currtab");
         $('.tablink').removeClass('on');
         currtab.addClass('on');
         $('.tab').hide();
