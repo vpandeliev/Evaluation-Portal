@@ -7,5 +7,5 @@ setup(
     version='1.0',
     description='Evaluation portal',
     author='Velian Pandeliev',
-    packages=['portal', 'portal.studies'],
+    packages=['portal', 'portal.studies', 'portal.assess','portal.boggle','portal.rushhour'],
     )

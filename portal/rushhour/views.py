@@ -30,17 +30,17 @@ def play_rushhour_game(request):
     level = Level.objects.get(order=order)
     minmoves = level.moves - 1
     reply = simplejson.dumps({'level':order, 'content': level.content})
-    return render_to_response('game.html', {'min': minmoves, 'level': level, 'content': reply, 'moves': level.moves})
+    return render_to_response('rushhour/game.html', {'min': minmoves, 'level': level, 'content': reply, 'moves': level.moves})
     
 
 
 def make_rushhour_game(request):
     """docstring for play"""
-    return render_to_response('gamemaker.html')
+    return render_to_response('rushhour/gamemaker.html')
 
 def show_rules(request):
     """docstring for play"""
-    return render_to_response('rules.html')
+    return render_to_response('rushhour/rules.html')
     
 
 def get_level(request):

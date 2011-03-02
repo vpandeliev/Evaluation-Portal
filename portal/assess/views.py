@@ -10,9 +10,9 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def set_switch(request):
     """docstring for set_switch"""
-    return render_to_response('setswitch.html')
+    return render_to_response('assess/setswitch.html')
 
 @login_required
 def ss_done(request):
     """docstring for set_switch"""
-    return render_to_response('setswitchdone.html')
+    return render_to_response('assess/setswitchdone.html')
