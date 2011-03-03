@@ -1,30 +1,34 @@
-var flag = -1;
+var flag;
 var starttime;
 var endtime;
 var curblock;
 var correct;
 var curtrial = 0;
-var blocksdone;
+var blocknum = 1;
 var tup;
 var stim;
 var response;
+var trialinstr = "";
+
 
 function update()
 	{
 	    $('.hidable').hide();
+	  
 		switch(flag)
 		{
 		    //before anything's started
-			case -1:	
-			        $('#instr').show();
-			        
+			case -2:
+				    $('#instr').show();	
 					break;	
-
+            case -1:
+                    $('#trial'+trialinstr).show();
+        			break;
             //1000ms fixation
 			case 0: $('#fixation').show();
 			        flag ++;
 			        $(document).unbind('keypress');
-			        window.setTimeout(update,1000);			        
+			        window.setTimeout(update,1000);
 			        break;
 			//stimulus presented, time starts
         	case 1: tup = curblock.random_stim();
@@ -34,22 +38,42 @@ function update()
         	        $('#stim').html(stim);
                     $('#stim').show();
                     starttime = (new Date).getTime();
-        			break;
-        	case 2: window.location = "/study/assess/done";
+
+                    break;
+            
+            case 2: $('#done').show();
+                    break;
+            }
 		}
-	}
+	
 	
 function submit_trial() {
     //console.log("submit");
     curtrial ++;
     //console.log(curtrial);
    ts = (new Date).getTime()/1000.0;
-    data = 'data=' + stim + "," + correct + "," + response + "," + ((correct == response) ? "1" : "0") + "," + timetaken  +'&timestamp=' + ts +'&code=SSW';
+    data = 'data=' + blocknum + ","+ stim + "," + correct + "," + response + "," + ((correct == response) ? "1" : "0") + "," + timetaken  +'&timestamp=' + ts +'&code=SSW';
     //console.log(data);
     jQuery.post("/study/send-data", data, false);
-    if (curtrial == 10) {
-        flag = 2;
-        update();
+    if (curtrial == 30) {
+        blocknum++;
+        curtrial = 0;
+        if (blocknum < 3) { 
+            curblock =  new Block(0,1);
+            trialinstr = "dig";
+        }
+        else if (blocknum < 5) { 
+            curblock =  new Block(1,0);
+            trialinstr = "let";
+        }
+        else if (blocknum < 9) {
+            curblock =  new Block(1,1);
+            trialinstr = "mix";
+        }
+        else {
+                flag = 4;
+        }
+        flag --;
     }
     
 }
@@ -122,10 +146,13 @@ function handler(e)
 		    
 
 			// user presses the " " key
-			case 32:	if (flag == -1){
-			                flag = 0;
+			case 32:	if (flag == -2 || flag == -1){
+			                flag++;
 			                update();
 			                }
+			            else if (flag == 2){
+			                window.location = '/study/ftask/SET';
+			            }
 			            break;
 
 		}
@@ -136,9 +163,12 @@ function handler(e)
 $(document).ready(function(){
     
     //display rules
-    
-        curblock = new Block(1,1);
+        curblock = new Block(0,1);
+        flag = -2;
+        blocknum = 1;
+        trialinstr = "digfirst";
         update();
+        
 });    
 
  

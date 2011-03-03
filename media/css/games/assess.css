@@ -14,13 +14,15 @@ background-color: #ddd;
     margin-right:auto;
     text-align:center;   
 }
+.pointtwo {
+    font-size: 1.2em;
+}
 #instr {
     width:600px; 
     margin-top: 0px;
 }
 
 #instr p {
-    font-size: 1.2em;
     text-align:left;
 }
 
