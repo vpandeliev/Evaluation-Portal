@@ -1,3 +1,5 @@
+
+
 body {
 background-color: #ddd;
 }
@@ -31,9 +33,47 @@ background-color: #ddd;
     margin-top: 230px;
     font-size:2.0em;     
 }
+#flankfixation {
+    width:80px; 
+    margin-top: 235px;
+    font-size:2.0em; 
+
+}
 
 #stim {
     width:40px; 
     margin-top: 200px;
     font-size:6.0em;
 }
+#stimtable {
+    display: none;
+    width:500px; 
+    margin-top: 30px;
+    font-size:6.0em;
+    
+}
+#stimtable table {
+    line-height: 0px;
+    background-color: #fff;
+}
+#stimtable table tbody tr {
+    /*height: 115px;*/
+    padding-bottom: 0px;
+    margin: 0px;
+    
+ }
+#stimtable table tbody tr td {
+    vertical-align: top;
+    padding: 0px;
+ }   
+ 
+ .flankerstim {
+     width: 90px;
+     height: 90px;
+ }
+ 
+ .frontimg {
+    }
+.backimg {
+    
+   }

@@ -23,7 +23,7 @@ SESSION_DURATION = 1
 def show_many_studies(request):
     if StudyParticipant.objects.count > 0:
         studies_as_participant = StudyParticipant.objects.filter(user=request.user)
-        current_stages = [x.get_current_stages() for x in studies_as_participant]
+        current_stages = [x.get_current_stage() for x in studies_as_participant]
     else:
         studies_as_participant = []
         current_stages = []
@@ -257,6 +257,20 @@ def choose_game(request):
         return HttpResponseRedirect('/study/rushhour/rules')
 
 @login_required
+def choose_assess(request):
+    study_id = request.session['study_id']
+    study = Study.objects.get(id=study_id)
+    sp = StudyParticipant.objects.get(user=request.user, study=study)
+    us = sp.get_current_stage()
+    sc = us.sessions_completed
+    us.start_stage()
+    #if sc%2 == 0:
+    #    return HttpResponseRedirect('/study/assess/setswitch')
+    #else:
+    return HttpResponseRedirect('/study/assess/flanker')
+
+
+@login_required
 def choose_task(request):
     study_id = request.session['study_id']
     study = Study.objects.get(id=study_id)
@@ -315,6 +329,7 @@ def log_game(request):
     if request.method != 'POST': 
 
         return HttpResponseBadRequest()
+        
     studyid = request.session['study_id']
 
     timestamp = request.POST['timestamp']
@@ -326,7 +341,7 @@ def log_game(request):
     try:
         Data.write(studyid, request.user, dt, code, data)
     except Exception:
-        print "log_game: failed to write"
+        print "log_game: failed to write: "
     #send: studyid, request.user, time, data
     return HttpResponse("YAY!")
 
@@ -334,8 +349,10 @@ def log_game(request):
 def log(request, code, datum):
     """Logs things"""
     #print "logging"
+    studyid = request.session['study_id']
+    
     try:
-        Data.write(request.session['study_id'], request.user, datetime.datetime.now(), code, datum)
+        Data.write(studyid, request.user, datetime.datetime.now(), code, datum)
     except Exception:
       print "logging: failed"
      #send: studyid, request.user, time, data

@@ -13,6 +13,6 @@ def set_switch(request):
     return render_to_response('assess/setswitch.html')
 
 @login_required
-def ss_done(request):
+def flanker(request):
     """docstring for set_switch"""
-    return render_to_response('assess/setswitchdone.html')
+    return render_to_response('assess/flanker.html')

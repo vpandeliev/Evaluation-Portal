@@ -131,9 +131,9 @@ class StudyParticipant(models.Model):
         #get the current userstage object
         return UserStage.objects.get(user=self.user, study=self.study, status=1)
 
-    def get_current_stages(self):
+    #def get_current_stages(self):
         #get the current userstage object
-        return UserStage.objects.get(user=self.user, status=1)
+     #   return UserStage.objects.get(user=self.user, status=1)
         
 
             
@@ -146,6 +146,7 @@ class StudyParticipant(models.Model):
         
 class Stage(models.Model):
     name = models.CharField('Stage Name', max_length=300)
+    stub = models.CharField('Stage Stub', max_length=3)
     study = models.ForeignKey(Study)
     sessions = models.IntegerField('Number of sessions')
     deadline = models.IntegerField('Time to finish session (in days)')
@@ -167,6 +168,8 @@ class Stage(models.Model):
     def number_of_users(self):
         return self.users().count()
     
+    
+        
     def users(self):
         
         return UserStage.objects.filter(stage=self, status=1).order_by('user')
@@ -189,6 +192,7 @@ class Data(models.Model):
     
     studyparticipant = models.ForeignKey(StudyParticipant)
     stage = models.IntegerField('Stage')
+    stage_stub = models.CharField(max_length=3)
     session = models.IntegerField('Session')
     timestamp = models.DateTimeField('Timestamp')
     datum = models.TextField('Datum')
@@ -198,19 +202,21 @@ class Data(models.Model):
     def write(cls, studyid, user, time, code, data):
         d = Data()
         d.studyparticipant = Study.objects.get(id=int(studyid)).get_study_participant(user) 
-        stage = d.studyparticipant.get_current_stage()
-        d.stage = stage.order
-        d.session = stage.sessions_completed + 1
+        astage = d.studyparticipant.get_current_stage()
+        d.stage = astage.order
+
+        d.stage_stub = d.studyparticipant.get_current_stage().stage.stub
+        d.session = astage.sessions_completed + 1
         d.timestamp = time
         d.datum = data
-        d.code = code
+        d.code = code        
         d.save()
     
     def __unicode__(self):
-        return u'%s,%s,%s,%s,%s,%s' % (self.studyparticipant.log(), self.stage, self.session, self.format_timestamp(), self.code, self.datum)
+        return u'%s,%s,%s,%s,%s,%s,%s' % (self.studyparticipant.log(), self.stage, self.stage_stub, self.session, self.format_timestamp(), self.code, self.datum)
         
     def data(self):
-        return u'%s,%s,%s,%s,%s,%s' % (self.studyparticipant.log(), self.stage, self.session, self.format_timestamp(), self.code, self.datum)
+        return u'%s,%s,%s,%s,%s,%s,%s' % (self.studyparticipant.log(), self.stage, self.stage_stub, self.session, self.format_timestamp(), self.code, self.datum)
 
     def format_timestamp(self):
         t = self.timestamp

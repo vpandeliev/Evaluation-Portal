@@ -26,8 +26,9 @@
 
 {% block hud %}
 <div id="flash-message" style="display: none"></div>
-<div id="game-start">{{ game }}</div>
+
 <div id="game-state">{{ game.state|choice:"portal.boggle.choices.game_states" }}</div>
+
 <!--<div id="player-list">
 	<h2>Scores</h2>
 	{% for player in players %}
@@ -39,7 +40,8 @@
 
 {% block game %}
 	{% ifequal game.state game_states.IN_PROGRESS %}
-	
+	<div id="game-start">{{ game }}</div>
+	<div id="numrounds" rounds="{{game.roundnum}}">Round {{ game.roundnum }}</div>
 	{% with you.words as words %}
 	<div id="your-words">
 		<div class="container">
@@ -99,6 +101,7 @@
 	<li>If your word is not in our dictionary, or you have already entered the word, you don't get any points.</li>
 	</ul>
 	</p>
+	<p> You will now play 10 rounds of Boggle for 3 minutes each.</p>
 	<p>Press the <b>Start game </b> button at the top to begin playing.</p>
 	</div>
 	{% endifequal %}
