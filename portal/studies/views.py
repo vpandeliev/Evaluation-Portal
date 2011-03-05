@@ -287,7 +287,7 @@ def choose_task(request):
 def show_task(request, game):
     study_id = request.session['study_id']
     study = Study.objects.get(id=study_id)
-    sd = study.task_session_duration
+    sd = study.task_session_dur
     if game == '1':
         gametitle = "Wonder-Juice Machine"
         link = "wonder_juice_machine"

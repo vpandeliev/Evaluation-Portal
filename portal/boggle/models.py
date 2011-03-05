@@ -35,6 +35,7 @@ class Game(models.Model):
     round = property(lambda self: self.state == game_states.IN_PROGRESS and self.round_set.count() and self.round_set.all()[0] or None)
     board = property(lambda self: self.state == game_states.IN_PROGRESS and self.round_set.count() and self.round.board or None)
     is_over = property(lambda self: self.round_set.count() >= self.round_max)
+    roundnum = property(lambda self: self.round_set.count())
 
     class Meta:
         ordering = ['-created_at']
@@ -44,6 +45,7 @@ class Game(models.Model):
     def __unicode__(self):
         return unicode(self.id)
 
+        
     def start_round(self, mode):
         '''
         Args:
