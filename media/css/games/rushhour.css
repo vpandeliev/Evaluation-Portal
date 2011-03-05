@@ -3,8 +3,8 @@ background-color: #ddd;
 }
 
 #wrap {
-    width: 700px;
-    margin-left: auto ;
+    width: 600px;
+    margin-left: auto;
     margin-right: auto ;
 
     
@@ -21,9 +21,9 @@ background-color: #ddd;
 }
 
 #scorediv {
-	position:relative;
-	top:350px;
-	left: 360px;
+	position:absolute;
+	top:300px;
+	left: 600px;
 	width: 300px;
 	z-index: 5;
 	
@@ -42,13 +42,13 @@ background-color: #ddd;
 }
 
 #button {
-      background-color: green;
+      /*background-color: green;
       color:white;
       position: relative;
       left: 0px;
-      top: 410px;
+      top: 10px;
         border: 3px solid #555;
-        padding: 6px;
+        padding: 3px;
         text-decoration: none;
         text-align: center;
         font-size: 120%;
@@ -71,11 +71,33 @@ a {
 a:visited{
     color: #000;
 }
+.actbutton{
+  border: 1px solid #ccc;
+  padding: 6px;
+  text-decoration: none;
+  font-size: 120%;
+  color: white;
+/*background-color: #333;*/
+  /*background: green;*/
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+}
+
+.green {background-color:green;color:white;}
+.green a {background-color:green; text-decoration:none;color:white;}
 
 #button:hover {
     cursor: pointer;
 }
 
+#timer {
+    position: absolute;
+    top: 480px;
+    left: 180px;
+}
+#timerdone {
+    padding-top: 500px;
+}
 #rules p{
     font-size: 1.2em;
 }

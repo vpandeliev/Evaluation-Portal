@@ -8,6 +8,7 @@ from forms import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from context_processors import *
+import datetime
 
 
 BOGGLE_DURATION = 20
@@ -252,7 +253,8 @@ def choose_game(request):
     sc = us.sessions_completed
     us.start_stage()
     if sc%2 == 0:
-        return HttpResponseRedirect('/study/boggle/new-game/?play_for='+str(br)+'&return_to=/study/ftask/BOG&dur=' + str(bd))
+        #return HttpResponseRedirect('/study/boggle/new-game/?play_for='+str(br)+'&return_to=/study/ftask/BOG&dur=' + str(bd))
+        return HttpResponseRedirect('/study/rushhour/rules')
     else:
         return HttpResponseRedirect('/study/rushhour/rules')
 
@@ -287,7 +289,11 @@ def choose_task(request):
 def show_task(request, game):
     study_id = request.session['study_id']
     study = Study.objects.get(id=study_id)
-    sd = study.task_session_dur
+    sp = StudyParticipant.objects.get(user=request.user, study=study)
+    stage = sp.get_current_stage()
+    sde = study.task_session_dur
+    elapsed = datetime.datetime.now() - stage.curr_session_started
+    sd = sde - elapsed.seconds / 60
     if game == '1':
         gametitle = "Wonder-Juice Machine"
         link = "wonder_juice_machine"

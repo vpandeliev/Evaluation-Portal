@@ -55,7 +55,7 @@ $(document).ready(function(){
     //counter.i = 300;
     counter.whendone = function(){
         $('#timer').fadeOut(1000);
-        $('#warn').fadeOut(1000);
+        //$('#warn').fadeOut(1000);
         $('#timerdone').delay(1000).fadeIn(1000);
     }
     counter.start();

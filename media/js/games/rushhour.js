@@ -46,9 +46,10 @@ function update(id){
         end = true;
 
         $('#'+redcar).animate({left: getleft}, 3000);
-        
-        $('#button').delay(3000).fadeTo("slow",1.0);
+        $('#button').delay(3000).fadeTo("fast",0.0).fadeTo("slow",1.0);
         submit_score();
+        $('#button').delay(5000).html('<span class="actbutton green" style="z-index:130;"><a href="/study/rushhour/play"> Next Level </a></span>');
+
         //console.log("Victory");
     }
 
@@ -193,7 +194,8 @@ return colors[id];
     
 
 $(document).ready(function(){
-    $('#button').hide();
+    //$('#button').hide();
+    $('#button2').hide();
     $('#button').click(function(){
         location.reload();
 		//window.location.replace("/study/ftask/RSH");
@@ -201,7 +203,7 @@ $(document).ready(function(){
     });
     $('#button2').click(function(){
         /*location.reload();*/
-		//window.location.replace("/study/ftask/RSH");
+		window.location.replace("/study/ftask/RSH");
 		
     });
     starttime = (new Date).getTime()/1000.0;

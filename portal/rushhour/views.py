@@ -6,6 +6,7 @@ import random, datetime
 from django.utils import simplejson
 from django.contrib.auth.decorators import login_required
 
+
 # Create your views here.
 @login_required
 def play_rushhour_game(request):
@@ -19,7 +20,7 @@ def play_rushhour_game(request):
     elapsed = datetime.datetime.now() - stage.curr_session_started
     if elapsed > datetime.timedelta(minutes=sd):
         return HttpResponseRedirect("/study/ftask/RSH")
-    obj = Data.objects.filter(code='RSL', studyparticipant=sp)
+    obj = sm.Data.objects.filter(code='RSL', studyparticipant=sp)
     max = 0
     for a in obj:
         curr = int(a.datum.split(',')[0])
@@ -29,8 +30,9 @@ def play_rushhour_game(request):
     order = max + 1
     level = Level.objects.get(order=order)
     minmoves = level.moves - 1
+    elapsed_minutes = elapsed.seconds / 60
     reply = simplejson.dumps({'level':order, 'content': level.content})
-    return render_to_response('rushhour/game.html', {'min': minmoves, 'level': level, 'content': reply, 'moves': level.moves})
+    return render_to_response('rushhour/game.html', {'sd': sd-elapsed_minutes, 'min': minmoves, 'level': level, 'content': reply, 'moves': level.moves})
     
 
 
