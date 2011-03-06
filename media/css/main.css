@@ -5,8 +5,10 @@ body {
 }
 
 .active a {
-    font-style: italic;
+    
+    
 }
+
 ul {
     list-style: none;
 }
@@ -170,10 +172,12 @@ float: right;}
 
 
 .past {
-  background-color: white;
+  /*background-color: #828282;*/
+  background-color: #999;
+  color: white;
 }
 .past a {
-    color: black;
+    color: #ddd;
     
 }
 
@@ -183,20 +187,21 @@ float: right;}
 }
 
 .present {
-  background-color: #ed500a;
+ /*background-color: #ed500a;*/
+  background-color: #777;
   color: white;
 }
 
 .present a {
-    color: white;
+    color: #99CC33;
 }
 .future {
-background-color: #828282;
+background-color: #555;
 color: white;
 }
 
 .future a {
-    color:white;
+    color: #ddd;
 }
 #stages_nav{
   text-align: center;
@@ -228,6 +233,7 @@ color: white;
         float:left;
         height: 20px;
         width: 90%;
+        
 
 
 
@@ -267,11 +273,25 @@ color: white;
 }
 */
 #stages_nav li.active a{
-
+    font-style: bold;
+    color: white;
+    /*color: #99CC33;*/
+    /*color: #ed500a;*/
 
 /*  padding: 15px 5px;
   background: #FFFC00;*/
 }
+
+#stages_nav li.active {
+    font-style: bold;
+    /*color: #99CC33;*/
+    background: #ed500a;
+    /*color: #ed500a;*/
+
+/*  padding: 15px 5px;
+  background: #FFFC00;*/
+}
+
 #supertabs ul {
 border-bottom: 1px solid #333333; /* set border COLOR as desired */
 padding-bottom: 5px;
