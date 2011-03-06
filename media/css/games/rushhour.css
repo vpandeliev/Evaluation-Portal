@@ -58,7 +58,6 @@ background-color: #ddd;
         /*background: green;*/
         -webkit-border-radius: 6px;
         -moz-border-radius: 6px;
-
 }
 
 }
@@ -99,7 +98,9 @@ a:visited{
     left: 180px;
 }
 #timerdone {
-    padding-top: 500px;
+    padding-top: 530px;
+    width: 600px;
+    margin-left: -50px;
 }
 #rules p{
     font-size: 1.2em;

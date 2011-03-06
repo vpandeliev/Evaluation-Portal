@@ -226,7 +226,7 @@ def data_dump(request):
             for y in obj:
                 data.append(y.data())
         FILE = open(dumpfile, "w")
-        FILE.write("userid,studyid,stage,session,year,month,day,hour,minute,second,millisecond,code,datum\n")
+        FILE.write("username,studyid,stage,stageslug,session,year,month,day,hour,minute,second,millisecond,code,datum\n")
         for line in data:
             FILE.write(line + "\n")
         FILE.close()
@@ -297,9 +297,11 @@ def show_task(request, game):
     if game == '1':
         gametitle = "Wonder-Juice Machine"
         link = "wonder_juice_machine"
+        code = "WDJ"
     else:
         gametitle = "Paradise Island II"
         link = "paradise_island"
+        code = "PAR"
     return render_to_response('fitbrains.html', locals(),context_instance=RequestContext(request))
 
 @login_required
