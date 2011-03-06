@@ -40,9 +40,12 @@ def make_rushhour_game(request):
     """docstring for play"""
     return render_to_response('rushhour/gamemaker.html')
 
+@login_required
 def show_rules(request):
     """docstring for play"""
     return render_to_response('rushhour/rules.html')
+
+
     
 
 def get_level(request):

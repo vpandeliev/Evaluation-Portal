@@ -1,18 +1,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
    "http://www.w3.org/TR/html4/strict.dtd">
-
+{% load helpers %}
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Rush Hour</title>
 	<meta name="generator" content="TextMate http://macromates.com/">
 	<meta name="author" content="Velian Pandeliev">
-			 <link rel="stylesheet" type="text/css" href="/media/css/games/rushhour.css" media="screen">
+			 <link rel="stylesheet" type="text/css" href="{% media_url %}css/games/rushhour.css" media="screen">
 			 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 		  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.js"></script>
-				  <script type="text/javascript" src="/media/js/jquery.event.drag.js"></script>
-		  <script type="text/javascript" src="/media/js/games/rushhour.js"></script>
-				  <script type="text/javascript" src="/media/js/timer.js"></script>
+				  <script type="text/javascript" src="{% media_url %}js/jquery.event.drag.js"></script>
+		  <script type="text/javascript" src="{% media_url %}js/games/rushhour.js"></script>
+				  <script type="text/javascript" src="{% media_url %}js/timer.js"></script>
 		    
 	<!-- Date: 2010-11-29 -->
 </head>
@@ -35,7 +35,7 @@
 
 	<div id="timer" count="{{sd}}"></div>
 	
-<div id="timerdone">	<span class="actbutton green" style="z-index:130;position:relative;"><a href="/study/ftask/RSH"> Finished! Back to Study </a></span></div>
+<div id="timerdone"><p>Time's up! Please click below to save your progress.</p>	<span class="actbutton green" style="z-index:130;position:relative;"> <a href="/study/ftask/RSH"> Save and Return to Study </a></span></div>
 
 
 </div>

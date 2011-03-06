@@ -89,6 +89,9 @@ a:visited{
 #button:hover {
     cursor: pointer;
 }
+#button2:hover {
+    cursor: pointer;
+}
 
 #timer {
     position: absolute;

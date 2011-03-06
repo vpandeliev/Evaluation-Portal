@@ -44,12 +44,12 @@ function update(id){
     if (set[redcar].x + set[redcar].freespace().plus == 5){
         getleft = left_limit + 5 + gridsize * 6;
         end = true;
-
+        //$('#button').fadeTo("fast",0.0);
         $('#'+redcar).animate({left: getleft}, 3000);
-        $('#button').delay(3000).fadeTo("fast",0.0).fadeTo("slow",1.0);
+        
         submit_score();
         $('#button').delay(5000).html('<span class="actbutton green" style="z-index:130;"><a href="/study/rushhour/play"> Next Level </a></span>');
-
+        //$('#button').fadeTo("fast",1.0);
         //console.log("Victory");
     }
 
@@ -203,7 +203,7 @@ $(document).ready(function(){
     });
     $('#button2').click(function(){
         /*location.reload();*/
-		window.location.replace("/study/ftask/RSH");
+		//window.location.replace("/study/ftask/RSH");
 		
     });
     starttime = (new Date).getTime()/1000.0;
