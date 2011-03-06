@@ -212,8 +212,8 @@ def consented(request):
     return HttpResponseRedirect('/study/0/'+str(study_id))
 
 @login_required
-def data_dump(request):
-    study_id = int(request.session['study_id'])
+def data_dump(request,study_id):
+    #study_id = int(request.session['study_id'])
     study = Study.objects.get(id=study_id)
     study_participants = StudyParticipant.objects.filter(study=study)
     role = study.role(request.user)

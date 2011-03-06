@@ -2,8 +2,8 @@
 
 {% block content %}
 	<h2>Data</h2>
-	<p>(file also created under portal/data/data-study[study-number].csv)</p>
+	<p>(file also created under portal/data/data-study{{study_id}}.csv)</p>
 	<p>{{datadump|safe}}</p>
 	<p>
-	<span class="button"><a href="/study/"> Back to studies </a></span></p>
+	<span class="actbutton grey"><a href="/study/"> Back to studies </a></span></p>
 {% endblock %}

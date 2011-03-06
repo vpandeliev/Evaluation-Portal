@@ -50,6 +50,7 @@ float: right;}
     /*color: white;*/
 }
 .actbutton:hover {
+    cursor: pointer;
     /*background: green;*/
 }
 
