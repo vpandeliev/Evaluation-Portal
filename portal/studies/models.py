@@ -202,7 +202,7 @@ class Data(models.Model):
     @classmethod
     def write(cls, studyid, user, time, code, data):
         d = Data()
-        d.studyparticipant = Study.objects.get(id=int(studyid)).get_study_participant(user) 
+        d.studyparticipant = Study.objects.get(id=studyid).get_study_participant(user) 
         astage = d.studyparticipant.get_current_stage()
         d.stage = astage.order
 
@@ -249,7 +249,7 @@ class UserStage(models.Model):
     def session_completed(self):
         self.sessions_completed += 1
         self.last_session_completed = datetime.datetime.now()
-        Data.write(self.stage.study.id, self.user, self.last_session_completed, "SSC", "Session Completed")
+        Data.write(self.study.id, self.user, self.last_session_completed, "SSC", "Session Completed")
         if self.sessions_completed == self.stage.sessions:
             #this stage is finished
             self.status = 0
@@ -269,7 +269,7 @@ class UserStage(models.Model):
     def stage_completed(self):
         self.sessions_completed = self.stage.sessions
         self.last_session_completed = datetime.datetime.now()
-        Data.write(self.stage.study.id, self.user, self.last_session_completed, "session completed", "ssc")
+        Data.write(self.study.id, self.user, self.last_session_completed, "session completed", "ssc")
         self.status = 0
         self.end_date = datetime.datetime.now()
         #find next stage

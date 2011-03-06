@@ -253,8 +253,8 @@ def choose_game(request):
     sc = us.sessions_completed
     us.start_stage()
     if sc%2 == 0:
-        #return HttpResponseRedirect('/study/boggle/new-game/?play_for='+str(br)+'&return_to=/study/ftask/BOG&dur=' + str(bd))
-        return HttpResponseRedirect('/study/rushhour/rules')
+        return HttpResponseRedirect('/study/boggle/new-game/?play_for='+str(br)+'&return_to=/study/ftask/BOG&dur=' + str(bd))
+        #return HttpResponseRedirect('/study/rushhour/rules')
     else:
         return HttpResponseRedirect('/study/rushhour/rules')
 
