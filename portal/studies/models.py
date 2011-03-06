@@ -21,7 +21,8 @@ class Study(models.Model):
     boggle_duration = models.IntegerField("Boggle Round Duration (seconds)")
     boggle_rounds = models.IntegerField("Number of Boggle Rounds Per Session")
     task_session_dur = models.IntegerField("Session Duration (minutes)")
-
+    assess_blocks = models.IntegerField("Number of assessment blocks")
+    assess_trials = models.IntegerField("Number of trials per block")
     def save(self, *args,**kwargs):
         
         #create timestamps, keep track of user

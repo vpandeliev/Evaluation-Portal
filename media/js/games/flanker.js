@@ -9,6 +9,7 @@ var tup;
 var forestim;
 var backstim;
 var response;
+var maxtrials;
 var trialinstr = "";
 
 
@@ -23,7 +24,8 @@ function update()
 				    $('#instr').show();	
 					break;	
             case -1:
-                    $('#trial').show();
+                    $('#trial'+first).show();
+                    first = "";
         			break;
             //1000ms fixation
 			case 0: $('#flankfixation').show();
@@ -55,10 +57,10 @@ function submit_trial() {
     //console.log("submit");
     curtrial ++;
     //console.log(curtrial);
-   ts = (new Date).getTime()/1000.0;
+    ts = (new Date).getTime()/1000.0;
     data = 'data=' + blocknum + ","+ forestim + "," + response + "," + ((forestim == response) ? "1" : "0") + "," + timetaken  +'&timestamp=' + ts +'&code=FLT';
     jQuery.post("/study/send-data", data, false);
-    if (curtrial == 30) {
+    if (curtrial == maxtrials) {
         blocknum++;
         curtrial = 0;
         if (blocknum >= 9) {
@@ -146,7 +148,9 @@ $(document).ready(function(){
     //display rules
         curblock = new Block();
         flag = -2;
-        blocknum = 1;
+        first = "first";
+        blocknum = $("#stimtable").attr("blocks");
+        maxtrials = $("#stimtable").attr("trials"); 
         update();
         
 });    

@@ -266,10 +266,10 @@ def choose_assess(request):
     us = sp.get_current_stage()
     sc = us.sessions_completed
     us.start_stage()
-    #if sc%2 == 0:
-    #    return HttpResponseRedirect('/study/assess/setswitch')
-    #else:
-    return HttpResponseRedirect('/study/assess/flanker')
+    if sc%2 == 0:
+        return HttpResponseRedirect('/study/assess/setswitch')
+    else:
+        return HttpResponseRedirect('/study/assess/flanker')
 
 
 @login_required

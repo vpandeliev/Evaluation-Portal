@@ -8,8 +8,20 @@ var blocknum = 1;
 var tup;
 var stim;
 var response;
-var trialinstr = "";
+var maxtrials;
 
+function trialinstr(){
+    if (blocknum == 1) {return "digfirst";}
+    else if (blocknum < 3) {return "dig";}
+    else if (blocknum < 5) {return "let";}
+    else {return "mix";}    
+}
+
+function stimtype(){
+    if (blocknum < 3) {return [0,1];}
+    else if (blocknum < 5) {return [1,0];}
+    else {return [1,1];}    
+}
 
 function update()
 	{
@@ -22,7 +34,7 @@ function update()
 				    $('#instr').show();	
 					break;	
             case -1:
-                    $('#trial'+trialinstr).show();
+                    $('#trial'+trialinstr()).show();
         			break;
             //1000ms fixation
 			case 0: $('#fixation').show();
@@ -55,21 +67,10 @@ function submit_trial() {
     data = 'data=' + blocknum + ","+ stim + "," + correct + "," + response + "," + ((correct == response) ? "1" : "0") + "," + timetaken  +'&timestamp=' + ts +'&code=SSW';
     //console.log(data);
     jQuery.post("/study/send-data", data, false);
-    if (curtrial == 30) {
+    if (curtrial == maxtrials) {
         blocknum++;
         curtrial = 0;
-        if (blocknum < 3) { 
-            curblock =  new Block(0,1);
-            trialinstr = "dig";
-        }
-        else if (blocknum < 5) { 
-            curblock =  new Block(1,0);
-            trialinstr = "let";
-        }
-        else if (blocknum < 9) {
-            curblock =  new Block(1,1);
-            trialinstr = "mix";
-        }
+        if (blocknum < 9) {curblock = new Block(stimtype()[0],stimtype()[1]);}
         else {
                 flag = 4;
         }
@@ -159,14 +160,18 @@ function handler(e)
 		
 	}
 
-
 $(document).ready(function(){
     
     //display rules
-        curblock = new Block(0,1);
+        blocknum = $("#stim").attr("blocks");
+        maxtrials = $("#stim").attr("trials"); 
+        
+        //console.log(blocknum);
+        //console.log(stimtype());
+        curblock = new Block(stimtype()[0],stimtype()[1]);
         flag = -2;
-        blocknum = 1;
-        trialinstr = "digfirst";
+        //console.log(blocknum);
+        //trialinstr = "digfirst";
         update();
         
 });    
