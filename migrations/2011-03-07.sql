@@ -1,0 +1,3 @@
+BEGIN;
+ALTER TABLE "studies_study" ADD COLUMN "stub" varchar(3) NOT NULL DEFAULT '000';
+COMMIT;

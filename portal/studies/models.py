@@ -8,6 +8,7 @@ from operator import attrgetter
 class Study(models.Model):
 
     name = models.CharField('Study Name', max_length=300)
+    stub = models.CharField('Study Stub', max_length=3)
     description = tinymce_models.HTMLField('Description')
     start_date = models.DateField('Starting Date', blank=True, null=True)
     end_date = models.DateField('End Date', blank=True, null=True)
@@ -142,7 +143,7 @@ class StudyParticipant(models.Model):
         return u'%s - %s (Participant)' % (self.user,self.study)        
     
     def log(self):
-        return u'%s,%s' % (self.user.username,self.study.id)
+        return u'%s,%s' % (self.user.username,self.study.stub)
 
         
 class Stage(models.Model):
@@ -156,7 +157,7 @@ class Stage(models.Model):
     instructions = tinymce_models.HTMLField('Stage Instructions')
 
     def __unicode__(self):
-        return unicode(self.name)       
+        return unicode("%s (%s)" % (self.name, self.study.stub))       
 
     def avg(self):
         """docstring for avg"""
