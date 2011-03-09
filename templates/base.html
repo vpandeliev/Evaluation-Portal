@@ -35,8 +35,6 @@
 				<div id="login_links">
 				{% if user.is_authenticated %}
 					Welcome, <a href="/study/">{{user.username}}</a> |
-          <a href="/">My Studies</a> |
-					<a href="#" onclick="$('#modal_background').show();$('#inbox').show();">Messages</a> | 
            <a href="{% url logout %}">Logout</a>
 				{% else %}
 					Welcome to Tangra: The Mental Fitness Evaluation Portal
