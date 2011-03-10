@@ -16,10 +16,10 @@
 	    <ul>
 	    {% for astage in stages %} 
 			  {% if astage.status > 1  %}
-	        <li class="stage not_active future"><a href="" id="stage_box_{{forloop.counter}}" onclick="return false;" class="stage_box">{{astage.stage}}</a></li>
+	        <li class="stage not_active future"><a href="" id="stage_box_{{forloop.counter}}" onclick="return false;" class="stage_box">{{astage.stage.display}}</a></li>
 			  {% else %}
 				  {% ifequal astage.status 1 %}
-				    <li class="stage active present"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box">{{astage.stage}}</a></li>
+				    <li class="stage active present"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box">{{astage.stage.display}}</a></li>
 				  {% else %}
 				    <li class="stage not_active past"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box">{{astage.stage}}</a></li>
 				  {% endifequal %}
@@ -139,7 +139,7 @@
 	        </div>
 	    </div>
 		  {% endfor %}{% endfor %}
-		-->
+		
 </div>
 
 

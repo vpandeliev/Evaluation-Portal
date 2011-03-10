@@ -159,6 +159,9 @@ class Stage(models.Model):
     def __unicode__(self):
         return unicode("%s (%s)" % (self.name, self.study.stub))       
 
+    def display(self):
+        return unicode(self.name)
+        
     def avg(self):
         """docstring for avg"""
         stagegroups = StageGroup.objects.filter(stage=self)
