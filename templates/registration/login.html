@@ -7,12 +7,11 @@
     <p class="error">Sorry, that's not a valid username or password.</p>
   {% endif %}
   <form action="" method="post">
-    <label for="username">Username</label><br />
-    <input class="login_input" type="text" name="username" value="" id="username"><br />
-    <label for="password">Password</label><br />
-    <input class="login_input" type="password" name="password" value="" id="password"><br />
-  
-    <input class="actbutton grey" id="login_submit" type="submit" value="login" />
+    <label for="username">Username</label>
+    <input class="login_input" type="text" name="username" value="" id="username">
+    <label for="password">Password</label>
+    <input class="login_input" type="password" name="password" value="" id="password">
+    <input class="actbutton grey" id="login_submit" type="submit" value="Login" />
     <input type="hidden" name="next" value="{{ next|escape }}" />
   </form>
   <div class="clear"></div>

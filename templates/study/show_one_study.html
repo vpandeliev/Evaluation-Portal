@@ -12,7 +12,7 @@
 </div>
 	 <!--stage menu-->
 <div id="tab1box" class="tab" >
-	  <div id="stages_nav" num="{{stages.count}}">
+	  <div id="stages_nav" class="clearfix" num="{{stages.count}}">
 	    <ul>
 	    {% for astage in stages %} 
 			  {% if astage.status > 1  %}
@@ -21,7 +21,7 @@
 				  {% ifequal astage.status 1 %}
 				    <li class="stage active present"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box">{{astage.stage}}</a></li>
 				  {% else %}
-				    <li class="stage not_active past"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box"><img src="{{MEDIA_URL}}img/tick.png"></img>{{astage.stage}}</a></li>
+				    <li class="stage not_active past"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box">{{astage.stage}}</a></li>
 				  {% endifequal %}
 			  {% endif %}
 		{% endfor%}
@@ -36,13 +36,13 @@
 	    <div id="stage_{{forloop.counter}}" class="stage_panel"
 	      {% ifnotequal astage.status 1 %}style="display:none;"{% endifnotequal %}>
 	      <div class="stage_header">
-			<table width="900" style="margin-left: auto; margin-right:auto;"><tr><td>
-	       <h2> Description</h2>
+			<table><tr><td>
+	       <h2 class="first">Description</h2>
 
 	        {{astage.stage.instructions|safe}}
-<br/>
-			<h2>Status</h2><br/>
-	        <h2>
+
+			<h2>Status</h2>
+	        <h2 class="stage_status">
 	        	{%ifequal astage.status 1 %}
 					{%if astage.overdue%}
 					    <span class="red">Session due: {{astage.nextdeadline|date:"d M Y"}}</span>
