@@ -259,6 +259,18 @@ def choose_game(request):
         return HttpResponseRedirect('/study/rushhour/rules')
 
 @login_required
+def rush_hour(request):
+    study_id = request.session['study_id']
+    study = Study.objects.get(id=study_id)
+    bd = study.boggle_duration
+    br = study.boggle_rounds
+    sp = StudyParticipant.objects.get(user=request.user, study=study)
+    us = sp.get_current_stage()
+    sc = us.sessions_completed
+    us.start_stage()
+    return HttpResponseRedirect('/study/rushhour/rules')
+    
+@login_required
 def choose_assess(request):
     study_id = request.session['study_id']
     study = Study.objects.get(id=study_id)

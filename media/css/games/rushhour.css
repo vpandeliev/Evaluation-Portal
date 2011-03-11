@@ -20,6 +20,35 @@ background-color: #ddd;
     z-index: 1;
 }
 
+.gridspace {
+    position: absolute;
+    left: 150px;
+    top: 50px;
+    width: 420px;
+    height: 420px;
+    border: 5px solid #555;
+    z-index: 10;
+    display: none;
+}
+#gridmask{
+    background-color: #666;
+}
+.gridspace h2 {
+    
+    padding-top: 180px; 
+    text-align: center; 
+    color: white;
+}
+
+.trans{
+    opacity: 0.8;
+    filter:alpha(opacity=80);
+    -moz-opacity:0.8;
+    filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+    -khtml-opacity: 0.8;
+    -ms-filter: “progid:DXImageTransform.Microsoft.Alpha(Opacity=80)”;
+}
+
 #scorediv {
 	position:absolute;
 	top:300px;
@@ -98,9 +127,9 @@ a:visited{
     left: 180px;
 }
 #timerdone {
-    padding-top: 530px;
+    padding-top: 494px;
     width: 600px;
-    margin-left: -50px;
+    margin-left: 0px;
 }
 #rules p{
     font-size: 1.2em;

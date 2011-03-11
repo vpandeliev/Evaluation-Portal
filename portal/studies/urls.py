@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     url(r'^choose_task$', choose_task, name="choose_task"),
     url(r'^alert_send$', send_alert, name="send_alert"),
     url(r'^quest$', questionnaire, name="questionnaire"),
+    url(r'^rush_hour$', rush_hour, name="rush_hour"),
 
     # Hosted games
     (r'^boggle/', include('portal.boggle.urls')),

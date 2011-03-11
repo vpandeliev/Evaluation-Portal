@@ -49,11 +49,14 @@ function update(id){
         
         submit_score();
         $('#button').delay(5000).html('<span class="actbutton green" style="z-index:130;"><a href="/study/rushhour/play"> Next Level </a></span>');
-        //$('#button').fadeTo("fast",1.0);
+        $('#gridmask').delay(3000).fadeTo("slow",0.8);
+        $('#leveldone').delay(3000).fadeTo("slow",1.0);
         //console.log("Victory");
     }
 
 }
+
+
 
 
 function gettopleftsquare(id){
@@ -196,6 +199,21 @@ return colors[id];
 $(document).ready(function(){
     //$('#button').hide();
     $('#button2').hide();
+    //$('$gridmask').hide()
+    
+    //$('#timerdone').hide();
+    $('.timer').hide().delay(3000).fadeIn(1000);
+    counter.i = parseInt($('#timer').attr('count'));
+    //counter.i = 300;
+    counter.whendone = function(){
+        $('#timer').html("<h2>Time's up!</h2>");
+        //$('#warn').fadeOut(1000);
+        $('#timerdone').delay(1000).fadeIn(1000);
+        //console.log($('#button'));
+        $('#button').hide();
+    }
+    counter.start();
+    
     $('#button').click(function(){
         location.reload();
 		//window.location.replace("/study/ftask/RSH");
