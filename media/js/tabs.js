@@ -1,6 +1,8 @@
 $(document).ready(function() {
     num = $('#stages_nav').attr('num');
-	width = $('#stages_nav').width();
+	width = $('#login_menu').width() + 96;
+	//console.log(width);
+	//console.log(Math.round(width/num));
     $('.stage').css('width', (1/num * width - num*2 - 8) + 'px');   
     $('.tablink', this).bind('click', function(){
         currtab = $(this);
