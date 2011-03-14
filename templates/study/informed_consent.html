@@ -3,7 +3,7 @@
 {% block content %}
 	<h2>Informed consent</h2>
 	{{study.consent|safe}}
-	<span class="actbutton red" style="margin-right:60px"><a href="/study/0/{{studynum}}"> I do NOT agree </a></span>
-	<span class="actbutton green"><a href="/study/consented"> I agree </a></span>
+	<span class="actbutton red" style="padding: 10px; margin-right:60px"><a href="/study/0/{{studynum}}"> I do NOT agree </a></span>
+	<span class="actbutton green" style="padding: 10px"><a href="/study/consented"> I agree </a></span>
 	<br/><br/><br/><br/>
 {% endblock %}
