@@ -181,3 +181,6 @@ input[type=submit] {
 #controls input[type=text] {font-size: 32pt; text-transform: uppercase; text-align: center; border: solid 2px #bbb; background-color: white;}
 
 #time-left {font-weight: bold; font-size: 24pt;}
+
+#bigbutton { color: white; background-color: #336699; padding: 10px;}
+#bigbutton:hover, #bigbutton:visited { color: white; text-decoration: none; }

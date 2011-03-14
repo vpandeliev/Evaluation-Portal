@@ -314,7 +314,7 @@ var Board = Class.create({
         var height = new Number(shape[1]);
         this._node.insert({top: '<div class="container"></div>'});
         var container = this._node.down('.container');
-        container.insert({top: '<div id="board-blocker"><h1>Round finished!</h1></div>'});
+        container.insert({top: '<div id="board-blocker"><h1>Round finished!</h1><h1>Click on <span style="padding: 3px; background-color:#369; color:white">Next Round</span> <br/>to continue</h1></div>'});
         var row, col;
         for (var rowIndex=0; rowIndex<height; rowIndex++) {
             row = new Element('div', {

@@ -201,7 +201,7 @@ $(document).ready(function(){
     $('#button2').hide();
     //$('$gridmask').hide()
     
-    //$('#timerdone').hide();
+    $('#timerdone').hide();
     $('.timer').hide().delay(3000).fadeIn(1000);
     counter.i = parseInt($('#timer').attr('count'));
     //counter.i = 300;
