@@ -21,7 +21,7 @@
 				  {% ifequal astage.status 1 %}
 				    <li class="stage active present"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box">{{astage.stage.display}}</a></li>
 				  {% else %}
-				    <li class="stage not_active past"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box">{{astage.stage}}</a></li>
+				    <li class="stage not_active past"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box">{{astage.stage.display}}</a></li>
 				  {% endifequal %}
 			  {% endif %}
 		{% endfor%}
