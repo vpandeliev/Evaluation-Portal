@@ -71,7 +71,7 @@ INSTALLED_APPS = (
     
     # Hosted games
     #'portal.assess',
-'portal.assess',
+    'portal.assess',
     'portal.boggle',
     'portal.rushhour',
     # Libraries
@@ -105,7 +105,7 @@ TEMPLATE_DIRS = (
 )
 
 
-#MEDIA_URL = '/media/' #os.path.join(ROOT_PATH, 'media/')
+MEDIA_URL = '/media/'
 
 #try:
 #    from local_settings import *
@@ -117,13 +117,13 @@ TINYMCE_DEFAULT_CONFIG = {
     'theme': "advanced",
     'cleanup_on_startup': True,
     'custom_undo_redo_levels': 10,
-		'theme_advanced_buttons1' : "bold,italic,underline,strikethrough,|,justifyleft,justifyfull,|cut,copy,paste,pastetext,|,undo,redo,|,link,unlink,anchor,image,search,replace,|,bullist,numlist,|,cleanup,help,code,|,insertdate,inserttime,preview",
-		'theme_advanced_buttons2' : "",
-		'theme_advanced_buttons3': '',
-		'theme_advanced_toolbar_location' : "top",
-		'theme_advanced_toolbar_align' : "left",
-		'theme_advanced_statusbar_location' : "bottom",
-		'theme_advanced_resizing' : 'True',
+	'theme_advanced_buttons1' : "bold,italic,underline,strikethrough,|,justifyleft,justifyfull,|cut,copy,paste,pastetext,|,undo,redo,|,link,unlink,anchor,image,search,replace,|,bullist,numlist,|,cleanup,help,code,|,insertdate,inserttime,preview",
+	'theme_advanced_buttons2' : "",
+	'theme_advanced_buttons3': '',
+	'theme_advanced_toolbar_location' : "top",
+	'theme_advanced_toolbar_align' : "left",
+	'theme_advanced_statusbar_location' : "bottom",
+	'theme_advanced_resizing' : 'True',
 }
 
 JS_URL = '%sjs/tiny_mce/tiny_mce.js' % MEDIA_URL
