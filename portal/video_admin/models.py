@@ -15,8 +15,10 @@ class UserProfile(models.Model):
 def create_profile(sender, **kw):
     user = kw["instance"]
     if kw["created"]:
-        profile = UserProfile(user=user)
+        profile = UserProfile(user=user, has_pending_request=0)
         profile.save()
 
+
 post_save.connect(create_profile, sender=User, dispatch_uid="users-profilecreation-signal")
+
 
