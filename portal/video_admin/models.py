@@ -19,6 +19,5 @@ def create_profile(sender, **kw):
         profile.save()
 
 
+# register signal handler
 post_save.connect(create_profile, sender=User, dispatch_uid="users-profilecreation-signal")
-
-
