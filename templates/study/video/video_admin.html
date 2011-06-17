@@ -1,0 +1,87 @@
+{% load helpers %}
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+
+<link href="{% media_url %}css/video_div.css" type="text/css" rel="stylesheet" >
+
+<script>
+	function invite_user(pk)
+	{
+		$("#ajax_response").load("/video_admin/invite_user", "pk="+pk, invite_complete);		
+	}
+	
+	function invite_complete(responseText, textStatus, XMLHttpRequest)
+	{
+		window.location.reload()
+	}
+	
+	function uninvite_user(pk)
+	{
+		$("#ajax_response").load("/video_admin/uninvite_user", "pk="+pk, uninvite_complete);
+	}
+	
+	function uninvite_complete(responseText, textStatus, XMLHttpRequest)
+	{
+		window.location.reload()
+	}
+	
+</script>
+
+<script src="http://staging.tokbox.com/v0.91/js/TB.min.js" type="text/javascript" charset="utf-8"></script>
+<script>
+	// These are the variables that need to be set in Django using the TokBox 
+	// server-side API. 
+
+	// It is important that they are set BEFORE you include the video_div.js 
+	// script below.
+
+	var apiKey = 1127; // OpenTok sample API key. Replace with your own API key.
+	var sessionId = '153975e9d3ecce1d11baddd2c9d8d3c9d147df18'; // Replace with your session ID.
+	var token = 'devtoken'; // Should not be hard-coded. Add via python SSL.
+</script>
+<script src="{% media_url %}js/video_div.js" type="text/javascript" charset="utf-8"></script>
+
+<div class="hidden_data" id="ajax_response">HIDDEN!</div>
+
+
+<br>
+
+<table class="user_table">
+	{% for name, pk, has_pending_request in user_data %}
+	    <tr>
+	    	<td>
+		      {{ name }}
+	    	</td>
+			<td>
+		      has pending request: {% if has_pending_request %} YES {% else %} NO {% endif %}
+	    	</td>
+			<td>
+		     	<a href="#" onclick="javascript:invite_user({{ pk }})">invite</a>
+		    </td>
+			<td>
+		      	<a href="#" onclick="javascript:uninvite_user({{ pk }})">uninvite</a>
+		    </td>
+	    </tr>
+	{% endfor %}
+</table>
+
+<br><br><br>
+
+
+<div style="width:100%; text-align:center;">
+
+	<div id="opentok_console"></div>
+	<div id="links">
+	      	<input type="button" value="Connect" id ="connectLink" onClick="javascript:connect()" />
+	      	<input type="button" value="Leave" id ="disconnectLink" onClick="javascript:disconnect()" />
+	      	<input type="button" value="Start Publishing" id ="publishLink" onClick="javascript:startPublishing()" />
+	      	<input type="button" value="Stop Publishing" id ="unpublishLink" onClick="javascript:stopPublishing()" />
+	</div>
+	<div id="myCamera" class="publisherContainer"></div>
+	<div id="subscribers"></div>
+
+	<script>
+		show('connectLink');
+	</script>
+
+</div>

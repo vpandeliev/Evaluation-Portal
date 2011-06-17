@@ -40,7 +40,7 @@ USE_I18N = True
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-     'django.template.loaders.eggs.load_template_source',
+    'django.template.loaders.eggs.load_template_source',
 )
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
@@ -61,6 +61,8 @@ MIDDLEWARE_CLASSES = (
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
+
+
 INSTALLED_APPS = (
 	'django.contrib.admin',
     'django.contrib.auth',
@@ -74,12 +76,22 @@ INSTALLED_APPS = (
     'portal.assess',
     'portal.boggle',
     'portal.rushhour',
+    
+    # Video conferencing
+    'portal.video_admin',
+    
     # Libraries
    'tinymce',
 #	'lockdown',
 	'alphacabbage.django.helpers',
 	'alphacabbage.django.choices',
 )
+
+
+# Used to add additional information to the auth.User model for signalling a
+# video request to the user
+AUTH_PROFILE_MODULE = "video_admin.UserProfile"
+
 
 try:
     from portal.local_settings import *
@@ -98,6 +110,7 @@ ADMIN_MEDIA_PREFIX = '/amedia/'
 TEMPLATE_DIRS = (
 	os.path.join(ROOT_PATH, 'templates'),
 	os.path.join(ROOT_PATH, 'templates/study'),
+	os.path.join(ROOT_PATH, 'templates/study/user_video'),
 	#os.path.join(ROOT_PATH, 'templates/registration'),
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.

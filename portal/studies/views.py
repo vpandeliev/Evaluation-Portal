@@ -45,8 +45,18 @@ def show_many_studies(request):
         
     return render_to_response('study/show_many_studies.html', locals(), context_instance=RequestContext(request))
 
+
+
+
+
 @login_required
 def show_one_study(request,as_inv,s_id):
+    """
+    Contains an example for setting up video conferences using TokBox.
+    """
+    video_request = request.user.get_profile().has_pending_request
+    
+    
     study_id = int(s_id)
     as_inv = int(as_inv)
     request.session['study_id'] = study_id
@@ -69,7 +79,11 @@ def show_one_study(request,as_inv,s_id):
         #unauthorized URL mucking about with
         return HttpResponseBadRequest()
     return render_to_response('study/show_one_study.html',locals(), context_instance=RequestContext(request))
-    
+
+
+
+
+
 @login_required
 def show_users_in_study(request,study_id):
     users = Study.objects.get(id=study_id).participants()

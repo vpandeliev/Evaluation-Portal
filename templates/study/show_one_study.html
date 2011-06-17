@@ -8,6 +8,7 @@
 <li class="tablink on" id="tab1">Study Progress</li>
 <li class="tablink" id="tab2">About Study</li>
 <li class="tablink" id="tab3">Contact Investigator</li>
+<li class="tablink" id="tab4">Video Example</li>
 </ul>
 </div>
 	 <!--stage menu-->
@@ -97,6 +98,14 @@
 
 
 
+<!-- Begin User Video Example -->
+<div id="tab4box" class="tab" style="display:none">
+	{% include "./video/video_div.html" %}
+</div>
+<!-- /End User Video Example -->
+
+
+
 {% else %}
 {% ifequal as_inv 1%}
 
@@ -161,5 +170,5 @@
 {% endifequal %}
 <!-->
 	
--->
+
 {% endblock %}

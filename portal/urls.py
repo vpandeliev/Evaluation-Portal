@@ -15,6 +15,10 @@ urlpatterns = patterns('',
 	url(r'^accounts/logout/$', logout, name="logout"),
 	url(r'^accounts/register/$', register, name="register"),
 
+
+	url(r'^video_admin/',  include('portal.video_admin.urls')),
+
+
     #(r'^boggle/', include('portal.boggle.urls')),
     
 	# Libraries

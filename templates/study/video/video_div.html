@@ -1,0 +1,53 @@
+{% load helpers %}
+
+{% ifequal video_request 1 %}
+
+	<div style="width:100%; text-align:center;">
+		In the town where I was born<br>
+		lived a man who sailed to sea<br>
+		and he told us of his life<br>
+		in the land of submarines<br>
+
+		<link href="{% media_url %}css/video_div.css" type="text/css" rel="stylesheet" >
+		<script src="http://staging.tokbox.com/v0.91/js/TB.min.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			// These are the variables that need to be set in Django using the TokBox 
+			// server-side API. 
+	
+			// It is important that they are set BEFORE you include the video_div.js 
+			// script below.
+	
+			var apiKey = 1127; // OpenTok sample API key. Replace with your own API key.
+			var sessionId = '153975e9d3ecce1d11baddd2c9d8d3c9d147df18'; // Replace with your session ID.
+			var token = 'devtoken'; // Should not be hard-coded. Add via python SSL.
+		</script>
+		<script src="{% media_url %}js/video_div.js" type="text/javascript" charset="utf-8"></script>
+
+
+		<div id="opentok_console"></div>
+		<div id="links">
+		      	<input type="button" value="Connect" id ="connectLink" onClick="javascript:connect()" />
+		      	<input type="button" value="Leave" id ="disconnectLink" onClick="javascript:disconnect()" />
+		      	<input type="button" value="Start Publishing" id ="publishLink" onClick="javascript:startPublishing()" />
+		      	<input type="button" value="Stop Publishing" id ="unpublishLink" onClick="javascript:stopPublishing()" />
+		</div>
+		<div id="myCamera" class="publisherContainer"></div>
+		<div id="subscribers"></div>
+
+		<script>
+			show('connectLink');
+		</script>
+
+	</div>
+
+{% else %}
+<div style="width:100%; text-align:center;">
+	He's a real nowhere man<br>
+	Sitting in his nowhere land<br>
+	Making all his nowhere plans<br>
+	For nobody.<br>
+</div>
+
+
+{% endifequal %}
+
