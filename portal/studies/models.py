@@ -137,6 +137,7 @@ class StudyParticipant(models.Model):
         #get the current userstage object
      #   return UserStage.objects.get(user=self.user, status=1)
         
+        
 
             
     def __unicode__(self):
