@@ -45,6 +45,7 @@ def show_many_studies(request):
         
     return render_to_response('study/show_many_studies.html', locals(), context_instance=RequestContext(request))
 
+
 @login_required
 def show_one_study(request,as_inv,s_id):
     study_id = int(s_id)
@@ -69,7 +70,8 @@ def show_one_study(request,as_inv,s_id):
         #unauthorized URL mucking about with
         return HttpResponseBadRequest()
     return render_to_response('study/show_one_study.html',locals(), context_instance=RequestContext(request))
-    
+
+
 @login_required
 def show_users_in_study(request,study_id):
     users = Study.objects.get(id=study_id).participants()
@@ -171,6 +173,8 @@ def informed_consent(request):
     role = study.role(request.user)
     if role > -1:
         #participant
+        
+        # CLEANUP: this chain of lookups seems unnecessary
         studynum = sid
         studypart = study.get_study_participant(request.user)
         stage = studypart.get_current_stage()
@@ -246,12 +250,22 @@ def data_dump(request,study_id):
 def choose_game(request):
     study_id = request.session['study_id']
     study = Study.objects.get(id=study_id)
+    
+    # CLEANUP: lots of gets
     bd = study.boggle_duration
     br = study.boggle_rounds
     sp = StudyParticipant.objects.get(user=request.user, study=study)
     us = sp.get_current_stage()
     sc = us.sessions_completed
     us.start_stage()
+    
+    #us = UserStage.objects.get(user=request.user, study=study, status=1)
+    #us.start_stage()
+    
+    
+    # CLEANUP: Mod 2 is because Velian switches between studies
+    # CLEANUP: We want to remove all logic specific to a given treatment and create a
+    # CLEANUP: simple way for the user to specify this kind of thing
     if sc%2 == 0:
         return HttpResponseRedirect('/study/boggle/new-game/?play_for='+str(br)+'&return_to=/study/ftask/BOG&dur=' + str(bd))
         #return HttpResponseRedirect('/study/rushhour/rules')
@@ -342,6 +356,7 @@ def finish_task(request,code):
 
 
 
+# CLEANUP: How do we want to let the user customize /deal with data collection?
 @login_required
 def log_game(request):
     """Logs a single piece of data from an in-house game's POST request"""
@@ -353,7 +368,8 @@ def log_game(request):
     studyid = request.session['study_id']
 
     timestamp = request.POST['timestamp']
-    data = request.POST['data']
+    
+    data = request.POST['data'] # CLEANUP: This is the user's data. Think about how to let them change this...
 
     dt = datetime.datetime.fromtimestamp(float(timestamp))
     code = request.POST['code']
@@ -364,6 +380,8 @@ def log_game(request):
         print "log_game: failed to write: "
     #send: studyid, request.user, time, data
     return HttpResponse("YAY!")
+
+
 
 @login_required
 def log(request, code, datum):

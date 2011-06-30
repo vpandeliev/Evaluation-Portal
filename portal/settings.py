@@ -105,7 +105,7 @@ TEMPLATE_DIRS = (
 )
 
 
-#MEDIA_URL = '/media/' #os.path.join(ROOT_PATH, 'media/')
+MEDIA_URL = '/media/' 
 
 #try:
 #    from local_settings import *

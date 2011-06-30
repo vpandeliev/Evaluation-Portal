@@ -227,7 +227,8 @@ class Data(models.Model):
     def format_timestamp(self):
         t = self.timestamp
         return u'%s,%s,%s,%s,%s,%s,%s' % (t.year, t.month, t.day, t.hour, t.minute, t.second, t.microsecond/1000)
-        
+
+
 class UserStage(models.Model):
     user = models.ForeignKey(User)
     stage = models.ForeignKey(Stage)
