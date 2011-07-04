@@ -71,9 +71,11 @@ INSTALLED_APPS = (
     
     # Hosted games
     #'portal.assess',
-'portal.assess',
+    'portal.assess',
     'portal.boggle',
     'portal.rushhour',
+    'portal.tutorial_study',
+    'portal.study_builder',
     # Libraries
    'tinymce',
 #	'lockdown',

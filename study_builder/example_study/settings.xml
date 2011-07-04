@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<study>
+	<name name_stub="exs"> example_study</name>
+	
+	<description>This is an example study</description>
+	<informed_consent>You must consent or else.</informed_consent>
+	<instructions>Click a button or something.</instructions>
+	<eligibility>Can you breathe?</eligibility>
+	<reward>LOL</reward>
+
+	<start_date>2002-09-24</start_date>
+	<end_date>2012-12-12</end_date>
+
+	<all_participants>
+		<user>mister_x</user>
+		<user>ms_y</user>
+		<user>dr_z</user>
+	</all_participants>
+
+	<all_groups>
+		<group name="groupA">
+			<user>mister_x</user>
+			<user>ms_y</user>
+		</group>
+
+		<group name="groupB">
+			<user>dr_z</user>
+		</group>
+	</all_groups>
+
+</study>

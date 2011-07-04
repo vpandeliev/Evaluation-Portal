@@ -14,7 +14,9 @@ urlpatterns = patterns('',
 	url(r'^accounts/login/$',  login, name="login"),
 	url(r'^accounts/logout/$', logout, name="logout"),
 	url(r'^accounts/register/$', register, name="register"),
-
+    url(r'^tutorial_study/', include('portal.tutorial_study.urls')),
+    url(r'^study_builder/', include('portal.study_builder.urls')),
+    
     #(r'^boggle/', include('portal.boggle.urls')),
     
 	# Libraries
