@@ -40,7 +40,7 @@ USE_I18N = True
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-     'django.template.loaders.eggs.load_template_source',
+    'django.template.loaders.eggs.load_template_source',
 )
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
@@ -51,11 +51,18 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    # This is used to set up the custom urls.py and views.py in the user_studies
+    # app
+    #'portal.FileBuilderMiddleware',
+    
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.middleware.doc.XViewMiddleware',
 		
+	
+
+	
     # 'lockdown.middleware.LockdownMiddleware',
 )
 
@@ -76,7 +83,8 @@ INSTALLED_APPS = (
     'portal.rushhour',
     'portal.tutorial_study',
     
-    'portal.generated_studies',
+    # User generated studies are dropped in this directory
+    'portal.user_studies',
     
     # Libraries
    'tinymce',
@@ -85,10 +93,6 @@ INSTALLED_APPS = (
 	'alphacabbage.django.choices',
 )
 
-try:
-    from portal.local_settings import *
-except ImportError:
-    print u'File local_settings.py is not found. Continuing with production settings.'
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
@@ -111,10 +115,10 @@ TEMPLATE_DIRS = (
 
 MEDIA_URL = '/media/' 
 
-#try:
-#    from local_settings import *
-#except ImportError:
-#    print u'File local_settings.py is not found. Continuing with production settings.'
+try:
+    from local_settings import *
+except ImportError:
+    print u'File local_settings.py is not found. Continuing with production settings.'
 
 TINYMCE_DEFAULT_CONFIG = {
     'plugins': "paste,searchreplace",

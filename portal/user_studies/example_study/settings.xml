@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <study>
-	<name name_stub="exs"> example_study</name>
+	<name name_stub="exs">example_study</name>
 	
 	<description>This is an example study</description>
 	<informed_consent>You must consent or else.</informed_consent>
@@ -12,29 +12,46 @@
 	<start_date>2002-09-24</start_date>
 	<end_date>2012-12-12</end_date>
 
+	<!-- List all participants you want to add to the study here -->
 	<all_participants>
 		<user name="mister_x"/>
 		<user name="ms_y"/>
 		<user name="dr_z"/>
 	</all_participants>
 
-	<all_groups>
-		<group name="groupA">
-			<user name="mister_x"/>
-			<user name="ms_y"/>
-		</group>
-
-		<group name="groupB">
-			<user name="dr_z"/>
-		</group>
-	</all_groups>
-	
+	<!-- 
+		List the directories of all stages in your study here (order is not 
+		important in this section)
+	-->
 	<all_stages>
 		<stage directory="welcome_page"/>
 		<stage directory="simple_task"/>
 		<stage directory="bye_page"/>
 	</all_stages>
 
+	<!-- One entry for each distinct group in the study -->
+	<all_groups>
+		<group name="groupA">
+			<user name="mister_x"/>
+			<user name="ms_y"/>
+			<!-- List the stages you want included in this group IN ORDER -->
+			<stages>
+				<stage directory="welcome_page"/>
+				<stage directory="simple_task"/>
+				<stage directory="bye_page"/>
+			</stages>
+		</group>
+
+		<group name="groupB">
+			<user name="dr_z"/>
+		
+			<stages>
+				<stage directory="simple_task"/>
+				<stage directory="bye_page"/>
+			</stages>
+		</group>
+	</all_groups>
+	
 </study>
 
 

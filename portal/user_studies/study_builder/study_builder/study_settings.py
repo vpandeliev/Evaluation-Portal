@@ -49,7 +49,11 @@ class StudySettings:
         self.participants = extract_attributes(all_participants_node, "user", "name")
         
         # build a dictionary of groups with each key:entry of the form:
-        #   "group_name":["user1", "user2"]
+        #   "group_name" : {
+        #                       "users":["user1", "user2",...],
+        #                       "stages":["stage_one", "stage_two",...]
+        #                  }
+        #
         all_groups_node = dom.getElementsByTagName("all_groups")[0]
         self.groups = extract_groups(all_groups_node)
         
@@ -108,7 +112,12 @@ def extract_groups(groups_node):
     
     for group_node in groups_node.getElementsByTagName("group"):
         group_name = group_node.getAttribute("name")
-        group_dict[group_name] = extract_attributes(group_node, "user", "name")
+        
+        group_dict[group_name] = {}
+        group_dict[group_name]["users"] = extract_attributes(group_node, "user", "name")
+        
+        stages_node = group_node.getElementsByTagName("stages")[0]
+        group_dict[group_name]["stages"] = extract_attributes(group_node, "stage", "directory")
     
     return group_dict
 
