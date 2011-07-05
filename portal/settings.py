@@ -75,7 +75,9 @@ INSTALLED_APPS = (
     'portal.boggle',
     'portal.rushhour',
     'portal.tutorial_study',
-    'portal.study_builder',
+    
+    'portal.generated_studies',
+    
     # Libraries
    'tinymce',
 #	'lockdown',
