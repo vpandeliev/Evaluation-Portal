@@ -29,16 +29,13 @@ class FileBuilderMiddleware:
             all_settings.append(get_study_settings(directory))
         
         # generate a sample views.py file to see if this approach will work
-        views_file = open("{0}/{1}".format(module_dir, "views.py"), "w")
         views_builder = ViewsBuilder(*all_settings)
-        views_builder.write_views_file(views_file)
-        
+        views_builder.write_views_file(module_dir)
         
         # generate a sample urls.py file to see if this approach will work
-        urls_file = open("{0}/{1}".format(module_dir, "urls.py"), "w")
         urls_builder = UrlsBuilder(*all_settings)
-        urls_builder.write_urls_file(urls_file)
-    
+        urls_builder.write_urls_file(module_dir)
+        
         raise MiddlewareNotUsed
 
 

@@ -66,7 +66,7 @@ MIDDLEWARE_CLASSES = (
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
 INSTALLED_APPS = (
-	'django.contrib.admin',
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -84,17 +84,17 @@ INSTALLED_APPS = (
     'portal.user_studies',
     
     # Libraries
-   'tinymce',
-#	'lockdown',
-	'alphacabbage.django.helpers',
-	'alphacabbage.django.choices',
+    'tinymce',
+#   'lockdown',
+    'alphacabbage.django.helpers',
+    'alphacabbage.django.choices',
 )
 
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = os.path.normpath(os.path.join(ROOT_PATH, "../media"))
-print MEDIA_ROOT
+
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".

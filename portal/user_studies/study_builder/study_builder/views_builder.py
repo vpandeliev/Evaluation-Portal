@@ -18,8 +18,8 @@ class ViewsBuilder:
     
     views_file_template = r"""
 from django.http import *
-from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
+from django.template import Template, Context
 
 {0}
 """
@@ -30,19 +30,25 @@ from django.contrib.auth.decorators import login_required
     stage_url_template = """
 @login_required
 def {1}(request):
-    return render_to_response('{0}/{1}.html')
+    template_file = open("{2}", "r")
+    template = Template("".join(template_file.readlines()))
+    context = Context({{}})
+    return HttpResponse(template.render(context))
 """
     
     def __init__(self, *settings_list):
         self.settings_list = settings_list
       
-    def write_views_file(self, file):
+    def write_views_file(self, module_dir):
+        views_file = open("{0}/{1}".format(module_dir, "views.py"), "w")
+        
         fcn_list = []
         for study in self.settings_list:
             for stage in study.stages:
-                
-                fcn_list.append(ViewsBuilder.stage_url_template.format(study.name, stage))
-        file.write(ViewsBuilder.views_file_template.format("\n".join(fcn_list)))
+                template_file = "{0}/{1}/stages/{2}/template.html".format(module_dir, study.name, stage)
+                fcn_list.append(ViewsBuilder.stage_url_template.format(study.name, stage, template_file))
+        
+        views_file.write(ViewsBuilder.views_file_template.format("\n".join(fcn_list)))
 
 
 

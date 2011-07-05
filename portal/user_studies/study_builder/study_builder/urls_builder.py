@@ -25,11 +25,14 @@ urlpatterns = patterns('', {0})
     
     def __init__(self, *settings_list):
         self.settings_list = settings_list
-       
-    def write_urls_file(self, file):
+
+        
+    def write_urls_file(self, module_dir):
+        urls_file = open("{0}/{1}".format(module_dir, "urls.py"), "w")
+        
         url_list = []
         for study in self.settings_list:
             for stage in study.stages:
                 url_list.append(UrlsBuilder.stage_url_template.format(study.name, stage))
         
-        file.write(UrlsBuilder.urls_file_template.format(", ".join(url_list)))
+        urls_file.write(UrlsBuilder.urls_file_template.format(", ".join(url_list)))
