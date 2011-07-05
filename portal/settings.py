@@ -53,16 +53,13 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 MIDDLEWARE_CLASSES = (
     # This is used to set up the custom urls.py and views.py in the user_studies
     # app
-    #'portal.FileBuilderMiddleware',
+    'portal.FileBuilderMiddleware',
     
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.middleware.doc.XViewMiddleware',
-		
-	
 
-	
     # 'lockdown.middleware.LockdownMiddleware',
 )
 
@@ -96,8 +93,8 @@ INSTALLED_APPS = (
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = os.path.join(ROOT_PATH, 'media/')
-
+MEDIA_ROOT = os.path.normpath(os.path.join(ROOT_PATH, "../media"))
+print MEDIA_ROOT
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
