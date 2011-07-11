@@ -73,12 +73,9 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'portal.studies',
     
-    # Hosted games
-    #'portal.assess',
+
+
     'portal.assess',
-    'portal.boggle',
-    'portal.rushhour',
-    'portal.tutorial_study',
     
     # User generated studies are dropped in this directory
     'portal.user_studies',
