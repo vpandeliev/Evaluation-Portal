@@ -22,11 +22,12 @@ class Study(models.Model):
     task_session_dur = models.IntegerField("Session Duration (minutes)")
     assess_blocks = models.IntegerField("Number of assessment blocks")
     assess_trials = models.IntegerField("Number of trials per block")
-    def save(self, *args,**kwargs):
-        
+    
+    
+    def save(self, *args,**kwargs):    
         #create timestamps, keep track of user
-        
         super(Study, self).save(*args, **kwargs) 
+    
     
     def role(self,user):
         a = 0
@@ -41,56 +42,54 @@ class Study(models.Model):
             return a
         else:
             return -2
-            
+    
+    
     def set_investigator(self, current_user):
         """Assign creator of study to investigator role"""
         StudyInvestigator(study=self,investigator=current_user).save()
-
+    
+    
     def participants(self):
         """Returns a list of all participants in the Study"""
         return [x.user for x in StudyParticipant.objects.filter(study=self)]
-
+    
+    
     def investigators(self):
         """Returns a list of all investigators in the Study"""
         return [x.investigator for x in StudyInvestigator.objects.filter(study=self)]
-
+    
+    
     def get_study_participant(self, user):
         s = StudyParticipant.objects.get(study=self, user=user)
         return s
-
+    
+    
     def get_study_investigator(self, user):
         return StudyInvestigator.objects.get(study=self, investigator=user)
-
-#error checking?
-            
+    
+    
     def __unicode__(self):
         return u'%s' % (self.name)
 
-        
-    # def __dict__(self):
-    #   """docstring for __dict__"""
-    #   return {
-    #       'name': self.name,
-    #       'description': self.description,
-    #       'start_date': self.start_date,
-    #       'end_date': self.end_date,
-    #       'started': self.started,
-    #   }
 
 class Group(models.Model):
     name = models.CharField('Group Name', max_length=300)
     study = models.ForeignKey(Study)
     
+    
     def __unicode__(self):
         return u'%s - %s' % (self.study, self.name)     
-
+    
+    
     def stages(self):
         return [x.stage for x in StageGroup.objects.filter(group=self).order_by('order')]
-        
+
+
 class StudyInvestigator(models.Model):
     study = models.ForeignKey(Study)
     investigator = models.ForeignKey(User)
-
+    
+    
     def stages(self):
         """Returns all of a study's stages as userstage objects"""
         stages = Stage.objects.filter(study=self.study)
@@ -98,11 +97,14 @@ class StudyInvestigator(models.Model):
         stageusers.sort(key=attrgetter('order'))
         return [x.stage for x in stageusers]
     
+    
     def stages_per_condition(self, cond):
         return StageGroup.objects.filter(group=cond).order_by('order')
-        
+    
+    
     def __unicode__(self):
         return u'%s - %s (Investigator)' % (self.investigator.username, self.study)
+
 
 class StudyParticipant(models.Model):
     study = models.ForeignKey(Study)
