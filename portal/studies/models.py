@@ -136,10 +136,7 @@ class StudyParticipant(models.Model):
     #def get_current_stages(self):
         #get the current userstage object
      #   return UserStage.objects.get(user=self.user, status=1)
-        
-        
-
-            
+     
     def __unicode__(self):
         return u'%s - %s (Participant)' % (self.user,self.study)        
     
