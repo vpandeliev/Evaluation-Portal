@@ -52,7 +52,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 MIDDLEWARE_CLASSES = (
     # This is used to set up the custom urls.py and views.py in the user_studies
-    # app
+    # app. We will be getting rid of this and have a custom 'build_studies' UI 
+    # once the code cleanup is done.
     'portal.FileBuilderMiddleware',
     
     'django.middleware.common.CommonMiddleware',
@@ -72,11 +73,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'portal.studies',
-    
-
-
-    'portal.assess',
-    
+        
     # User generated studies are dropped in this directory
     'portal.user_studies',
     

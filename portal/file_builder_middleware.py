@@ -84,8 +84,6 @@ class FileBuilderMiddleware:
             study.instructions = s.instructions
             study.eligibility = s.eligibility
             study.reward = s.reward
-            study.boggle_duration = 10
-            study.boggle_rounds = 1
             study.task_session_dur = 1
             study.assess_blocks = 1
             study.assess_trials = 1
