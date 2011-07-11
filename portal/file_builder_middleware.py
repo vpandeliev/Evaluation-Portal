@@ -6,6 +6,16 @@
 #       urls.py:
 #           one 
 #
+#
+#   TODO:
+#       Don't do this each time the server starts up. Create a separate page for
+#       building studies (with some user interaction) that makes it clear what
+#       is happening at each step, and does some error checking
+#
+#       This is OK for now, while I clean up the code... we can ensure that 
+#       everyting is being generated appropriately as I delete piles of stuff
+
+
 import os, sys
 
 from django.core.exceptions import MiddlewareNotUsed
