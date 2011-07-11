@@ -246,44 +246,7 @@ def data_dump(request,study_id):
     #return HttpResponseRedirect('/study/1/'+str(study_id))
     return render_to_response("data.html", locals(), context_instance=RequestContext(request))
 
-@login_required
-def choose_game(request):
-    study_id = request.session['study_id']
-    study = Study.objects.get(id=study_id)
-    
-    # CLEANUP: lots of gets
-    bd = study.boggle_duration
-    br = study.boggle_rounds
-    sp = StudyParticipant.objects.get(user=request.user, study=study)
-    us = sp.get_current_stage()
-    sc = us.sessions_completed
-    us.start_stage()
-    
-    #us = UserStage.objects.get(user=request.user, study=study, status=1)
-    #us.start_stage()
-    
-    
-    # CLEANUP: Mod 2 is because Velian switches between studies
-    # CLEANUP: We want to remove all logic specific to a given treatment and create a
-    # CLEANUP: simple way for the user to specify this kind of thing
-    if sc%2 == 0:
-        return HttpResponseRedirect('/study/boggle/new-game/?play_for='+str(br)+'&return_to=/study/ftask/BOG&dur=' + str(bd))
-        #return HttpResponseRedirect('/study/rushhour/rules')
-    else:
-        return HttpResponseRedirect('/study/rushhour/rules')
 
-@login_required
-def rush_hour(request):
-    study_id = request.session['study_id']
-    study = Study.objects.get(id=study_id)
-    bd = study.boggle_duration
-    br = study.boggle_rounds
-    sp = StudyParticipant.objects.get(user=request.user, study=study)
-    us = sp.get_current_stage()
-    sc = us.sessions_completed
-    us.start_stage()
-    return HttpResponseRedirect('/study/rushhour/rules')
-    
 @login_required
 def choose_assess(request):
     study_id = request.session['study_id']
