@@ -188,7 +188,7 @@ class FileBuilderMiddleware:
         # parse and save the settings files for each study
         self.all_settings = []
         for directory in self.study_dirs:
-            self.all_settings.append(get_study_settings(directory))
+            self.all_settings.append(StudySettings(directory))
         
         print self.all_settings[0]
         self.create_study_urls_and_views()
