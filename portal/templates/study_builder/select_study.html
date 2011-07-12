@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load helpers %}
+{% block content %}
+
+<h1>BLARG</h1>
+
+<!-- Specify tab headers here -->
+<div id="supertabs">
+	<ul>
+		<li class="tablink on" id="tab1">Select Studies</li>
+		<li class="tablink" id="tab2">Random</li>
+	</ul>
+</div>
+
+
+<!-- First Tab -->
+<div id="tab1box" class="tab" >
+	<center>
+	<div id="stage_info">
+		Select a study from the form below:
+		<form action="/contact/" method="post">{% csrf_token %}
+			{{ form.as_p }}
+		<input type="submit" value="Submit" />
+		</form>
+	</div>
+	</center>
+</div>
+
+
+<!-- Second Tab -->	
+<div id="tab2box" class="tab" style="display:none">
+	<div id="study_details">
+		<h2><a href="" onclick="return toggle_detail('d1',$(this));" class="right">Description</a></h2>
+		<div id="d1" style="display:none;">{{ test_random }}</div>
+	</div>
+</div>
+
+
+{% endblock %}

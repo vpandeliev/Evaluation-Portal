@@ -73,7 +73,10 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'portal.studies',
-        
+    
+    # UI and modules for creating user generated studies
+    'portal.study_builder',
+    
     # User generated studies are dropped in this directory
     'portal.user_studies',
     
@@ -97,6 +100,7 @@ ADMIN_MEDIA_PREFIX = '/amedia/'
 TEMPLATE_DIRS = (
 	os.path.join(ROOT_PATH, 'templates'),
 	os.path.join(ROOT_PATH, 'templates/study'),
+	os.path.join(ROOT_PATH, 'templates/study_builder'),
 	#os.path.join(ROOT_PATH, 'templates/registration'),
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.

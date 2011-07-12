@@ -22,7 +22,7 @@ from django.core.exceptions import MiddlewareNotUsed
 from django.contrib.auth.models import User
 
 from studies.models import Study, Group, Stage, StageGroup, StudyParticipant, UserStage
-from user_studies.study_builder import *
+from study_builder import *
 
 
 class FileBuilderMiddleware:

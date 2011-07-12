@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+
+<study>
+	<name name_stub="ex2">example_study_2</name>
+	
+	<description>This is an example study</description>
+	<informed_consent>You must consent or else.</informed_consent>
+	<instructions>Click a button or something.</instructions>
+	<eligibility>Can you breathe?</eligibility>
+	<reward>LOL</reward>
+
+	<start_date>2002-09-24</start_date>
+	<end_date>2012-12-12</end_date>
+
+	<!-- List all participants you want to add to the study here 
+		 This seems cumbersome... perhaps it would be best to have a 
+		 separate list of users with the study groups they are associated with
+		
+		 This will make it easier to allow anonymous users as well as to have
+		 the users organized into multiple files...
+	-->
+	<all_participants>
+		<user name="guy1"/>
+		<user name="gal2"/>
+		<user name="dr_z"/>
+	</all_participants>
+
+	<!-- 
+		List the directories of all stages in your study here (order is not 
+		important in this section)
+	-->
+	<all_stages>
+		<stage directory="welcome_page"/>
+		<stage directory="simple_task"/>
+		<stage directory="bye_page"/>
+	</all_stages>
+
+	<!-- One entry for each distinct group in the study -->
+	<all_groups>
+		<group name="groupX">
+			<user name="guy1"/>
+			<user name="gal2"/>
+			<!-- List the stages you want included in this group IN ORDER -->
+			<stages>
+				<stage directory="welcome_page"/>
+				<stage directory="simple_task"/>
+				<stage directory="bye_page"/>
+			</stages>
+		</group>
+
+		<group name="groupY">
+			<user name="dr_z"/>
+		
+			<stages>
+				<stage directory="simple_task"/>
+				<stage directory="bye_page"/>
+			</stages>
+		</group>
+	</all_groups>
+	
+</study>
+
+
+
+
+
+
+
