@@ -18,7 +18,7 @@
 	<center>
 	<div id="stage_info">
 		Select a study from the form below:
-		<form action="/contact/" method="post">{% csrf_token %}
+		<form action="/study_builder/process_select_study_form" method="post">{% csrf_token %}
 			{{ form.as_p }}
 		<input type="submit" value="Submit" />
 		</form>

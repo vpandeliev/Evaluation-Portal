@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load helpers %}
+{% block content %}
+
+<h1>BLARG</h1>
+
+<!-- Specify tab headers here -->
+<div id="supertabs">
+	<ul>
+		<li class="tablink on" id="tab1">Confirm Build</li>
+	</ul>
+</div>
+
+
+<!-- First Tab -->
+<div id="tab1box" class="tab" >
+	<center>
+	<div id="stage_info">
+		You selected this study: {{ selected_study }}
+		
+		<br><br>
+		{{ study_info }}
+		<br><br>
+		
+		<form action="/study_builder/build_study" method="post">
+			<input type="hidden" name="study" value="{{ selected_study }}">
+		<input type="submit" value="Build Study!" />
+		</form>
+		
+	</div>
+	</center>
+</div>
+
+
+{% endblock %}

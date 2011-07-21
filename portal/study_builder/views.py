@@ -4,31 +4,96 @@ from django.template import Template, Context, RequestContext
 from django.shortcuts import render_to_response
 from django.forms import Form, CharField, DateField, ChoiceField, Select
 
-
 from random import random
 
-class EligibilityForm(Form):
-    
-    def __init__(self, choices):
-        super(EligibilityForm, self).__init__()
-        # dynamic fields here ...
-        self.fields['study'] = ChoiceField(choices=choices)
-    
-    # normal fields here ...
-    #date_requested = DateField()
+from study_selector import *
+from study_builder import *
+
+
+#################################################################################
+#   DJANGO URLS
+#################################################################################
+
 
 #@login_required
-def select_study(request):
-    # Get the names of all the study folders in the user studies directory
-    module_dir = os.path.dirname(__file__) + "/../user_studies"
-    files = ["{0}/{1}".format(module_dir, f) for f in os.listdir(module_dir)]
-    study_dirs = [f for f in files if os.path.isdir(f)]
-    dirs=[os.path.basename(d) for d in study_dirs]
-    choices = ( (d, d) for d in dirs )
-    
+def process_select_study_form(request):
+    if request.method == 'POST': # If the form has been submitted...
+        form = create_study_select_form(request.POST)
+        if form.is_valid(): # All validation rules pass
+            return render_confirm_build(form.cleaned_data['study'], request)
+            
+    else:
+        form = create_study_select_form(None)
+        
+    return render_to_response('select_study.html', locals(), 
+                              context_instance=RequestContext(request))
+
+
+#@login_required
+def select_study(request):    
     test_random = random()
-    form = EligibilityForm(choices=choices)
+    form = create_study_select_form(None)
     
     return render_to_response('select_study.html', locals(), 
                               context_instance=RequestContext(request))
+
+
+def build_study(request):
+    if request.method == 'POST': # If the form has been submitted...
+        selected_study = request.POST['study']
+    else:
+        return HttpResponseRedirect("invalid_request.html")
     
+    study_settings = StudySettings(get_study_directory(selected_study))
+    add_study_to_db(study_settings)
+    
+    return render_to_response('build_complete.html', locals(), 
+                              context_instance=RequestContext(request))
+
+#################################################################################
+#   REDIRECTS
+#################################################################################
+
+
+def render_confirm_build(selected_study, request):
+    study_settings = StudySettings(get_study_directory(selected_study))
+    study_info = str(study_settings)
+    
+    return render_to_response('confirm_build.html', locals(), 
+                              context_instance=RequestContext(request))
+
+
+
+#################################################################################
+#   HELPER FUNCTIONS/CLASSES
+#################################################################################
+
+
+class SelectStudyForm(Form):
+
+  def __init__(self, choices=(), post_request=None):
+      if post_request == None:
+          super(SelectStudyForm, self).__init__()
+      else:
+          super(SelectStudyForm, self).__init__(post_request)
+          
+      # dynamic fields here ...
+      self.fields['study'] = ChoiceField(choices=choices)
+      
+  # normal fields here ...
+  #date_requested = DateField()
+
+
+def create_study_select_form(post_request):
+    """Scans the folders in the user studies directory and creates a form that
+    """
+    # Build form choices for all study folders in the user studies directory
+    study_directories = get_user_study_names()
+    choices = ( (d, d) for d in study_directories )
+    
+    return SelectStudyForm(choices=choices, post_request=post_request)
+
+
+
+
+  
