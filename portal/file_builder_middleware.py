@@ -2,10 +2,6 @@
 # and do some setup???
 
 # This file must create the urls.py and views.py appropriately for each study.
-#   For a given study we need:
-#       urls.py:
-#           one 
-#
 #
 #   TODO:
 #       Don't do this each time the server starts up. Create a separate page for

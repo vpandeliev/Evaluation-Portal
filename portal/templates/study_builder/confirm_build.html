@@ -14,21 +14,27 @@
 
 <!-- First Tab -->
 <div id="tab1box" class="tab" >
-	<center>
+	
 	<div id="stage_info">
-		You selected this study: {{ selected_study }}
-		
+		<center>
+			You selected this study: {{ selected_study }}
+		</center>
+			
 		<br><br>
-		{{ study_info }}
+		<div id="study_details">
+			<h2><a href="" onclick="return toggle_detail('d1',$(this));" class="right">Description</a></h2>
+			<div id="d1" style="display:none;">{{ study_info }}</div>
+		</div>
 		<br><br>
 		
-		<form action="/study_builder/build_study" method="post">
-			<input type="hidden" name="study" value="{{ selected_study }}">
-		<input type="submit" value="Build Study!" />
-		</form>
+		<center>
+			<form action="/study_builder/build_study" method="post">
+				<input type="hidden" name="study" value="{{ selected_study }}">
+			<input type="submit" value="Build This Study!" />
+			</form>
+		<center>
 		
 	</div>
-	</center>
 </div>
 
 

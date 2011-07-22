@@ -90,7 +90,7 @@ def create_groups(study_settings):
         # specify the order that the stages appear for this group
         stage_index = 0
         for stage_name in stages:
-            stage = Stage.objects.get(name=stage_name)
+            stage = Stage.objects.get(name=stage_name, study=study)
             try:
                 stage_group = StageGroup.objects.get(group=group, stage=stage, order=stage_index)
             except StageGroup.DoesNotExist:
@@ -129,11 +129,10 @@ def create_stages(study_settings):
     study = Study.objects.get(name=study_settings.name)
     for stage_name in study_settings.stages:
         try:
-            stage = Stage.objects.get(name=stage_name)
+            stage = Stage.objects.get(study=study, name=stage_name)
         except Stage.DoesNotExist:
-            stage = Stage(name=stage_name)
+            stage = Stage(study=study, name=stage_name)
         stage.stub = stage_name[0:3]
-        stage.study = study
         stage.sessions = 1
         stage.deadline = 10
         
