@@ -258,15 +258,16 @@ class UserStage(models.Model):
             self.status = 0
             self.end_date = datetime.datetime.now()
             #find next stage
-            next = UserStage.objects.filter(user=self.user, order=self.order+1)
-            if len(next) == 0:
+            try:
+                next = UserStage.objects.get(user=self.user, study=self.study, order=self.order+1)
+                next.status = 1
+                next.start_date = datetime.datetime.now()
+                next.last_session_completed = next.start_date
+                next.save()
+            except UserStage.DoesNotExist:
                 #end of study
                 pass
-            else:
-                next[0].status = 1
-                next[0].start_date = datetime.datetime.now()
-                next[0].last_session_completed = next[0].start_date
-                next[0].save()
+                
         self.save()       
 
     def stage_completed(self):
@@ -276,14 +277,14 @@ class UserStage(models.Model):
         self.status = 0
         self.end_date = datetime.datetime.now()
         #find next stage
-        next = UserStage.objects.filter(user=self.user, order=self.order+1)
+        next = UserStage.objects.get(user=self.user, order=self.order+1)
         if len(next) == 0:
             #end of study
             pass
         else:
-            next[0].status = 1
-            next[0].start_date = datetime.datetime.now()
-            next[0].save()
+            next.status = 1
+            next.start_date = datetime.datetime.now()
+            next.save()
         self.save()       
 
     def start_stage(self):

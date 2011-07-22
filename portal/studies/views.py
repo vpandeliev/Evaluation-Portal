@@ -24,7 +24,10 @@ SESSION_DURATION = 1
 def show_many_studies(request):
     if StudyParticipant.objects.count > 0:
         studies_as_participant = StudyParticipant.objects.filter(user=request.user)
-        current_stages = [x.get_current_stage() for x in studies_as_participant]
+        current_stages = UserStage.objects.filter(user=request.user, status=1)
+        
+        print "ADSFASDF", current_stages
+        
     else:
         studies_as_participant = []
         current_stages = []
@@ -57,7 +60,8 @@ def show_one_study(request,as_inv,s_id):
         #role >= 0 and as_part == 0
         #participant
         studypart = study.get_study_participant(request.user)
-        stages = studypart.participant_stages()
+        stages = UserStage.objects.filter(user=request.user, study=study)
+        #stages = studypart.participant_stages()
         action = studypart.get_current_stage().stage.url
     elif as_inv == 1 and role <= 0: 
         #investigator
@@ -305,7 +309,8 @@ def finish_session(request):
     if role > -1:
         #participant
         studypart = StudyParticipant.objects.get(study=study,user=request.user)
-        stage = studypart.get_current_stage()
+        #stage = studypart.get_current_stage()
+        stage = UserStage.objects.get(user=request.user, study=study, status=1)
         stage.session_completed()
     else: 
         #unauthorized URL mucking about with
