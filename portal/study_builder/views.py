@@ -58,6 +58,13 @@ def build_study(request):
 def render_confirm_build(selected_study, request):
     study_settings = StudySettings(get_study_directory(selected_study))
     study_info = str(study_settings)
+    description = str(study_settings.description)
+    informed_consent = str(study_settings.informed_consent)
+    eligibility = str(study_settings.eligibility)
+    reward = str(study_settings.reward)
+    instructions = str(study_settings.instructions)
+    participants = study_settings.participants
+    groups = study_settings.groups
     
     return render_to_response('confirm_build.html', locals(), 
                               context_instance=RequestContext(request))

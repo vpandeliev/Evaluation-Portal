@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<participants>
+
+	<!-- List all participants you want to add to the study here 
+		 Will probably want to be able to define more info here, and to generate
+		 passwords randomly (or perhaps email them automatically to the users.)
+	-->
+
+		<user name="guy1" password="default"/>
+		<user name="gal2" password="default"/>
+		<user name="dr_z" password="default"/>
+
+</participants>
+
+
+
+
+
+
+

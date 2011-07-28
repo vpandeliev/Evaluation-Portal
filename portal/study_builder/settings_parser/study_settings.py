@@ -12,12 +12,20 @@ class StudySettings:
         
         study_dir - The directory containing Tangra Study data.
         """
-        # Attempt to open the settings directory
+        # Attempt to open the settings xml file
         self.settings_path = study_dir + "/settings.xml"
         try:
             self.settings_xml = open(self.settings_path)
         except:
             stderr.write("Couldn't open settings.xml: {0}".format(self.settings_path))
+            raise
+        
+        # Attempt to open the participants xml file
+        self.participants_path = study_dir + "/participants.xml"
+        try:
+            self.participants_xml = open(self.participants_path)
+        except:
+            stderr.write("Couldn't open settings.xml: {0}".format(self.participants_path))
             raise
         
         # Relevant instance variables are set here

@@ -17,10 +17,12 @@
 <div id="tab1box" class="tab" >
 	<center>
 	<div id="stage_info">
-		Select a study from the form below:
+		<h3>Select a study from the list below:</h3>
+		<br>
 		<form action="/study_builder/process_select_study_form" method="post">{% csrf_token %}
 			{{ form.as_p }}
-		<input type="submit" value="Submit" />
+		<br>
+		<input type="submit" value="Select Study" />
 		</form>
 	</div>
 	</center>

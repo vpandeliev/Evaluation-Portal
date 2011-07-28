@@ -17,15 +17,65 @@
 	
 	<div id="stage_info">
 		<center>
-			You selected this study: {{ selected_study }}
+			<h3>Ready to build: <b>{{ selected_study }}</b></h3>
+			<br>
+			Please check the settings below to ensure everything is correct.
 		</center>
 			
-		<br><br>
+		<br>
+		
 		<div id="study_details">
 			<h2><a href="" onclick="return toggle_detail('d1',$(this));" class="right">Description</a></h2>
-			<div id="d1" style="display:none;">{{ study_info }}</div>
+			<div id="d1" style="display:none;">{{ description }}</div>
+			
+			<h2><a href="" onclick="return toggle_detail('d2',$(this));" class="right">Informed Consent</a></h2>
+			<div id="d2" style="display:none;">{{ informed_consent }}</div>
+			
+			<h2><a href="" onclick="return toggle_detail('d3',$(this));" class="right">Eligibility</a></h2>
+			<div id="d3" style="display:none;">{{ eligibility }}</div>
+			
+			<h2><a href="" onclick="return toggle_detail('d4',$(this));" class="right">Reward</a></h2>
+			<div id="d4" style="display:none;">{{ reward }}</div>
+			
+			<h2><a href="" onclick="return toggle_detail('d5',$(this));" class="right">Instructions</a></h2>
+			<div id="d5" style="display:none;">{{ instructions }}</div>
+			
+			<h2><a href="" onclick="return toggle_detail('d6',$(this));" class="right">Participants</a></h2>
+			<div id="d6" style="display:none;">
+				<ul>
+				{% for participant in participants %}
+					<li>{{ participant }}</li>
+				{% endfor %}
+				<ul>
+			</div>
+			
+			<h2><a href="" onclick="return toggle_detail('d7',$(this));" class="right">Stages and Groups</a></h2>
+			<div id="d7" style="display:none;">
+				<ul>
+				{% for group, data in groups.items %}
+					<li>{{ group }}</li>
+					<ul>
+						<li>Stages:</li>
+						<ul>
+							{% for stage in data.stages %}
+								<li> {{ stage }} </li>
+							{% endfor %}
+						</ul>
+						<li>Users:</li>
+						<ul>
+							{% for user in data.users %}
+								<li> {{ user }} </li>
+							{% endfor %}
+						</ul>
+					</ul>
+				{% endfor %}
+				<ul>
+			</div>
+			
+			
+			
+			
 		</div>
-		<br><br>
 		
 		<center>
 			<form action="/study_builder/build_study" method="post">
