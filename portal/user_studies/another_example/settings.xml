@@ -12,18 +12,6 @@
 	<start_date>2002-09-24</start_date>
 	<end_date>2012-12-12</end_date>
 
-	<!-- List all participants you want to add to the study here 
-		 This seems cumbersome... perhaps it would be best to have a 
-		 separate list of users with the study groups they are associated with
-		
-		 This will make it easier to allow anonymous users as well as to have
-		 the users organized into multiple files...
-	-->
-	<all_participants>
-		<user name="guy1"/>
-		<user name="gal2"/>
-		<user name="dr_z"/>
-	</all_participants>
 
 	<!-- 
 		List the directories of all stages in your study here (order is not 

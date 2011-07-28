@@ -26,8 +26,6 @@ def show_many_studies(request):
         studies_as_participant = StudyParticipant.objects.filter(user=request.user)
         current_stages = UserStage.objects.filter(user=request.user, status=1)
         
-        print "ADSFASDF", current_stages
-        
     else:
         studies_as_participant = []
         current_stages = []

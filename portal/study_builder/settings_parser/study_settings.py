@@ -29,8 +29,21 @@ class StudySettings:
             raise
         
         # Relevant instance variables are set here
+        self.parse_participants_list()
         self.parse_study_settings()
     
+    
+    def parse_participants_list(self):
+        """ Reads self.participants_xml and sets instance variables for all the data
+        needed to create the required Tangra study and user object.
+        """
+        dom = parse(self.participants_xml)
+    
+        # extract information about the study name
+        self.participants = extract_attributes(dom, "user", "name")
+        #self.passwords = 
+    
+        
     
     def parse_study_settings(self):
         """ Reads sefl.settings_xml and sets instance variables for all the data
@@ -53,8 +66,8 @@ class StudySettings:
         
         
         # get the list of all participants
-        all_participants_node = dom.getElementsByTagName("all_participants")[0]
-        self.participants = extract_attributes(all_participants_node, "user", "name")
+        #all_participants_node = dom.getElementsByTagName("all_participants")[0]
+        #self.participants = extract_attributes(all_participants_node, "user", "name")
         
         # build a dictionary of groups with each key:entry of the form:
         #   "group_name" : {
