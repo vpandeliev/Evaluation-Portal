@@ -29,8 +29,7 @@ def create_participants(study_settings):
         except User.DoesNotExist:
             user = User(username=username)
         
-        # TODO: read this in from the .xml file
-        user.set_password("default")
+        user.set_password(study_settings.passwords[username])
         user.save()
 
 

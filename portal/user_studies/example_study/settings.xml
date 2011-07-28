@@ -4,9 +4,13 @@
 	<name name_stub="exs">example_study</name>
 	
 	<description>This is an example study</description>
+	
 	<informed_consent>You must consent or else.</informed_consent>
+	
 	<instructions>Click a button or something.</instructions>
+	
 	<eligibility>Can you breathe?</eligibility>
+	
 	<reward>LOL</reward>
 
 	<start_date>2002-09-24</start_date>

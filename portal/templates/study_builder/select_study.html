@@ -2,13 +2,12 @@
 {% load helpers %}
 {% block content %}
 
-<h1>BLARG</h1>
+<h2>Study Selection</h2>
 
 <!-- Specify tab headers here -->
 <div id="supertabs">
 	<ul>
 		<li class="tablink on" id="tab1">Select Studies</li>
-		<li class="tablink" id="tab2">Random</li>
 	</ul>
 </div>
 
@@ -26,15 +25,6 @@
 		</form>
 	</div>
 	</center>
-</div>
-
-
-<!-- Second Tab -->	
-<div id="tab2box" class="tab" style="display:none">
-	<div id="study_details">
-		<h2><a href="" onclick="return toggle_detail('d1',$(this));" class="right">Description</a></h2>
-		<div id="d1" style="display:none;">{{ test_random }}</div>
-	</div>
 </div>
 
 

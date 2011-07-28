@@ -31,7 +31,6 @@ def process_select_study_form(request):
 
 #@login_required
 def select_study(request):    
-    test_random = random()
     form = create_study_select_form(None)
     
     return render_to_response('select_study.html', locals(), 

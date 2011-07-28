@@ -41,9 +41,10 @@ class StudySettings:
     
         # extract information about the study name
         self.participants = extract_attributes(dom, "user", "name")
-        #self.passwords = 
-    
+        passwords = extract_attributes(dom, "user", "password")
+        self.passwords = dict(zip(self.participants, passwords))
         
+    
     
     def parse_study_settings(self):
         """ Reads sefl.settings_xml and sets instance variables for all the data
