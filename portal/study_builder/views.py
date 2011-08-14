@@ -87,8 +87,8 @@ class SelectStudyForm(Form):
       self.fields['study'] = ChoiceField(choices=choices)
       
   # normal fields here ...
-  test_checkbox = BooleanField(required=False)
-  other_test = BooleanField(required=True)
+  # test_checkbox = BooleanField(required=False)
+  # other_test = BooleanField(required=True)
   # So put one boolean field for each
 
 

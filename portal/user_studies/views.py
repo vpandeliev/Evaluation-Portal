@@ -52,3 +52,19 @@ def bye_page(request):
     context = Context({})
     return HttpResponse(template.render(context))
 
+
+@login_required
+def welcome_page(request):
+    template_file = open("/Users/kante/Documents/work/tangra/Evaluation-Portal/portal/user_studies/shipley_vocabulary_test/stages/welcome_page/template.html", "r")
+    template = Template("".join(template_file.readlines()))
+    context = Context({})
+    return HttpResponse(template.render(context))
+
+
+@login_required
+def test(request):
+    template_file = open("/Users/kante/Documents/work/tangra/Evaluation-Portal/portal/user_studies/shipley_vocabulary_test/stages/test/template.html", "r")
+    template = Template("".join(template_file.readlines()))
+    context = Context({})
+    return HttpResponse(template.render(context))
+

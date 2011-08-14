@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 
 <study>
-	<name name_stub="shi">Shipley Vocabulary Test</name>
+	<name name_stub="shi">shipley_vocabulary_test</name>
 	
-	<description></description>
+	<description>An example using the Shipley Vocabulary Test</description>
 	<informed_consent>Do you wish to be tested?</informed_consent>
 	<instructions>
 		In the following survery, you will see a word in capital letters for 
@@ -17,6 +17,9 @@
 	<start_date>2002-09-24</start_date>
 	<end_date>2012-12-12</end_date>
 
+	<investigators>
+		<user name="dr_no"/>
+	</investigators>
 
 	<!-- 
 		List the directories of all stages in your study here (order is not 
