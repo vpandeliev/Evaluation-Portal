@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+
+<study>
+	<name name_stub="shi">Shipley Vocabulary Test</name>
+	
+	<description></description>
+	<informed_consent>Do you wish to be tested?</informed_consent>
+	<instructions>
+		In the following survery, you will see a word in capital letters for 
+		each question. Underneath there are four other words. Select the one word
+		 which means the same thing, or most nearly the same thing as the first 
+		word. If you don't know, guess.
+	</instructions>
+	<eligibility>Everyone.</eligibility>
+	<reward>None.</reward>
+
+	<start_date>2002-09-24</start_date>
+	<end_date>2012-12-12</end_date>
+
+
+	<!-- 
+		List the directories of all stages in your study here (order is not 
+		important in this section)
+	-->
+	<all_stages>
+		<stage directory="welcome_page"/>
+		<stage directory="test"/>
+	</all_stages>
+
+
+	<!-- One entry for each distinct group in the study -->
+	<all_groups>
+		<group name="shipley_participants">
+			<user name="jim"/>
+			<user name="jill"/>
+			<!-- List the stages you want included in this group IN ORDER -->
+			<stages>
+				<stage directory="welcome_page"/>
+				<stage directory="test"/>
+			</stages>
+		</group>
+	</all_groups>
+	
+</study>
+
+
+
+
+
+
+

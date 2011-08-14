@@ -2,7 +2,7 @@ from django.http import *
 from django.contrib.auth.decorators import login_required
 from django.template import Template, Context, RequestContext
 from django.shortcuts import render_to_response
-from django.forms import Form, CharField, DateField, ChoiceField, Select
+from django.forms import Form, CharField, DateField, ChoiceField, Select, BooleanField
 
 from random import random
 
@@ -87,7 +87,9 @@ class SelectStudyForm(Form):
       self.fields['study'] = ChoiceField(choices=choices)
       
   # normal fields here ...
-  #date_requested = DateField()
+  test_checkbox = BooleanField(required=False)
+  other_test = BooleanField(required=True)
+  # So put one boolean field for each
 
 
 def create_study_select_form(post_request):
