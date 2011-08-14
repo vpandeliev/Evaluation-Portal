@@ -29,7 +29,7 @@ from django.template import Template, Context
     #    return render_to_response('tutorial_study/study_display.html', {'number': 2})
     stage_url_template = """
 @login_required
-def {1}(request):
+def {0}_{1}(request):
     template_file = open("{2}", "r")
     template = Template("".join(template_file.readlines()))
     context = Context({{}})

@@ -31,6 +31,7 @@
 	<all_groups>
 		<group name="groupA">
 			<user name="mister_x"/>
+			<user name="jill"/>
 			<user name="ms_y"/>
 			<!-- List the stages you want included in this group IN ORDER -->
 			<stages>

@@ -21,7 +21,7 @@ from portal.user_studies.views import *
 urlpatterns = patterns('', {0})
     """
     #url(r'^study_dir/stage_one$', stage_one, name="stage_one"),
-    stage_url_template = "url(r'^{0}/{1}$', {1}, name='{1}')"
+    stage_url_template = "url(r'^{0}/{1}$', {0}_{1}, name='{0}_{1}')"
     
     def __init__(self, *settings_list):
         self.settings_list = settings_list

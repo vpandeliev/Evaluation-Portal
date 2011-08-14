@@ -11,13 +11,7 @@ from context_processors import *
 import datetime
 
 
-BOGGLE_DURATION = 20
-BOGGLE_ROUNDS = 1
-SESSION_DURATION = 1
-
-
 ############### Study
-
 
 
 @login_required
