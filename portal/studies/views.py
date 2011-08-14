@@ -60,7 +60,12 @@ def show_one_study(request,as_inv,s_id):
         studypart = study.get_study_participant(request.user)
         stages = UserStage.objects.filter(user=request.user, study=study)
         #stages = studypart.participant_stages()
-        action = studypart.get_current_stage().stage.url
+        current_stage = studypart.get_current_stage()
+        if current_stage:
+            action = current_stage.stage.url
+        else:
+            action = "study/show_many_studies"
+            
     elif as_inv == 1 and role <= 0: 
         #investigator
         conditions = []
@@ -314,6 +319,7 @@ def finish_session(request):
         #unauthorized URL mucking about with
         return HttpResponseBadRequest()
     return HttpResponseRedirect('/study/0/'+str(study_id))
+    
 
 @login_required
 def finish_task(request,code):
@@ -324,6 +330,28 @@ def finish_task(request,code):
 
 # CLEANUP: How do we want to let the user customize /deal with data collection?
 @login_required
+def save_json_data(request):
+    """Saves arbitrary JSON data from a user stage and responds with a 
+    confirmation."""
+    
+    if request.method != 'POST': 
+        return HttpResponse("not_post")
+          
+    studyid = request.session['study_id']
+    data = request.POST['json_data']
+    dt = datetime.datetime.now()    
+    code = "JSD"
+
+    try:
+        Data.write(studyid, request.user, dt, code, data)
+    except Exception:
+        return HttpResponse("couldn't save")
+        
+    #send: studyid, request.user, time, data
+    return HttpResponse("success")
+
+
+@login_required
 def log_game(request):
     """Logs a single piece of data from an in-house game's POST request"""
 
@@ -332,20 +360,18 @@ def log_game(request):
         return HttpResponseBadRequest()
         
     studyid = request.session['study_id']
-
-    timestamp = request.POST['timestamp']
-    
+    user = request.user
+    timestamp = datetime.datetime.now()
     data = request.POST['data'] # CLEANUP: This is the user's data. Think about how to let them change this...
-
-    dt = datetime.datetime.fromtimestamp(float(timestamp))
     code = request.POST['code']
-
+    
     try:
-        Data.write(studyid, request.user, dt, code, data)
+        Data.write(studyid, user, timestamp, code, data)
     except Exception:
-        print "log_game: failed to write: "
-    #send: studyid, request.user, time, data
-    return HttpResponse("YAY!")
+        HttpResponse(content='FAILED', mimetype=DEFAULT_CONTENT_TYPE)
+
+    # User should read this using an ajax request before calling fsess
+    return HttpResponse(content="SUCCESS")
 
 
 

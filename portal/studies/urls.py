@@ -20,6 +20,10 @@ urlpatterns = patterns('',
     url(r'^(\d+)/(\d+)$', show_one_study, name="show_one_study"),
     
     
+    # General function to store arbitrary JSON strings from a user study
+    url(r'^save_json_data$', save_json_data, name="save_json_data"),
+    
+    
     # unsure if we will keep these frontends... perhaps incorporate them into the
     # study_builder
     url(r'^edit/(\d+)', edit_one_study, name="edit_one_study"),

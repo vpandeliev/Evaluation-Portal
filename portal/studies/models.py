@@ -131,8 +131,14 @@ class StudyParticipant(models.Model):
 
     def get_current_stage(self):
         #get the current userstage object
-        return UserStage.objects.get(user=self.user, study=self.study, status=1)
-
+        try:
+            current_stage = UserStage.objects.get(user=self.user, study=self.study, status=1)
+        except UserStage.DoesNotExist:
+            current_stage = None
+            
+        return current_stage
+        
+        
     #def get_current_stages(self):
         #get the current userstage object
      #   return UserStage.objects.get(user=self.user, status=1)

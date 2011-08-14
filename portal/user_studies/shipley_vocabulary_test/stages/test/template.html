@@ -1,6 +1,50 @@
-<html>
-<body>
-	PAT YOUR HEAD
-	<a href="/study/fsess">then click on this link</a>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+	<script type="text/javascript">
+	
+		// call this when AJAX request returns
+		function complete_task(response,status,xhr)
+		{
+			if (response == "success")
+			{
+				$("#waiting_container").hide();
+				window.location = "/study/fsess";
+			} else {
+				$("#waiting_container").hide();
+				$("#retry_container").show();
+			}
+		}
+
+		// Send arbitrary JSON data to /???/save_data
+		function submit_data()
+		{
+			$("#submit_container").hide();
+			$("#waiting_container").show();
+			$.post("/study/save_json_data", 
+					{"json_data" : "{json thing}"}, 
+					complete_task);
+		}
+		
+	</script>
+	
+	<h1>Shipley Vocabulary Test</h1>
+	
+	
+	
+	<div id="submit_box", >
+		<div id="submit_container">
+			<a style="color:blue;" href="#" onclick="submit_data();">sumbit</a> some data
+		</div>
+		<div style="display:none;" id="waiting_container">
+			Request submitted... please wait.
+		</div>
+		<div style="display:none;" id="retry_container">
+			Submit failed. Please click <a style="color:blue;" href="#" onclick="submit_data();">here</a> 
+			to try again.
+		</div>
+	</div>
+	
+{% endblock %}
+
+
