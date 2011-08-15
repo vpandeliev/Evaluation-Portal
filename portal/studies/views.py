@@ -324,17 +324,24 @@ def finish_task(request,code):
 
 # CLEANUP: How do we want to let the user customize /deal with data collection?
 @login_required
-def save_json_data(request):
-    """Saves arbitrary JSON data from a user stage and responds with a 
+def save_post_data(request):
+    """Saves arbitrary POST data from a user stage and responds with a 
     confirmation."""
     
     if request.method != 'POST': 
         return HttpResponse("not_post")
-          
+        
     studyid = request.session['study_id']
-    data = request.POST['json_data']
+    
+    # Save in comma separated value format
+    data = ""
+    for key in request.POST:
+        data = data + "{0},{1}\n".format(key, request.POST[key])
+    
+    print data
+    
     dt = datetime.datetime.now()    
-    code = "JSD"
+    code = "CSV"
 
     try:
         Data.write(studyid, request.user, dt, code, data)

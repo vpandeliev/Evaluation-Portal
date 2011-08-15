@@ -10,18 +10,19 @@ urlpatterns = patterns('',
     url(r'^consented$', consented, name="consented"),
     url(r'^datadump/(\d+)$', data_dump, name="data_dump"),
     
+    
     url(r'^choose_task$', choose_task, name="choose_task"),
     url(r'^alert_send$', send_alert, name="send_alert"),
     url(r'^quest$', questionnaire, name="questionnaire"),
-
- 
+    
+    
     url(r'^fsess$', finish_session, name="finish_session"),
     url(r'^ftask/([A-Z]+)$', finish_task, name="finish_task"),
     url(r'^(\d+)/(\d+)$', show_one_study, name="show_one_study"),
     
     
     # General function to store arbitrary JSON strings from a user study
-    url(r'^save_json_data$', save_json_data, name="save_json_data"),
+    url(r'^save_post_data$', save_post_data, name="save_post_data"),
     
     
     # unsure if we will keep these frontends... perhaps incorporate them into the

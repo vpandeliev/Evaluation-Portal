@@ -21,18 +21,395 @@
 		{
 			$("#submit_container").hide();
 			$("#waiting_container").show();
-			$.post("/study/save_json_data", 
-					{"json_data" : "{json thing}"}, 
-					complete_task);
+			
+			var data = $("#shipley_form").serialize();
+			
+			if (data.split('=').length - 1 != 40) {
+				alert("Please answer all questions");
+				$("#submit_container").show();
+				$("#waiting_container").hide();
+				return;
+			}
+			
+			data += "&custom_data=Whatever you want";
+			$.post("/study/save_post_data", data, complete_task);
 		}
 		
+		
 	</script>
+	
+	<style>
+		.shipley_question input {
+			margin:0 5px 0 20px;
+		}
+	</style>
 	
 	<h1>Shipley Vocabulary Test</h1>
 	
 	
-	
-	<div id="submit_box", >
+	<form id="shipley_form">
+        <div class="shipley_question">
+            <h3>TALK *</h3>
+            <input type="radio" name="q1" value="draw">draw<br>
+            <input type="radio" name="q1" value="eat">eat<br>
+            <input type="radio" name="q1" value="speak">speak<br>
+            <input type="radio" name="q1" value="sleep">sleep<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>PERMIT *</h3>
+            <input type="radio" name="q2" value="allow">allow<br>
+            <input type="radio" name="q2" value="sew">sew<br>
+            <input type="radio" name="q2" value="cut">cut<br>
+            <input type="radio" name="q2" value="drive">drive<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>PARDON *</h3>
+            <input type="radio" name="q3" value="forgive">forgive<br>
+            <input type="radio" name="q3" value="pound">pound<br>
+            <input type="radio" name="q3" value="divide">divide<br>
+            <input type="radio" name="q3" value="tell">tell<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>COUCH *</h3>
+            <input type="radio" name="q4" value="pin">pin<br>
+            <input type="radio" name="q4" value="eraser">eraser<br>
+            <input type="radio" name="q4" value="sofa">sofa<br>
+            <input type="radio" name="q4" value="glass">glass<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>REMEMBER *</h3>
+            <input type="radio" name="q5" value="swim">swim<br>
+            <input type="radio" name="q5" value="recall">recall<br>
+            <input type="radio" name="q5" value="number">number<br>
+            <input type="radio" name="q5" value="defy">defy<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>TUMBLE *</h3>
+            <input type="radio" name="q6" value="drink">drink<br>
+            <input type="radio" name="q6" value="dress">dress<br>
+            <input type="radio" name="q6" value="fall">fall<br>
+            <input type="radio" name="q6" value="think">think<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>HIDEOUS *</h3>
+            <input type="radio" name="q7" value="silvery">silvery<br>
+            <input type="radio" name="q7" value="tilted">tilted<br>
+            <input type="radio" name="q7" value="young">young<br>
+            <input type="radio" name="q7" value="dreadful">dreadful<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>CORDIAL *</h3>
+            <input type="radio" name="q8" value="swift">swift<br>
+            <input type="radio" name="q8" value="muddy">muddy<br>
+            <input type="radio" name="q8" value="leafy">leafy<br>
+            <input type="radio" name="q8" value="hearty">hearty<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>EVIDENT *</h3>
+            <input type="radio" name="q9" value="green">green<br>
+            <input type="radio" name="q9" value="obvious">obvious<br>
+            <input type="radio" name="q9" value="skeptical">skeptical<br>
+            <input type="radio" name="q9" value="afraid">afraid<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>IMPOSTOR *</h3>
+            <input type="radio" name="q10" value="conductor">conductor<br>
+            <input type="radio" name="q10" value="officer">officer<br>
+            <input type="radio" name="q10" value="book">book<br>
+            <input type="radio" name="q10" value="pretender">pretender<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>MERIT *</h3>
+            <input type="radio" name="q11" value="deserve">deserve<br>
+            <input type="radio" name="q11" value="distrust">distrust<br>
+            <input type="radio" name="q11" value="fight">fight<br>
+            <input type="radio" name="q11" value="separate">separate<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>FASCINATE *</h3>
+            <input type="radio" name="q12" value="welcome">welcome<br>
+            <input type="radio" name="q12" value="fix">fix<br>
+            <input type="radio" name="q12" value="stir">stir<br>
+            <input type="radio" name="q12" value="enchant">enchant<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>INDICATE *</h3>
+            <input type="radio" name="q13" value="defy">defy<br>
+            <input type="radio" name="q13" value="excite">excite<br>
+            <input type="radio" name="q13" value="signify">signify<br>
+            <input type="radio" name="q13" value="bicker">bicker<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>IGNORANT *</h3>
+            <input type="radio" name="q14" value="red">red<br>
+            <input type="radio" name="q14" value="sharp">sharp<br>
+            <input type="radio" name="q14" value="uninformed">uninformed<br>
+            <input type="radio" name="q14" value="precise">precise<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>FORTIFY *</h3>
+            <input type="radio" name="q15" value="submerge">submerge<br>
+            <input type="radio" name="q15" value="strengthen">strengthen<br>
+            <input type="radio" name="q15" value="vent">vent<br>
+            <input type="radio" name="q15" value="deaden">deaden<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>RENOWN *</h3>
+            <input type="radio" name="q16" value="length">length<br>
+            <input type="radio" name="q16" value="head">head<br>
+            <input type="radio" name="q16" value="fame">fame<br>
+            <input type="radio" name="q16" value="loyalty">loyalty<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>NARRATE *</h3>
+            <input type="radio" name="q17" value="yield">yield<br>
+            <input type="radio" name="q17" value="buy">buy<br>
+            <input type="radio" name="q17" value="associate">associate<br>
+            <input type="radio" name="q17" value="tell">tell<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>MASSIVE *</h3>
+            <input type="radio" name="q18" value="bright">bright<br>
+            <input type="radio" name="q18" value="large">large<br>
+            <input type="radio" name="q18" value="speedy">speedy<br>
+            <input type="radio" name="q18" value="low">low<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>HILARITY *</h3>
+            <input type="radio" name="q19" value="laughter">laughter<br>
+            <input type="radio" name="q19" value="speed">speed<br>
+            <input type="radio" name="q19" value="grace">grace<br>
+            <input type="radio" name="q19" value="malice">malice<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>SMIRCHED *</h3>
+            <input type="radio" name="q20" value="stolen">stolen<br>
+            <input type="radio" name="q20" value="pointed">pointed<br>
+            <input type="radio" name="q20" value="remade">remade<br>
+            <input type="radio" name="q20" value="soiled">soiled<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>SQUANDER *</h3>
+            <input type="radio" name="q21" value="tease">tease<br>
+            <input type="radio" name="q21" value="belittle">belittle<br>
+            <input type="radio" name="q21" value="cut">cut<br>
+            <input type="radio" name="q21" value="waste">waste<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>CAPTION *</h3>
+            <input type="radio" name="q22" value="drum">drum<br>
+            <input type="radio" name="q22" value="ballast">ballast<br>
+            <input type="radio" name="q22" value="heading">heading<br>
+            <input type="radio" name="q22" value="ape">ape<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>FACILITATE *</h3>
+            <input type="radio" name="q23" value="help">help<br>
+            <input type="radio" name="q23" value="turn">turn<br>
+            <input type="radio" name="q23" value="strip">strip<br>
+            <input type="radio" name="q23" value="bewilder">bewilder<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>JOCOSE *</h3>
+            <input type="radio" name="q24" value="humorous">humorous<br>
+            <input type="radio" name="q24" value="paltry">paltry<br>
+            <input type="radio" name="q24" value="fervid">fervid<br>
+            <input type="radio" name="q24" value="plain">plain<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>APPRISE *</h3>
+            <input type="radio" name="q25" value="reduce">reduce<br>
+            <input type="radio" name="q25" value="strew">strew<br>
+            <input type="radio" name="q25" value="inform">inform<br>
+            <input type="radio" name="q25" value="delight">delight<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>RUE *</h3>
+            <input type="radio" name="q26" value="eat">eat<br>
+            <input type="radio" name="q26" value="lament">lament<br>
+            <input type="radio" name="q26" value="dominate">dominate<br>
+            <input type="radio" name="q26" value="cure">cure<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>DENIZEN *</h3>
+            <input type="radio" name="q27" value="senator">senator<br>
+            <input type="radio" name="q27" value="inhabitant">inhabitant<br>
+            <input type="radio" name="q27" value="fish">fish<br>
+            <input type="radio" name="q27" value="atom">atom<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>DIVEST *</h3>
+            <input type="radio" name="q28" value="dispossess">dispossess<br>
+            <input type="radio" name="q28" value="intrude">intrude<br>
+            <input type="radio" name="q28" value="rally">rally<br>
+            <input type="radio" name="q28" value="pledge">pledge<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>AMULET *</h3>
+            <input type="radio" name="q29" value="charm">charm<br>
+            <input type="radio" name="q29" value="orphan">orphan<br>
+            <input type="radio" name="q29" value="dingo">dingo<br>
+            <input type="radio" name="q29" value="pond">pond<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>INEXORABLE *</h3>
+            <input type="radio" name="q30" value="untidy">untidy<br>
+            <input type="radio" name="q30" value="involatile">involatile<br>
+            <input type="radio" name="q30" value="rigid">rigid<br>
+            <input type="radio" name="q30" value="sparse">sparse<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>SERRATED *</h3>
+            <input type="radio" name="q31" value="dried">dried<br>
+            <input type="radio" name="q31" value="notched">notched<br>
+            <input type="radio" name="q31" value="armed">armed<br>
+            <input type="radio" name="q31" value="blunt">blunt<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>LISSOM *</h3>
+            <input type="radio" name="q32" value="moldy">moldy<br>
+            <input type="radio" name="q32" value="loose">loose<br>
+            <input type="radio" name="q32" value="supple">supple<br>
+            <input type="radio" name="q32" value="convex">convex<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>MOLLIFY *</h3>
+            <input type="radio" name="q33" value="mitigate">mitigate<br>
+            <input type="radio" name="q33" value="direct">direct<br>
+            <input type="radio" name="q33" value="pertain">pertain<br>
+            <input type="radio" name="q33" value="abuse">abuse<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>PLAGIARIZE *</h3>
+            <input type="radio" name="q34" value="appropriate">appropriate<br>
+            <input type="radio" name="q34" value="intend">intend<br>
+            <input type="radio" name="q34" value="revoke">revoke<br>
+            <input type="radio" name="q34" value="maintain">maintain<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>ORIFICE *</h3>
+            <input type="radio" name="q35" value="brush">brush<br>
+            <input type="radio" name="q35" value="hole">hole<br>
+            <input type="radio" name="q35" value="building">building<br>
+            <input type="radio" name="q35" value="lute">lute<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>QUERULOUS *</h3>
+            <input type="radio" name="q36" value="maniacal">maniacal<br>
+            <input type="radio" name="q36" value="curious">curious<br>
+            <input type="radio" name="q36" value="devout">devout<br>
+            <input type="radio" name="q36" value="complaining">complaining<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>PARIAH *</h3>
+            <input type="radio" name="q37" value="outcast">outcast<br>
+            <input type="radio" name="q37" value="priest">priest<br>
+            <input type="radio" name="q37" value="lentil">lentil<br>
+            <input type="radio" name="q37" value="locker">locker<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>ABET *</h3>
+            <input type="radio" name="q38" value="waken">waken<br>
+            <input type="radio" name="q38" value="ensue">ensue<br>
+            <input type="radio" name="q38" value="incite">incite<br>
+            <input type="radio" name="q38" value="placate">placate<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>TEMERITY *</h3>
+            <input type="radio" name="q39" value="rashness">rashness<br>
+            <input type="radio" name="q39" value="timidity">timidity<br>
+            <input type="radio" name="q39" value="desire">desire<br>
+            <input type="radio" name="q39" value="kindness">kindness<br>
+        </div>
+
+
+        <div class="shipley_question">
+            <h3>PRISTINE *</h3>
+            <input type="radio" name="q40" value="vain">vain<br>
+            <input type="radio" name="q40" value="sound">sound<br>
+            <input type="radio" name="q40" value="first">first<br>
+            <input type="radio" name="q40" value="level">level<br>
+        </div>
+	</form>
+
+
+	<div id="submit_box">
 		<div id="submit_container">
 			<a style="color:blue;" href="#" onclick="submit_data();">sumbit</a> some data
 		</div>
@@ -44,7 +421,8 @@
 			to try again.
 		</div>
 	</div>
-	
+
+
 {% endblock %}
 
 
