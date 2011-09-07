@@ -18,6 +18,7 @@ urlpatterns = patterns('',
 	url(r'^accounts/logout/$', logout, name="logout"),
 	url(r'^accounts/register/$', register, name="register"),
 
+
     # Study builder UI
     url(r'^study_builder/', include('portal.study_builder.urls')),
     
