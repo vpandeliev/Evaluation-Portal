@@ -27,10 +27,11 @@
 		<stage directory="bye_page"/>
 	</all_stages>
 
+
 	<!-- One entry for each distinct group in the study -->
 	<all_groups>
 		<group name="groupA">
-			<user name="mister_x"/>
+			<user name="bob"/>
 			<user name="jill"/>
 			<user name="ms_y"/>
 			<!-- List the stages you want included in this group IN ORDER -->

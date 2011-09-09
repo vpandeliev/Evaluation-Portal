@@ -232,6 +232,12 @@ class Data(models.Model):
         return u'%s,%s,%s,%s,%s,%s,%s' % (t.year, t.month, t.day, t.hour, t.minute, t.second, t.microsecond/1000)
 
 
+class UserActivity(models.Model):
+    last_activity_ip = models.IPAddressField()
+    last_activity_date = models.DateTimeField(default = datetime.datetime(1950, 1, 1))
+    user = models.OneToOneField(User, primary_key=True)
+
+
 class UserStage(models.Model):
     user = models.ForeignKey(User)
     stage = models.ForeignKey(Stage)

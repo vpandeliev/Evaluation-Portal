@@ -55,6 +55,7 @@ MIDDLEWARE_CLASSES = (
     # app. We will be getting rid of this and have a custom 'build_studies' UI 
     # once the code cleanup is done.
     'portal.FileBuilderMiddleware',
+    'portal.UserActivityMiddleware',
     
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -101,6 +102,7 @@ TEMPLATE_DIRS = (
 	os.path.join(ROOT_PATH, 'templates'),
 	os.path.join(ROOT_PATH, 'templates/study'),
 	os.path.join(ROOT_PATH, 'templates/study_builder'),
+	os.path.join(ROOT_PATH, 'templates/video_conferencing'),
 	#os.path.join(ROOT_PATH, 'templates/registration'),
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
