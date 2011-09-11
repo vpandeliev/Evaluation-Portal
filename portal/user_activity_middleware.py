@@ -6,7 +6,6 @@
 #   update it using this middleware instead of saving datetimes to a database.
 #   Need to install some external software for that though...
 #
-from studies.models import UserActivity
 from datetime import datetime
 from django.conf import settings
 from django.contrib.sites.models import Site
@@ -19,17 +18,6 @@ class UserActivityMiddleware:
         
         # Only update when the users are in a study doing stuff.
         if request.path.find("study") == -1:
-            return
-        
-        activity = None
-        try:
-            activity = request.user.useractivity
-        except:
-            activity = UserActivity()
-            activity.user = request.user
-            activity.last_activity_date = datetime.now()
-            activity.last_activity_ip = request.META['REMOTE_ADDR']
-            activity.save()
             return
         
         # TESTING: memory cache for saving active users.
@@ -45,11 +33,6 @@ class UserActivityMiddleware:
         # TODO: make this a parameter in the settings.py file!!!!!!
         cache.set(request.user, 1, 30)
         
-        
-        activity.last_activity_date = datetime.now()
-        activity.last_activity_ip = request.META['REMOTE_ADDR']
-        activity.save()
-
 
 
 
