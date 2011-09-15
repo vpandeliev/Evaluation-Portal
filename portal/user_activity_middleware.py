@@ -22,16 +22,18 @@ class UserActivityMiddleware:
         
         # TESTING: memory cache for saving active users.
         user_list_timeout = 160000000
-        cached_users = cache.get("recent_users_list")
+        cached_users = cache.get("recent_users_dict")
+        username = request.user.username
         if not cached_users:
-            cache.set("recent_users_list", [request.user], user_list_timeout)
+            cached_users = {username:1}
         else:
-            cached_users.append(request.user)
-            cache.set("recent_users_list", cached_users, user_list_timeout)
+            cached_users[username] = 1
+        
+        cache.set("recent_users_dict", cached_users, user_list_timeout)
         
         # Users time out after 30 seconds. 
         # TODO: make this a parameter in the settings.py file!!!!!!
-        cache.set(request.user, 1, 30)
+        cache.set(username, 1, 30)
         
 
 

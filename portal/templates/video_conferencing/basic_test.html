@@ -1,7 +1,38 @@
-hahahaha <br>
 
 
-{{ test }} <br>
+<style>
+
+	.test_table {
+		border:solid;
+		border-width:0 1px 1px 0;
+		border-collapse: collapse;
+	}
+	
+	.test_table td, th, tr{
+		padding:2px;
+		spacing:0;
+		margin:0;
+	}
+	
+	.test_table td, th {
+		border:solid;
+		border-width: 1px 0 0 1px;
+	}
+
+</style>
 
 
-jibblies.
+<table class="test_table">
+	<tr>
+		<th>users</th>
+		<th>request link</th>
+	</tr>
+	{% for user in test %}
+		<tr>
+			<td> {{user}} </td>
+			<td> waka </td>
+		</tr>
+	{% endfor %}
+</table>
+
+
