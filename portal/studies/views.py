@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from context_processors import *
 import datetime
+from django.core.cache import cache
 
 
 ############### Study
@@ -29,14 +30,14 @@ def show_many_studies(request):
     else:
         studies_as_investigator = []
     
-    part = len(studies_as_participant)
-    inv = len(studies_as_investigator)
+    #part = len(studies_as_participant)
+    #inv = len(studies_as_investigator)
     
-    if part+inv == 1:
-        if part > inv:
-            return show_one_study(request, 0, studies_as_participant[0].study.id)
-        else:
-            return show_one_study(request, 1, studies_as_investigator[0].study.id)
+    #if part+inv == 1:
+    #    if part > inv:
+    #        return show_one_study(request, 0, studies_as_participant[0].study.id)
+    #    else:
+    #        return show_one_study(request, 1, studies_as_investigator[0].study.id)
         
     return render_to_response('study/show_many_studies.html', locals(), context_instance=RequestContext(request))
 
@@ -48,6 +49,9 @@ def show_one_study(request,as_inv,s_id):
     request.session['study_id'] = study_id
     study = Study.objects.get(id=study_id)
     role = study.role(request.user)
+    video_request = True if cache.get(request.user.username + "_has_pending_invite") else False
+    username = request.user.username
+    
     if as_inv == 0 and role >= 0:
         #role >= 0 and as_part == 0
         #participant

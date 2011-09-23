@@ -49,11 +49,15 @@
 			
 			<td>
 				{% if is_active %}
-					{% if has_request %}
-						<a href="#" onclick="javascript:uninvite_user('{{ user }}')">cancel_chat_reuqest</a>
-					{% else %}
-						<a href="#" onclick="javascript:invite_user('{{ user }}')">send_chat_request</a>
-					{% endif %}
+					{% if request_declined %}
+						user declined request
+					{% else %} 
+						{%if has_request %}
+							<a href="#" onclick="javascript:uninvite_user('{{ user }}')">cancel_chat_reuqest</a>
+						{% else %}
+							<a href="#" onclick="javascript:invite_user('{{ user }}')">send_chat_request</a>
+						{% endif %}
+					{% endif %}	
 				{% else %}
 					offline
 				{% endif %}

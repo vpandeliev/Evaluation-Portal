@@ -1,17 +1,41 @@
 {% extends 'base.html' %}
 {% load helpers %}
 {% block content %}
-	<h1>{{study.name}}</h1>
+
+<script src="{{ MEDIA_URL }}js/video_conferencing/ajax_requests.js" type="text/javascript" charset="utf-8"></script>
+<div class="hidden_data" id="ajax_response">HIDDEN!</div>
+
+
+
+<h1>{{ study.name }}</h1>
+
 {% ifequal as_inv 0 %}
 <div id="supertabs">
 <ul>
-<li class="tablink on" id="tab1">Study Progress</li>
+
+{% if not video_request %}
+	<li class="tablink on" id="tab1">Study Progress</li>
+{% else %}
+	<li class="tablink" id="tab1">Study Progress</li>
+{% endif %}
+
 <li class="tablink" id="tab2">About Study</li>
-<li class="tablink" id="tab3">Contact Investigator</li>
+
+
+{% if video_request %}
+	<li class="tablink on" id="tab3">VIDEO REQUEST</li>
+{% endif %}
+
 </ul>
 </div>
-	 <!--stage menu-->
-<div id="tab1box" class="tab" >
+
+<!--stage menu-->
+{% if video_request %}
+	<div id="tab1box" class="tab" style="display:none">
+{% else %}
+	<div id="tab1box" class="tab" >
+{% endif %}
+
 	  <div id="stages_nav" class="clearfix" num="{{stages.count}}">
 	    <ul>
 	    {% for astage in stages %} 
@@ -75,7 +99,8 @@
 	  </div>
 	
 </div>
-	
+
+
 <div id="tab2box" class="tab" style="display:none">
 	<div id="study_details">
 		<h2><a href="" onclick="return toggle_detail('d1',$(this));" class="right">Description</a></h2>
@@ -90,11 +115,60 @@
 		<div id="d5" style="display:none;">{{study.reward|safe}}</div>
 	</div>
 </div>
- 
-<div id="tab3box" class="tab" style="display:none">
-<p>If you run into any problems at all, please do not hesitate to contact the investigator of this study at <strong>velian@taglab.ca</strong> </p>
-</div>
 
+
+{% if video_request %}
+	<div id="tab3box" class="tab">
+		<div style="width:100%; text-align:center;">
+			Hello there! You have been selected for a video chat with one of our
+			study investigators. Would you like to accept this request? <br>
+			<div style="width:250px;background-color:green;color:black;">
+				<a href="#" onclick="javascript:connect();">
+					YES
+				</a>
+			</div>
+
+			<div style="width:250px;background-color:red;color:black;">
+				<a href="#" onclick="javascript:decline_video_request('{{ username }}');">
+					NO
+				</a>
+			</div>
+						
+			
+			<link href="{{ MEDIA_URL }}css/video_conferencing.css" type="text/css" rel="stylesheet" >
+			<script src="http://staging.tokbox.com/v0.91/js/TB.min.js" type="text/javascript" charset="utf-8"></script>
+			<script>
+				// These are the variables that need to be set in Django using the TokBox 
+				// server-side API. 
+
+				// It is important that they are set BEFORE you include the video_div.js 
+				// script below.
+
+				var apiKey = 1127; // OpenTok sample API key. Replace with your own API key.
+				var sessionId = '153975e9d3ecce1d11baddd2c9d8d3c9d147df18'; // Replace with your session ID.
+				var token = 'devtoken'; // Should not be hard-coded. Add via python SSL.
+			</script>
+			<script src="{{ MEDIA_URL }}js/video_conferencing/open_tok.js" type="text/javascript" charset="utf-8"></script>
+
+
+			<div id="opentok_console"></div>
+			<div id="links">
+			      	<input type="button" value="Connect" id ="connectLink" onClick="javascript:connect()" />
+			      	<input type="button" value="Leave" id ="disconnectLink" onClick="javascript:disconnect()" />
+			      	<input type="button" value="Start Publishing" id ="publishLink" onClick="javascript:startPublishing()" />
+			      	<input type="button" value="Stop Publishing" id ="unpublishLink" onClick="javascript:stopPublishing()" />
+			</div>
+			<div id="myCamera" class="publisherContainer"></div>
+			<div id="subscribers"></div>
+
+			<script>
+				show('connectLink');
+			</script>
+
+		</div>
+
+	</div>
+{% endif %}
 
 
 {% else %}

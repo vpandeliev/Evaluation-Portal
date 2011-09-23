@@ -3,7 +3,9 @@ $(document).ready(function() {
 	width = $('#login_menu').width() + 96;
 	//console.log(width);
 	//console.log(Math.round(width/num));
-    $('.stage').css('width', (1/num * width - num*2 - 8) + 'px');   
+    
+    $('.stage').css('width', ((1/num * width - num*2 - 8) - 200) + 'px');
+    
     $('.tablink', this).bind('click', function(){
         currtab = $(this);
         $('.tablink').removeClass('on');

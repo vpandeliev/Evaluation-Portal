@@ -33,7 +33,6 @@ def get_online_users():
 def has_pending_invite(username):
     """Returns True iff the user with the supplied username has a pending video
     request."""
-    print "GETTING", username
     if cache.get(username + "_has_pending_invite"):
         return True
     else:
@@ -43,7 +42,6 @@ def has_pending_invite(username):
 def set_pending_invite(username):
     """Sets a field in the cache that represents a pending videoconferencing 
     invitation to the user"""
-    print "SETTING", username
     cache.set(username + "_has_pending_invite", True, 30)
 
 
@@ -59,6 +57,14 @@ def invite_user(request):
     # study page...
     username = request.GET.get("pk", None)
     set_pending_invite(username)
+
+
+def decline_video_request(request):
+    username = request.GET.get("pk", None)
+    cache.delete(username + "_has_pending_invite")
+    cache.set(username + "_no_chat_requested", True, 30)
+    print cache.get(username + "_no_chat_requested")
+    
 
 
 #@login_required
@@ -77,6 +83,8 @@ def basic_test(request):
             user_info = (username, False, has_pending_invite(username))
             user_status.append(user_info)
         
+    request_declined = True if cache.get(request.user.username + "_no_chat_requested") else False
+    
     return render_to_response('basic_test.html', locals(), 
                               context_instance=RequestContext(request))
 
