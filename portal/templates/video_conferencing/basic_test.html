@@ -5,10 +5,7 @@
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 
-<link href="{{ MEDIA_URL }}/css/video_conferencing.css" type="text/css" rel="stylesheet" >
-<link href="{{ MEDIA_URL }}/css/video_div.css" type="text/css" rel="stylesheet" >
-
-
+<link href="{{ MEDIA_URL }}css/video_conferencing.css" type="text/css" rel="stylesheet" >
 
 <script src="http://staging.tokbox.com/v0.91/js/TB.min.js" type="text/javascript" charset="utf-8"></script>
 <script>
@@ -22,8 +19,8 @@
 	var sessionId = '153975e9d3ecce1d11baddd2c9d8d3c9d147df18'; // Replace with your session ID.
 	var token = 'devtoken'; // Should not be hard-coded. Add via python SSL.
 </script>
-<script src="{{ MEDIA_URL }}/js/video_conferencing/open_tok.js" type="text/javascript" charset="utf-8"></script>
-
+<script src="{{ MEDIA_URL }}js/video_conferencing/open_tok.js" type="text/javascript" charset="utf-8"></script>
+<script src="{{ MEDIA_URL }}js/video_conferencing/ajax_requests.js" type="text/javascript" charset="utf-8"></script>
 
 <div class="hidden_data" id="ajax_response">HIDDEN!</div>
 
@@ -31,27 +28,47 @@
 <br>
 
 
-
-
 <table class="test_table">
 	<tr>
 		<th>users</th>
-		<th>request link</th>
+		<th>is active</th>
+		<th>send chat request</th>
 	</tr>
-	{% for user, is_active in test %}
-		<tr>
+	{{ user_status }}
+	{% for user, is_active, has_request in user_status %}
+		<!-- tr -->
+		{% if is_active %}
+			<tr style="background-color:red;">
+		{% else %}
+			<tr>
+		{% endif %}
+			
 			<td> {{user}} </td>
+
 			<td> {{is_active}} </td>
-			<td> send_chat_request / cancel_chat_request </td>
+			
+			<td>
+				{% if is_active %}
+					{% if has_request %}
+						<a href="#" onclick="javascript:uninvite_user('{{ user }}')">cancel_chat_reuqest</a>
+					{% else %}
+						<a href="#" onclick="javascript:invite_user('{{ user }}')">send_chat_request</a>
+					{% endif %}
+				{% else %}
+					offline
+				{% endif %}
+			</td>
+			
 		</tr>
 	{% endfor %}
 </table>
 
 
 
+<br><br>
 
 
-<div style="width:100%; text-align:center;">
+<div class="admin_video_console">
 
 	<div id="opentok_console"></div>
 	<div id="links">

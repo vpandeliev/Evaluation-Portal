@@ -30,24 +30,53 @@ def get_online_users():
     return cached_users
 
 
-def request_video_chat(request):
-    
-    # get username from request POST data
-    
+def has_pending_invite(username):
+    """Returns True iff the user with the supplied username has a pending video
+    request."""
+    print "GETTING", username
+    if cache.get(username + "_has_pending_invite"):
+        return True
+    else:
+        return False
+
+# 30 second timeout for now...
+def set_pending_invite(username):
+    """Sets a field in the cache that represents a pending videoconferencing 
+    invitation to the user"""
+    print "SETTING", username
+    cache.set(username + "_has_pending_invite", True, 30)
+
+
+def uninvite_user(request):
+    """Sets a field in the cache that represents a pending videoconferencing 
+    invitation to the user"""
+    username = request.GET.get("pk", None)
+    cache.delete(username + "_has_pending_invite")
+
+
+def invite_user(request):
     # set a cache element that the participants can check when they visit the
     # study page...
-    
-    # UI: separate tab on study page for 
-    pass
+    username = request.GET.get("pk", None)
+    set_pending_invite(username)
+
 
 #@login_required
 def basic_test(request):
-    test = get_online_users()
+    online_users = get_online_users()
     
     # TODO: only users in an investigator's study
-    user_status = U:
+    user_status = []
+    for u in User.objects.all():
+        # user_info = (username, is_active, has_pending_invite)
+        username = u.username
+        if cache.get(username):
+            user_info = (username, True, has_pending_invite(username))
+            user_status.insert(0, user_info)
+        else:
+            user_info = (username, False, has_pending_invite(username))
+            user_status.append(user_info)
         
-    
     return render_to_response('basic_test.html', locals(), 
                               context_instance=RequestContext(request))
 

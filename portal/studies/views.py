@@ -78,6 +78,7 @@ def show_users_in_study(request,study_id):
     users = Study.objects.get(id=study_id).participants()
     return render_to_response('study/show_users.html', locals(), context_instance=RequestContext(request))
 
+
 @login_required
 def create_one_study(request):
     if request.method == 'POST':
@@ -97,8 +98,9 @@ def create_one_study(request):
         #study = Blank()
         form = NewStudyForm()
     return render_to_response('study/new_study.html', locals(), context_instance=RequestContext(request))
-        
-@login_required     
+
+
+@login_required
 def edit_one_study(request,study_id):
     """docstring for edit_one_study"""
     if request.method == 'POST':
@@ -107,6 +109,7 @@ def edit_one_study(request,study_id):
         study = Study.objects.get(id=study_id)
         form = NewStudyForm(instance=study)
         return render_to_response('study/edit_study.html',locals(), context_instance=RequestContext(request))
+
 
 @login_required
 def remove_one_study(request,study_id):
@@ -117,7 +120,8 @@ def remove_one_study(request,study_id):
     
     s.delete()
     return HttpResponseRedirect('/study/')
-    
+
+
 @login_required
 def add_participant_to_study(request,study_id):
     """docstring for add_participant_to_study"""
@@ -165,7 +169,9 @@ def added_to_study(request, study_id, user_id):
     new = not (message is None)
     return render_to_response('study/added_to_study.html',locals(), context_instance=RequestContext(request))
 
+
 ############### Data Collection
+
 
 @login_required
 def informed_consent(request):
@@ -186,6 +192,7 @@ def informed_consent(request):
         #unauthorized URL mucking about with
         return HttpResponseBadRequest()
     return render_to_response('study/informed_consent.html',locals(), context_instance=RequestContext(request))
+
 
 @login_required
 def questionnaire(request):
@@ -215,6 +222,7 @@ def consented(request):
         #unauthorized URL mucking about with
         return HttpResponseBadRequest()
     return HttpResponseRedirect('/study/0/'+str(study_id))
+
 
 @login_required
 def data_dump(request,study_id):
@@ -275,6 +283,7 @@ def choose_task(request):
     else:
         return HttpResponseRedirect('/study/fitbrains/1')
 
+
 @login_required
 def show_task(request, game):
     study_id = request.session['study_id']
@@ -294,9 +303,13 @@ def show_task(request, game):
         code = "PAR"
     return render_to_response('study/fitbrains.html', locals(),context_instance=RequestContext(request))
 
+
+
 @login_required
 def show_wonderjuice(request):
     return render_to_response('study/wonderjuice.html', context_instance=RequestContext(request))
+
+
 
 @login_required
 def finish_session(request):
