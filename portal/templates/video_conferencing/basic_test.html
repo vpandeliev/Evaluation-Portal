@@ -1,25 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% load helpers %}
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+
+<link href="{{ MEDIA_URL }}/css/video_conferencing.css" type="text/css" rel="stylesheet" >
+<link href="{{ MEDIA_URL }}/css/video_div.css" type="text/css" rel="stylesheet" >
 
 
-<style>
 
-	.test_table {
-		border:solid;
-		border-width:0 1px 1px 0;
-		border-collapse: collapse;
-	}
-	
-	.test_table td, th, tr{
-		padding:2px;
-		spacing:0;
-		margin:0;
-	}
-	
-	.test_table td, th {
-		border:solid;
-		border-width: 1px 0 0 1px;
-	}
+<script src="http://staging.tokbox.com/v0.91/js/TB.min.js" type="text/javascript" charset="utf-8"></script>
+<script>
+	// These are the variables that need to be set in Django using the TokBox 
+	// server-side API. 
 
-</style>
+	// It is important that they are set BEFORE you include the video_div.js 
+	// script below.
+
+	var apiKey = 1127; // OpenTok sample API key. Replace with your own API key.
+	var sessionId = '153975e9d3ecce1d11baddd2c9d8d3c9d147df18'; // Replace with your session ID.
+	var token = 'devtoken'; // Should not be hard-coded. Add via python SSL.
+</script>
+<script src="{{ MEDIA_URL }}/js/video_conferencing/open_tok.js" type="text/javascript" charset="utf-8"></script>
+
+
+<div class="hidden_data" id="ajax_response">HIDDEN!</div>
+
+
+<br>
+
+
 
 
 <table class="test_table">
@@ -27,12 +38,37 @@
 		<th>users</th>
 		<th>request link</th>
 	</tr>
-	{% for user in test %}
+	{% for user, is_active in test %}
 		<tr>
 			<td> {{user}} </td>
-			<td> waka </td>
+			<td> {{is_active}} </td>
+			<td> send_chat_request / cancel_chat_request </td>
 		</tr>
 	{% endfor %}
 </table>
+
+
+
+
+
+<div style="width:100%; text-align:center;">
+
+	<div id="opentok_console"></div>
+	<div id="links">
+	      	<input type="button" value="Connect" id ="connectLink" onClick="javascript:connect()" />
+	      	<input type="button" value="Leave" id ="disconnectLink" onClick="javascript:disconnect()" />
+	      	<input type="button" value="Start Publishing" id ="publishLink" onClick="javascript:startPublishing()" />
+	      	<input type="button" value="Stop Publishing" id ="unpublishLink" onClick="javascript:stopPublishing()" />
+	</div>
+	<div id="myCamera" class="publisherContainer"></div>
+	<div id="subscribers"></div>
+
+	<script>
+		show('connectLink');
+	</script>
+
+</div>
+
+{% endblock %}
 
 

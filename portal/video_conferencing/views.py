@@ -30,9 +30,23 @@ def get_online_users():
     return cached_users
 
 
+def request_video_chat(request):
+    
+    # get username from request POST data
+    
+    # set a cache element that the participants can check when they visit the
+    # study page...
+    
+    # UI: separate tab on study page for 
+    pass
+
 #@login_required
 def basic_test(request):
     test = get_online_users()
+    
+    # TODO: only users in an investigator's study
+    user_status = U:
+        
     
     return render_to_response('basic_test.html', locals(), 
                               context_instance=RequestContext(request))
