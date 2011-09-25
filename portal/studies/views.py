@@ -43,6 +43,10 @@ def show_many_studies(request):
 
 
 @login_required
+# TODO: get rid of 90% of this... can do everything just from the request object
+#       since login is required (must be able to quickly get what you want by
+#       username alone, so a couple things will need to be changed to implement
+#       this)
 def show_one_study(request,as_inv,s_id):
     study_id = int(s_id)
     as_inv = int(as_inv)
@@ -64,16 +68,10 @@ def show_one_study(request,as_inv,s_id):
         else:
             action = "study/show_many_studies"
             
-    elif as_inv == 1 and role <= 0: 
-        #investigator
-        conditions = []
-        studyinv = study.get_study_investigator(request.user)
-        groups = Group.objects.filter(study=study);
-        for g in groups:
-            conditions.append({'group':g, 'stages': StageGroup.stages_in_group(g)})
     else: 
         #unauthorized URL mucking about with
         return HttpResponseBadRequest()
+    
     return render_to_response('study/show_one_study.html',locals(), context_instance=RequestContext(request))
 
 

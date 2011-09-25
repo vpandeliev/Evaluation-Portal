@@ -7,11 +7,8 @@
 
 <div class="hidden_data" id="ajax_response">HIDDEN!</div>
 
-
-
 <h1>{{ study.name }}</h1>
 
-{% ifequal as_inv 0 %}
 <div id="supertabs">
 <ul>
 
@@ -31,32 +28,53 @@
 </ul>
 </div>
 
-<!--stage menu-->
+<!-- tab1box is active if there is no video request -->
 {% if video_request %}
 	<div id="tab1box" class="tab" style="display:none">
 {% else %}
 	<div id="tab1box" class="tab" >
 {% endif %}
 
-	  <div id="stages_nav" class="clearfix" num="{{stages.count}}">
-	    <ul>
-	    {% for astage in stages %} 
-			  {% if astage.status > 1  %}
-	        <li class="stage not_active future"><a href="" id="stage_box_{{forloop.counter}}" onclick="return false;" class="stage_box">{{astage.stage.display}}</a></li>
-			  {% else %}
+
+<!-- stage_navigator
+		display subject stage and allow for selection of future or past stages
+		with CLEAR messages telling the user what's going on.
+		TODO: make the messages clear lol
+-->
+<div id="stages_nav" class="clearfix" num="{{ stages.count }}">
+	<ul>
+		{% for astage in stages %} 
+			{% if astage.status > 1	 %}
+				<li class="stage not_active future">
+					<a href="" id="stage_box_{{forloop.counter}}" onclick="return false;" class="stage_box">
+						{{ astage.stage.display }}
+					</a>
+				</li>
+			{% else %}
 				  {% ifequal astage.status 1 %}
-				    <li class="stage active present"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box">{{astage.stage.display}}</a></li>
+					<li class="stage active present">
+						<a href="" id="stage_box_{{forloop.counter}}" class="stage_box">
+							{{ astage.stage.display }}
+						</a>
+					</li>
 				  {% else %}
-				    <li class="stage not_active past"><a href="" id="stage_box_{{forloop.counter}}" class="stage_box">{{astage.stage.display}}</a></li>
+					<li class="stage not_active past">
+						<a href="" id="stage_box_{{forloop.counter}}" class="stage_box">
+							{{ astage.stage.display }}
+						</a>
+					</li>
 				  {% endifequal %}
-			  {% endif %}
+			{% endif %}
 		{% endfor%}
+	</ul>
+</div>
 
-	  </ul>
-	  </div>
-		<!--stage block-->
 
-	  <div id="stage_info">
+<!-- 
+	stage_info_display. one subdiv active at a time, controlled by stage 
+	navigator above
+ -->
+<div id="stage_info">
 		{% for astage in stages %}  
 
 	    <div id="stage_{{forloop.counter}}" class="stage_panel"
@@ -120,6 +138,8 @@
 
 
 {% if video_request %}
+	<link href="{{ MEDIA_URL }}css/video_conferencing.css" type="text/css" rel="stylesheet" >
+	
 	<div id="tab3box" class="tab">
 		<div style="width:100%; text-align:center;">
 			Hello there! You have been selected for a video chat with one of our
@@ -129,15 +149,13 @@
 					YES
 				</a>
 			</div>
-
+			
 			<div style="width:250px;background-color:red;color:black;">
 				<a href="#" onclick="javascript:decline_video_request('{{ username }}');">
 					NO
 				</a>
 			</div>
-						
 			
-			<link href="{{ MEDIA_URL }}css/video_conferencing.css" type="text/css" rel="stylesheet" >
 			<script src="http://staging.tokbox.com/v0.91/js/TB.min.js" type="text/javascript" charset="utf-8"></script>
 			<script>
 				// These are the variables that need to be set in Django using the TokBox 
@@ -151,7 +169,6 @@
 				var token = 'devtoken'; // Should not be hard-coded. Add via python SSL.
 			</script>
 			<script src="{{ MEDIA_URL }}js/video_conferencing/open_tok.js" type="text/javascript" charset="utf-8"></script>
-
 
 			<div id="opentok_console"></div>
 			<div id="links">
@@ -170,52 +187,8 @@
 		</div>
 
 	</div>
-{% endif %}
+	
+{% endif %} <!-- endif video_request-->
 
-
-{% else %}
-{% ifequal as_inv 1%}
-
-<!-- Investigator -->
-
-<div>
-  <a href="/study/datadump/{{study.id}}" class="actbutton grey">Export Data</a>
-</div>
-<br/><br/>
-<div><img src="{% media_url %}img/mockup.png" width=1000></img></div>
-<!-->
-<div id="inv_stages_nav">
-<ul>
-    {% for cond in conditions %}
-	<li>
- 		Condition: {{cond.group.name}}
-		
-		<ul>{% for astage in cond.stages %}
-		  {% if astage.status > 1  %}
-        	<li class="not_active"><a href="" cond="{{cond.group.id}}" id="box_stage_{{cond.group.id}}_{{forloop.counter}}" onclick="return false;" class="stage_box present">{{astage}} - {{astage.number_of_users}}</a></li>
-		  {% else %}
-			    <li class="not_active"><a href="" cond="{{cond.group.id}}" id="box_stage_{{cond.group.id}}_{{forloop.counter}}" class="stage_box present">{{astage}} - {{astage.number_of_users}}</a></li>
-		  {% endif %}
-
-		{% endfor%}
-		</ul>
-	</li>	
-
-	{% endfor%}
-</ul>
-{% for cond in conditions %}
-{% for stage in cond.stages %}
-	    <div id="stage_{{cond.group.id}}_{{forloop.counter}}" class="stage_panel" style="display:none;">
-	      <div class="stage_header">
-	        <h2><strong>Stage: </strong> {{stage.name}} ({{stage.number_of_users}})</h2>
-	        </div>
-	    </div>
-		  {% endfor %}{% endfor %}
-		
-</div>
-
-{% endifequal %}
-{% endifequal %}
-<!-->
 
 {% endblock %}

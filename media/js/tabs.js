@@ -4,7 +4,7 @@ $(document).ready(function() {
 	//console.log(width);
 	//console.log(Math.round(width/num));
     
-    $('.stage').css('width', ((1/num * width - num*2 - 8) - 200) + 'px');
+    $('.stage').css('width', ((width - 100) / num) + 'px');
     
     $('.tablink', this).bind('click', function(){
         currtab = $(this);
