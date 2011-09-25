@@ -28,7 +28,7 @@
 
 
 .hidden_data {
-    /*display:none;*/
+    display:none;
 }
 .user_table {
     border:solid;

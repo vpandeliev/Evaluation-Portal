@@ -2,6 +2,10 @@
 import os
 import sys
 
+# Module for non-django settings (cache timeouts, database types, etc...)
+from custom_settings import *
+
+
 ROOT_PATH = os.path.dirname(__file__)
 sys.path.insert(0, os.path.normpath(os.path.join(ROOT_PATH, "../lib")))
 sys.path.insert(0, os.path.normpath(os.path.join(ROOT_PATH,"..")))
@@ -109,13 +113,7 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
-
 MEDIA_URL = '/media/' 
-
-try:
-    from local_settings import *
-except ImportError:
-    print u'File local_settings.py is not found. Continuing with production settings.'
 
 TINYMCE_DEFAULT_CONFIG = {
     'plugins': "paste,searchreplace",

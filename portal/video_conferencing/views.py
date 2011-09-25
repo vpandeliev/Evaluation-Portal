@@ -5,6 +5,7 @@ from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from datetime import datetime, timedelta
 from django.core.cache import cache
+from django.conf import settings
 
 
 #################################################################################
@@ -25,7 +26,7 @@ def get_online_users():
             del cached_users[username]
             
     # save the new user list in the cache.
-    cache.set("recent_users_dict", cached_users, 16000000)
+    cache.set("recent_users_dict", cached_users, settings.RECENT_USER_LIST_TIMEOUT)
     
     return cached_users
 
@@ -42,7 +43,7 @@ def has_pending_invite(username):
 def set_pending_invite(username):
     """Sets a field in the cache that represents a pending videoconferencing 
     invitation to the user"""
-    cache.set(username + "_has_pending_invite", True, 30)
+    cache.set(username + "_has_pending_invite", True, settings.VIDEO_INVITE_TIMEOUT)
 
 
 def uninvite_user(request):
@@ -62,7 +63,7 @@ def invite_user(request):
 def decline_video_request(request):
     username = request.GET.get("pk", None)
     cache.delete(username + "_has_pending_invite")
-    cache.set(username + "_no_chat_requested", True, 30)
+    cache.set(username + "_no_chat_requested", True, settings.VIDEO_REJECTED_TIMEOUT)
     print cache.get(username + "_no_chat_requested")
     
 

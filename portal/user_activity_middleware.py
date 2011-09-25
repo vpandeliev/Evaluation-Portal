@@ -10,6 +10,8 @@ from datetime import datetime
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core.cache import cache
+from django.conf import settings
+
 
 class UserActivityMiddleware:
     def process_view(self, request, view, args, kwargs):
@@ -21,7 +23,7 @@ class UserActivityMiddleware:
             return
         
         # TESTING: memory cache for saving active users.
-        user_list_timeout = 160000000
+        user_list_timeout = settings.RECENT_USER_LIST_TIMEOUT
         cached_users = cache.get("recent_users_dict")
         username = request.user.username
         if not cached_users:
@@ -32,8 +34,7 @@ class UserActivityMiddleware:
         cache.set("recent_users_dict", cached_users, user_list_timeout)
         
         # Users time out after 30 seconds. 
-        # TODO: make this a parameter in the settings.py file!!!!!!
-        cache.set(username, 1, 30)
+        cache.set(username, 1, settings.USER_ACTIVITY_TIMEOUT)
         
 
 

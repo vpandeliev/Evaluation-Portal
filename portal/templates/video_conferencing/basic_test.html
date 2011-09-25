@@ -34,7 +34,7 @@
 		<th>is active</th>
 		<th>send chat request</th>
 	</tr>
-	{{ user_status }}
+
 	{% for user, is_active, has_request in user_status %}
 		<!-- tr -->
 		{% if is_active %}
