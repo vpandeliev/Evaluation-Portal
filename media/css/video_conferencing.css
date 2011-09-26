@@ -1,22 +1,5 @@
 
 
-/* Really bad user list table thing */
-.test_table {
-	border:solid;
-	border-width:0 1px 1px 0;
-	border-collapse: collapse;
-}
-
-.test_table td, th, tr{
-	padding:2px;
-	margin:0;
-}
-
-.test_table td, th {
-	border:solid;
-	border-width: 1px 0 0 1px;
-}
-
 
 /* Video conferencing box */
 
@@ -30,19 +13,6 @@
 .hidden_data {
     display:none;
 }
-.user_table {
-    border:solid;
-    border-width:1px;
-    border-color:black;
-    width:100%;
-}
-
-.user_table td{
-    border:solid;
-    border-width:1px;
-    border-color:black;
-}
-
 
 
 #opentok_console {

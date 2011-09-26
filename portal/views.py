@@ -3,6 +3,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 
 def home(request):
 	"""docstring for home"""
@@ -48,9 +49,9 @@ def login(request):
 				
 		else:
 			errors = True
-			return render_to_response("registration/login.html", locals())
+			return render_to_response("registration/login.html", locals(), context_instance=RequestContext(request))
 	else:
-			return render_to_response("registration/login.html", locals())
+			return render_to_response("registration/login.html", locals(), context_instance=RequestContext(request))
 
 def logout(request):
 	auth.logout(request)

@@ -10,7 +10,7 @@ def get_user_study_dir():
         
         TODO: Find a more robust way to the user_studies directory
     """
-    return settings.ROOT_PATH + "/portal/user_studies"
+    return settings.ROOT_PATH + "/user_studies"
 
 
 def get_user_study_names():
@@ -28,4 +28,4 @@ def get_study_directory(base_name):
     """Returns a full path to the studies directory for the study with the given
     directory name
     """
-    return settings.ROOT_PATH + "/portal/user_studies/" + base_name
+    return settings.ROOT_PATH + "/user_studies/" + base_name

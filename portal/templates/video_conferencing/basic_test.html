@@ -3,9 +3,11 @@
 
 {% load helpers %}
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 
 <link href="{{ MEDIA_URL }}css/video_conferencing.css" type="text/css" rel="stylesheet" >
+<link href="{{ MEDIA_URL }}css/investigator/user_table.css" type="text/css" rel="stylesheet" >
+
+
 
 <script src="http://staging.tokbox.com/v0.91/js/TB.min.js" type="text/javascript" charset="utf-8"></script>
 <script>
@@ -27,35 +29,36 @@
 
 <br>
 
-
-<table class="test_table">
+<div id="user_table_wrapper">
+<table>
+	<!-- Header row -->
 	<tr>
-		<th>users</th>
-		<th>is active</th>
-		<th>send chat request</th>
+		<th scope ="col" class="nobg">users</th> 
+		<th scope ="col">is active</th> 
+		<th scope ="col">send chat request</th>
 	</tr>
 
+	<!-- User rows -->
 	{% for user, is_active, has_request in user_status %}
 		<!-- tr -->
-		{% if is_active %}
-			<tr style="background-color:red;">
-		{% else %}
-			<tr>
-		{% endif %}
-			
-			<td> {{user}} </td>
+		{% if is_active %} <tr class="online_tr"> {% else %} <tr>{% endif %}
+			<th scope="row" class={% cycle "spec" "specalt" %}> {{ user }} </td>
 
-			<td> {{is_active}} </td>
+			<td> {{ is_active }} </td>
 			
-			<td>
+			{% if is_active %} <td style="background-color:red;"> {% else %} <td>{% endif %}
 				{% if is_active %}
 					{% if request_declined %}
 						user declined request
 					{% else %} 
 						{%if has_request %}
-							<a href="#" onclick="javascript:uninvite_user('{{ user }}')">cancel_chat_reuqest</a>
+							<a href="#" onclick="javascript:uninvite_user('{{ user }}')">
+								cancel_chat_reuqest
+							</a>
 						{% else %}
-							<a href="#" onclick="javascript:invite_user('{{ user }}')">send_chat_request</a>
+							<a href="#" onclick="javascript:invite_user('{{ user }}')">
+								send_chat_request
+							</a>
 						{% endif %}
 					{% endif %}	
 				{% else %}
@@ -65,30 +68,53 @@
 			
 		</tr>
 	{% endfor %}
+	
 </table>
-
+</div> <!--user_table_wrapper-->
 
 
 <br><br>
 
 
-<div class="admin_video_console">
-
+<div id="admin_video_wrapper">
 	<div id="opentok_console"></div>
-	<div id="links">
-	      	<input type="button" value="Connect" id ="connectLink" onClick="javascript:connect()" />
-	      	<input type="button" value="Leave" id ="disconnectLink" onClick="javascript:disconnect()" />
-	      	<input type="button" value="Start Publishing" id ="publishLink" onClick="javascript:startPublishing()" />
-	      	<input type="button" value="Stop Publishing" id ="unpublishLink" onClick="javascript:stopPublishing()" />
-	</div>
-	<div id="myCamera" class="publisherContainer"></div>
-	<div id="subscribers"></div>
-
-	<script>
-		show('connectLink');
-	</script>
-
+	<table>
+		<tr>
+			<th> Investigator Video </th>
+			<th> Participant Video </th>
+		</tr>
+		
+		<tr>
+			<td>
+				<div id="myCamera" class="publisherContainer"></div>
+			</td>
+			<td>
+				<div id="subscribers"></div>
+			</td>
+		</tr>
+		
+		<tr>
+			<td>
+				<div id="links">
+					<input type="button" value="Connect" id ="connectLink" onClick="javascript:connect()" />
+					<input type="button" value="Leave" id ="disconnectLink" onClick="javascript:disconnect()" />
+					<input type="button" value="Start Publishing" id ="publishLink" onClick="javascript:startPublishing()" />
+					<input type="button" value="Stop Publishing" id ="unpublishLink" onClick="javascript:stopPublishing()" />
+				</div>
+			</td>
+			<td>
+				
+			</td>
+		</tr>
+		
+	</table>
 </div>
+
+<script>
+	show('connectLink');
+</script>
+
+
 
 {% endblock %}
 

@@ -2,8 +2,15 @@
 {% load helpers %}
 {% block content %}
 
-<link href="{{ MEDIA_URL }}css/video_conferencing.css" type="text/css" rel="stylesheet" >
+<!-- javascript includes -->
 <script src="{{ MEDIA_URL }}js/video_conferencing/ajax_requests.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- CSS includes -->>
+<link href="{{ MEDIA_URL }}css/video_conferencing.css" type="text/css" rel="stylesheet" >
+<link href="{{ MEDIA_URL }}css/investigator/user_table.css" type="text/css" rel="stylesheet" >
+<link href="{{ MEDIA_URL }}css/participant/study.css" type="text/css" rel="stylesheet" >
+
+
 
 <div class="hidden_data" id="ajax_response">HIDDEN!</div>
 
@@ -142,20 +149,23 @@
 	
 	<div id="tab3box" class="tab">
 		<div style="width:100%; text-align:center;">
-			Hello there! You have been selected for a video chat with one of our
-			study investigators. Would you like to accept this request? <br>
-			<div style="width:250px;background-color:green;color:black;">
-				<a href="#" onclick="javascript:connect();">
+			<br>
+				Hello there! One of our investigators would appreciate the 
+				opportunity to speak to about your study. Would you like to 
+				accept this request for a video chat? 
+			<br>
+			<div style="display:inline;width:250px;background-color:green;color:black;">
+				<a style="width:200px" href="#" onclick="javascript:connect();">
 					YES
 				</a>
 			</div>
 			
-			<div style="width:250px;background-color:red;color:black;">
+			<div style="display:inline;width:250px;background-color:red;color:black;">
 				<a href="#" onclick="javascript:decline_video_request('{{ username }}');">
 					NO
 				</a>
 			</div>
-			
+			<br><br><br><br><br>
 			<script src="http://staging.tokbox.com/v0.91/js/TB.min.js" type="text/javascript" charset="utf-8"></script>
 			<script>
 				// These are the variables that need to be set in Django using the TokBox 
@@ -170,16 +180,46 @@
 			</script>
 			<script src="{{ MEDIA_URL }}js/video_conferencing/open_tok.js" type="text/javascript" charset="utf-8"></script>
 
-			<div id="opentok_console"></div>
-			<div id="links">
-			      	<input type="button" value="Connect" id ="connectLink" onClick="javascript:connect()" />
-			      	<input type="button" value="Leave" id ="disconnectLink" onClick="javascript:disconnect()" />
-			      	<input type="button" value="Start Publishing" id ="publishLink" onClick="javascript:startPublishing()" />
-			      	<input type="button" value="Stop Publishing" id ="unpublishLink" onClick="javascript:stopPublishing()" />
-			</div>
-			<div id="myCamera" class="publisherContainer"></div>
-			<div id="subscribers"></div>
 
+		
+			<div id="opentok_console"></div>
+			
+			
+
+			<div id="admin_video_wrapper">
+				<table style="width:90%">
+					<tr>
+						<th> Participant Video </th>
+						<th> Investigator Video </th>
+					</tr>
+
+					
+
+					<tr>
+						<td>
+							<div id="myCamera" class="publisherContainer"></div>
+						</td>
+						<td>
+							<div id="subscribers"></div>
+						</td>
+					</tr>
+
+					<tr>
+						<td>
+							<div id="links">
+								<input type="button" value="Connect" id ="connectLink" onClick="javascript:connect()" />
+								<input type="button" value="Leave" id ="disconnectLink" onClick="javascript:disconnect()" />
+								<input type="button" value="Start Publishing" id ="publishLink" onClick="javascript:startPublishing()" />
+								<input type="button" value="Stop Publishing" id ="unpublishLink" onClick="javascript:stopPublishing()" />
+							</div>
+						</td>
+						<td>
+							
+						</td>
+					</tr>
+
+				</table>
+			</div>
 			<script>
 				show('connectLink');
 			</script>

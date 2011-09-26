@@ -1,0 +1,124 @@
+#admin_video_wrapper {
+    text-align:center;
+    width:80%;
+    
+    padding: 0 0 0 10%;
+    
+    float:left;
+}
+
+#subject_video_wrapper {
+    width:40%;
+    float:left;
+}
+
+#user_table_wrapper {
+    align:center;
+    height:200px;
+    overflow:auto;
+}
+
+table {
+    width:100%;
+}
+
+th {
+	font: bold 11px "Trebuchet MS", Verdana, Arial, Helvetica,
+	sans-serif;
+	color: #6D929B;
+	border-right: 1px solid #C1DAD7;
+	border-bottom: 1px solid #C1DAD7;
+	border-top: 1px solid #C1DAD7;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	text-align: left;
+	padding: 6px 6px 6px 12px;
+	background: #CAE8EA url(../../img/video_conferencing/bg_header.jpg) no-repeat;
+}
+
+th.nobg {
+	border-top: 0;
+	border-left: 0;
+	border-right: 1px solid #C1DAD7;
+	background: none;
+}
+
+
+th.spec {	
+	border-left: 1px solid #C1DAD7;
+	border-top: 0;
+	background: #fff url(../../img/video_conferencing/bullet1.gif) no-repeat;
+	font: bold 10px "Trebuchet MS", Verdana, Arial, Helvetica,
+	sans-serif;
+}
+
+th.specalt {
+	border-left: 1px solid #C1DAD7;
+	border-top: 0;
+	background: #f5fafa url(../../img/video_conferencing//bullet2.gif) no-repeat;
+	font: bold 10px "Trebuchet MS", Verdana, Arial, Helvetica,
+	sans-serif;
+	color: #B4AA9D;
+}
+
+
+td {
+	border-right: 1px solid #C1DAD7;
+	border-bottom: 1px solid #C1DAD7;
+	background: #fff;
+	padding: 6px 6px 6px 12px;
+	color: #6D929B;
+}
+
+
+td.alt {
+	background: #F5FAFA;
+	color: #B4AA9D;
+}
+
+
+/* Really bad user list table thing */
+/*
+.test_table {
+	border:solid;
+	border-width:0 1px 1px 0;
+	border-collapse: collapse;
+	
+	width:100%;
+	height:5px;
+	
+	overflow:hidden;
+}
+
+
+.test_table th {
+    background-color:#556644;
+    text-align:center;
+}
+
+
+.test_table td, th, tr {
+	padding:2px;
+	margin:0;
+}
+
+.test_table td, th {
+	border:solid;
+	border-width: 1px 0 0 1px;
+}
+
+
+
+.user_table {
+    border:solid;
+    border-width:1px;
+    border-color:black;
+    width:100%;
+}
+
+.user_table td{
+    border:solid;
+    border-width:1px;
+    border-color:black;
+}
+*/
