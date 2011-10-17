@@ -1,4 +1,11 @@
+from django.core.cache import cache
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 
+
+from portal.studies.models import User
+
+from video_conferencing import *
 
 #@login_required
 def investigator_home(request):
