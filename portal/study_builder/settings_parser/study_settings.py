@@ -45,6 +45,13 @@ class StudySettings:
         self.passwords = dict(zip(self.participants, passwords))
         
     
+    def parse_investigator_node(self, investigator_node):
+        """ Extracts the usernames and passwords from the supplied dom node
+        """
+        investigators = extract_attributes(investigator_node, "user", "name")
+        investigator_passwords = extract_attributes(investigator_node, "user", "password")
+        self.investigators = dict(zip(investigators, investigator_passwords))
+        
     
     def parse_study_settings(self):
         """ Reads sefl.settings_xml and sets instance variables for all the data
@@ -82,6 +89,10 @@ class StudySettings:
         # get the dictionary of stages with each
         all_stages_node = dom.getElementsByTagName("all_stages")[0]
         self.stages = extract_attributes(all_stages_node, "stage", "directory")
+        
+        # build the investigators list
+        investigator_node = dom.getElementsByTagName("investigators")[0]
+        self.parse_investigator_node(investigator_node)        
         
     
     def __str__(self):

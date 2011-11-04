@@ -13,6 +13,7 @@ def add_study_to_db(study_settings):
     create_participants(study_settings)
     create_stages(study_settings)
     create_groups(study_settings)
+    create_investigators(study_settings)
 
 
 def create_participants(study_settings):
@@ -36,7 +37,31 @@ def create_participants(study_settings):
         profile = user.get_profile()
         profile.user_role = UserRoles.PARTICIPANT
         profile.save()
-        
+
+
+def create_investigators(study_settings):
+    """
+        Create user entries in the database for the supplied study_settings
+
+        This will override any existing users password with the one that is
+        supplied in settings.xml
+    """
+
+    for username in study_settings.investigators.keys():
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            user = User(username=username)
+
+        user.set_password(study_settings.investigators[username])
+        user.save()
+
+        # now update the user profile (it should be created after the save)
+        profile = user.get_profile()
+        profile.user_role = UserRoles.INVESTIGATOR
+        profile.save()    
+
+
 
 
 def create_studies(study_settings):
