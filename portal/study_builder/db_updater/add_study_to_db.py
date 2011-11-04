@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 
 
 from studies.models import Study, Group, Stage, StageGroup, StudyParticipant, UserStage
-
+from users.models import UserRoles
 
 def add_study_to_db(study_settings):
     """
@@ -33,7 +33,10 @@ def create_participants(study_settings):
         user.save()
         
         # now update the user profile (it should be created after the save)
-        print user.get_profile().user_class
+        profile = user.get_profile()
+        profile.user_role = UserRoles.PARTICIPANT
+        profile.save()
+        
 
 
 def create_studies(study_settings):

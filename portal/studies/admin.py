@@ -1,5 +1,6 @@
 from django.contrib import admin
 from portal.studies.models import *
+from portal.users.models import UserProfile
 import datetime
 
 class StudyParticipantAdmin( admin.ModelAdmin ):
@@ -31,3 +32,4 @@ admin.site.register(Group)
 admin.site.register(Data)
 admin.site.register(Alert)
 admin.site.register(AlertRecepient)
+admin.site.register(UserProfile)
