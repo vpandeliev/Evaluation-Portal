@@ -25,8 +25,7 @@ urlpatterns = patterns('',
     url(r'^user_studies/', include('portal.user_studies.urls')),
     
     # Video conferencing test 
-    #   TODO: move this to a subdirectory of investigator
-    url(r'^video_conferencing/', include('portal.video_conferencing.urls')),
+    url(r'^video_conferencing/', include('portal.investigator.video_conferencing.urls')),
     
     # New investigator interface
     url(r'^investigator/', include('portal.investigator.urls'))

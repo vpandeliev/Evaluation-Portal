@@ -71,6 +71,8 @@ MIDDLEWARE_CLASSES = (
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
+
+
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -85,12 +87,20 @@ INSTALLED_APPS = (
     # User generated studies are dropped in this directory
     'portal.user_studies',
     
+    # Classes used to extend the basic django User model
+    'portal.users',
+    
     # Libraries
     'tinymce',
 #   'lockdown',
     'alphacabbage.django.helpers',
     'alphacabbage.django.choices',
 )
+
+
+# Required for the extension of the django User model
+AUTH_PROFILE_MODULE = 'users.UserProfile'
+
 
 
 # Absolute path to the directory that holds media.
@@ -102,18 +112,19 @@ MEDIA_ROOT = os.path.normpath(os.path.join(ROOT_PATH, "../media"))
 # Examples: "http://foo.com/media/", "/media/".
 ADMIN_MEDIA_PREFIX = '/amedia/'
 
+
+# The location of all html/django templates
 TEMPLATE_DIRS = (
 	os.path.join(ROOT_PATH, 'templates'),
 	os.path.join(ROOT_PATH, 'templates/study'),
 	os.path.join(ROOT_PATH, 'templates/study_builder'),
 	os.path.join(ROOT_PATH, 'templates/video_conferencing'),
-	#os.path.join(ROOT_PATH, 'templates/registration'),
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
 )
 
+
+# Where we store css/js/images
 MEDIA_URL = '/media/' 
+
 
 TINYMCE_DEFAULT_CONFIG = {
     'plugins': "paste,searchreplace",

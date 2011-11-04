@@ -29,15 +29,6 @@ def show_many_studies(request):
         studies_as_investigator = StudyInvestigator.objects.filter(investigator=request.user)
     else:
         studies_as_investigator = []
-    
-    #part = len(studies_as_participant)
-    #inv = len(studies_as_investigator)
-    
-    #if part+inv == 1:
-    #    if part > inv:
-    #        return show_one_study(request, 0, studies_as_participant[0].study.id)
-    #    else:
-    #        return show_one_study(request, 1, studies_as_investigator[0].study.id)
         
     return render_to_response('study/show_many_studies.html', locals(), context_instance=RequestContext(request))
 

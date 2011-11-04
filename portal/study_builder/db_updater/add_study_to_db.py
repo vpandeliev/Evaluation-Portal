@@ -31,6 +31,9 @@ def create_participants(study_settings):
         
         user.set_password(study_settings.passwords[username])
         user.save()
+        
+        # now update the user profile (it should be created after the save)
+        print user.get_profile().user_class
 
 
 def create_studies(study_settings):
